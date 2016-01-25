@@ -1,0 +1,257 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[wpn_ak74]:identity_immunities
+GroupControlSection	= spawn_group
+discovery_dependency = 
+$spawn                   = "weapons\aks74"					; option for Level Editor
+$npc					= on				; option for Level Editor
+$prefetch 				= 16
+scheduled				= off              ; option for ALife Simulator
+cform                   = skeleton
+class                   = WP_AK74
+min_radius              = 30
+max_radius              = 100
+description				= oka74protoo
+
+ef_main_weapon_type		= 2
+ef_weapon_type			= 6
+
+;-----------------------------------------------------------------------------------
+holder_range_modifier	= 1.0		       ; во сколько раз увеличиваетс€ eye_range 
+holder_fov_modifier		= 0.7              ; во сколько раз увеличиваетс€ eye_fov
+;-----------------------------------------------------------------------------------
+
+cost					= 450
+weapon_class			= assault_rifle
+
+ammo_limit				= 210
+ammo_current			= 180
+ammo_elapsed			= 30
+
+ammo_mag_size		 	= 30
+MinAmmoTryJammed                        = 15
+ammo_class		 		= ammo_5.45x39_fmj, ammo_5.45x39_ap
+fire_modes				= 1, -1
+launch_speed			= 0
+
+grenade_class			= ammo_vog-25, ammo_vog-25p
+
+hand_dependence		 	= 1
+single_handed			= 0
+
+slot 					= 2		; // secondary
+animation_slot			= 2		; type of the animation that will be used
+
+inv_name	         	= ј C-74P
+inv_name_short		 	= ј C-74P
+inv_weight		 		= 3.2
+
+inv_grid_width			= 5
+inv_grid_height			= 2
+inv_grid_x				= 9
+inv_grid_y				= 32
+
+kill_msg_x			= 0
+kill_msg_y			= 28
+kill_msg_width		= 84
+kill_msg_height		= 28
+
+;-----------------------------------------------------------------------------------
+;базова€ дисперси€
+fire_dispersion_base		= 0.25	;угол (в градусах) базовой дисперсии оружи€ (оружи€ зажатого в тисках)
+control_inertion_factor		= 1.05f
+
+;отдача
+cam_relax_speed         	= 7.2;0.3	;скорость возврата в исходное положение
+cam_dispersion          	= 0.3	;увеличени€ угла (в градусах) с каждым выстрелом
+cam_dispersion_inc		= 0.12	;увеличениe cam_dispersion с каждым выстрелом
+cam_dispertion_frac		= 0.75	;ствол будет подыматьс€ на cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+cam_max_angle			= 18.0	;максимальный угол отдачи
+cam_max_angle_horz		= 9.0	;(degree) maximum shot horizontal degree 
+cam_step_angle_horz		= 0.85	;(degree) size of step camera moved in horizontal position while shooting
+
+fire_dispersion_condition_factor = 0.9	;увеличение дисперсии в процентах при максимальном износе 
+misfire_probability 		= 0.003	;веро€тность осечки при максимальном износе 
+misfire_condition_k			= 0.05
+condition_shot_dec 			= 0.001 ;увеличение износа при каждом выстреле
+;-----------------------------------------------------------------------------------
+
+direction               = 0, 0, 1
+
+fire_point               	= 0.0,0.05,0.62
+
+flame_particles		    = weapons\generic_weapon05
+smoke_particles			= weapons\generic_shoot_00
+grenade_flame_particles = weapons\generic_weapon01
+
+
+shell_point				= 0.0, 0.194, 0.04
+shell_dir				= 0.0, 0.0, 0.4
+shell_particles			= weapons\generic_shells
+rpm_empty_click 		= 200
+
+PDM_disp_base 			= 1.0
+PDM_disp_vel_factor 		= 1.1
+PDM_disp_accel_factor 		= 1.1
+PDM_crouch	 		= 1.0
+PDM_crouch_no_acc 		= 1.0
+
+; ttc
+hit_power           = 0.44
+hit_impulse		 	= 150
+hit_type 			= fire_wound
+
+fire_distance           	= 800
+bullet_speed			= 630	;начальна€ скорость пули
+rpm                    		= 700
+
+use_aim_bullet				= true		;ѕоддерживаетс€ ли перва€ суппер пул€
+time_to_aim					= 1.0	
+
+grenade_vel			= 76
+; end ttc
+
+silencer_hit_power       	= 0.58
+silencer_hit_impulse	 	= 15
+silencer_fire_distance   	= 250
+silencer_bullet_speed	 	= 280
+
+hud                     = wpn_aks74_hud
+normal                  = 0, 1, 0
+
+;----------------------------------------------------------
+position                = -0.026, 0, 0.16
+orientation      	    = 0, 0, 0
+
+;--STRAP PARAMETERS-----------------------------------------------------------------
+strap_position         		= -0.16,-0.40,0.15			; position (offset) and orientation of the weapon when it is strapped
+strap_orientation      		= -10,-5,10					; (3rd person view in degrees)			; (3rd person view in degrees)
+strap_bone0					= bip01_spine2
+strap_bone1					= bip01_spine1
+
+startup_ammo            = 90
+visual                  = weapons\aks74\wpn_aks74.ogf
+
+light_color		 		= 0.6,0.5,0.3
+light_range		 		= 5
+light_var_color		 	= 0.05
+light_var_range		 	= 0.5
+light_time 		 		= 0.2
+
+ph_mass			 		= 5
+;cost			 		= 2100
+
+;addons
+scope_status			= 2
+silencer_status			= 2
+grenade_launcher_status	= 2
+
+zoom_enabled			= true
+scope_zoom_factor	    = 50	;30
+
+scope_name 					= wpn_addon_scope			; section name for the attachable scope
+scope_x 					= 60						; offset in inventory icon
+scope_y 					= 3
+silencer_name  				= wpn_addon_silencer		; section name for the attachable silencer
+silencer_x 					= 222						; offset in inventory icon
+silencer_y 					= 15					
+grenade_launcher_name 		= wpn_addon_grenade_launcher_aks_old; section name for the attachable grenade launcher
+grenade_launcher_x 			= 142						; offset in inventory icon
+grenade_launcher_y 			= 29
+
+
+;звуки
+snd_draw			= weapons\wpn_aks74\aks74_draw
+snd_holster			= weapons\generic_holster
+snd_shoot			= weapons\ak74pro_shot_0        ;test2_shoot; was generic_shoot
+;snd_shoot			= weapons\wpn_aks74\aks74_shoot
+snd_shoot1			= weapons\ak74pro_shot_0
+;snd_shoot1			= weapons\wpn_aks74\aks74_shoot2
+snd_empty			= weapons\gen_empty, 0.5
+snd_reload			= weapons\wpn_aks74\aks74_reload, 0.7, 0.45
+snd_shoot_grenade	= weapons\gen_grenshoot
+snd_reload_grenade	= weapons\gen_grenload, 1.0, 1.3
+snd_switch			= weapons\groza_switch, 1.0, 0.45
+snd_reload_jammed                               = weapons\generic_holster
+
+;params when silencer is attached 
+;similar to corresponding params without prefix silencer_
+
+;silencer_flame_particles 	= weapons\generic_weapon01
+silencer_smoke_particles 	= weapons\generic_shoot_00
+
+snd_silncer_shot			= weapons\w_ak74_shot1 
+
+silencer_light_color		= 0.6,0.5,0.3
+silencer_light_range		= 0.01
+silencer_light_var_color	= 0.05
+silencer_light_var_range	= 0.5
+silencer_light_time 		= 0.2
+
+ 
+[wpn_aks74_hud]
+allow_inertion = false
+
+shell_point     	   	 	= 0.15, 0.0, -0.05
+;shell_point		 	= -0.15, -0.03, 0.05
+shell_dir		 		= 0.0, -5.0, 0.0
+
+fire_point			= 0,0.00000,-0.00000
+fire_bone               = wpn_body
+
+position			= 0.048000,-0.010000,0.100000
+orientation			= 2.576571,1.832839,0.000000
+
+visual                  = weapons\aks74\wpn_aks74_hud.ogf
+
+grenade_bone    = wpn_grenade
+
+anim_idle		= idle
+anim_idle_aim	        = idle_aim
+anim_reload		= reload
+anim_draw		= draw
+anim_holster	= holster
+anim_shoot		= shoot
+anim_idle_sprint			= idle_sprint
+
+anim_idle_g				= idle_g
+anim_reload_g			= reload_g
+anim_shoot_g			= shoot_g
+anim_switch_grenade_on =    switch_on
+anim_switch_grenade_off	=    switch_off
+anim_draw_g				= draw_g
+anim_holster_g			= holster_g
+
+anim_idle_gl			= idle_w_gl
+anim_reload_gl			= reload_w_gl
+anim_draw_gl			= draw_w_gl
+anim_holster_gl			= holster_w_gl
+anim_shoot_gl			= shoot_w_gl
+anim_idle_g_aim         = idle_g_aim
+anim_idle_gl_aim        = idle_w_gl_aim
+
+anim_reload_jammed              = draw
+anim_reload_empty_jammed        = draw
+
+
+
+
+
+;смещени€ HUD дл€ режима приближени€
+zoom_offset			= -0.166400,0.029800,-0.099000
+zoom_rotate_x		= 0.031200
+zoom_rotate_y		= 0.063500
+
+;тоже самое, но дл€ подствольника
+grenade_zoom_offset		= -0.151,-0.0300,0
+grenade_zoom_rotate_x		= 0.04
+grenade_zoom_rotate_y		= 0.0635
+
+
+grenade_normal_zoom_offset		= -0.1565,0.0370,-0.15   ;левее+,правее-\вверх+, вниз-\ближе+, дальше-
+grenade_normal_zoom_rotate_x	=       0.035                ;вверх-, вниз+
+grenade_normal_zoom_rotate_y	= 0.0432                   ;влево-, вправо+
+
+
+
+
+zoom_hide_crosshair	= true						;to hide crosshair in zoom 

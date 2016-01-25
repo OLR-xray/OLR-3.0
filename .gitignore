@@ -11,15 +11,8 @@
 *.userprefs
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-bld/
-[Bb]in/
-[Oo]bj/
+intermediate/
+libraries/
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -234,3 +227,20 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+#stalker
+*.db0
+*.db1
+*.db2
+*.db3
+*.db4
+*.db5
+*.db6
+*.db7
+*.db8
+*.db9
+*.dba
+*.dbb
+*.dbc
+*.dbd
+_appdata_/
