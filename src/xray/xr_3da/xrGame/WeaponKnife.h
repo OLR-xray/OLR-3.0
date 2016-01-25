@@ -18,8 +18,6 @@ protected:
 #if defined(KNIFE_SPRINT_MOTION)
 	MotionSVec			mhud_idle_sprint;
 #endif
-	MotionSVec			mhud_idle_walk;
-	MotionSVec			mhud_idle_walk_slow;
 
 	HUD_SOUND			m_sndShot;
 
@@ -32,9 +30,6 @@ protected:
 	virtual void		switch2_Hidden				();
 	virtual void		switch2_Showing				();
 			void		switch2_Attacking			(u32 state);
-	virtual bool	TryPlayAnimIdle	();
-	
-	virtual void	PlayAnimIdle();
 
 	virtual void		OnAnimationEnd				(u32 state);
 	virtual void		OnStateSwitch				(u32 S);
@@ -76,7 +71,9 @@ public:
 	virtual void		StartIdleAnim					();
 	virtual void		GetBriefInfo					(xr_string& str_name, xr_string& icon_sect_name, xr_string& str_count);
 
+#if defined(KNIFE_SPRINT_MOTION)
 	virtual void		onMovementChanged				(ACTOR_DEFS::EMoveCommand cmd);
+#endif
 
 	DECLARE_SCRIPT_REGISTER_FUNCTION
 };

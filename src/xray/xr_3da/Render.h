@@ -229,7 +229,6 @@ public:
 	virtual IRender_Visual*			model_CreateParticles	(LPCSTR name)								= 0;
 	virtual IRender_DetailModel*	model_CreateDM			(IReader*	F)								= 0;
 	virtual IRender_Visual*			model_Create			(LPCSTR name, IReader*	data=0)				= 0;
-	virtual IRender_Visual*			model_Instance_Load		(LPCSTR name, IReader*	data=0)				= 0;
 	virtual IRender_Visual*			model_CreateChild		(LPCSTR name, IReader*	data)				= 0;
 	virtual IRender_Visual*			model_Duplicate			(IRender_Visual*	V)						= 0;
 	virtual void					model_Delete			(IRender_Visual* &	V, BOOL bDiscard=FALSE)	= 0;
@@ -255,11 +254,8 @@ public:
 	virtual u32						memory_usage			()											= 0;
 
 	// KD: need to know, what R2 phase is active now
-	virtual u32						active_phase			() = 0;
-	
-	virtual LPCSTR getShaderFromModel() = 0;
-	virtual void setShaderFromModel(LPCSTR value) = 0;
-	
+	virtual u32						active_phase			()											= 0;
+
 	// Constructor/destructor
 	virtual ~IRender_interface();
 };

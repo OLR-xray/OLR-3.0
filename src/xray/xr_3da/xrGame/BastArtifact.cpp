@@ -74,8 +74,8 @@ void CBastArtefact::BastCollision(CEntityAlive* pEntityAlive)
 		m_bStrike = true;
 		Fvector vel;
 		vel.set(0,0,0);
-		this->m_pPhysicsShell->set_LinearVel(vel);  // -- было flyer
-		this->m_pPhysicsShell->set_AngularVel(vel); // -- было flyer
+	//	this->m_pPhysicsShell->set_LinearVel(vel);
+	//	this->m_pPhysicsShell->set_AngularVel(vel);
 
 	}
 }
@@ -190,8 +190,8 @@ void CBastArtefact::UpdateCLChild()
 			Fmatrix pos; 
 			pos.set(XFORM()); 
 			Fvector vel; 
-			vel.sub(Position(),ps_Element(0).vPosition);                   //-- было flyer
-			vel.div((Level().timeServer()-ps_Element(0).dwTime)/1000.f);   //-- было flyer
+			//vel.sub(Position(),ps_Element(0).vPosition); 
+			//vel.div((Level().timeServer()-ps_Element(0).dwTime)/1000.f);
 			vel.set(0,0,0);
 			pStaticPG->UpdateParent(pos, vel); 
 			pStaticPG->Play();

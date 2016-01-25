@@ -27,11 +27,9 @@ IGame_Level::IGame_Level	()
 
 IGame_Level::~IGame_Level	()
 {
-	if(strstr(Core.Params,"-nes_texture_storing") ) {
+	if(strstr(Core.Params,"-nes_texture_storing") )
 		Device.Resources->StoreNecessaryTextures();
-	}
 //.	DEL_INSTANCE				( pHUD			);
-	g_pGamePersistent->Environment().BackgroundTextureDestroy();
 	xr_delete					( pLevel		);
 
 	// Render-level unload
@@ -65,8 +63,6 @@ BOOL IGame_Level::Load			(u32 dwNum)
 	if (!FS.exist(temp, "$level$", "level.ltx"))
 		Debug.fatal	(DEBUG_INFO,"Can't find level configuration file '%s'.",temp);
 	pLevel						= xr_new<CInifile>	( temp );
-	
-	g_pGamePersistent->Environment().BackgroundTextureLoad();
 	
 	// Open
 	g_pGamePersistent->LoadTitle	("st_opening_stream");

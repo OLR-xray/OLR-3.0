@@ -446,50 +446,16 @@ LPCSTR CScriptGameObject::ProfileName			()
 }
 
 
-LPCSTR CScriptGameObject::CharacterName() {
-	auto pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
+LPCSTR CScriptGameObject::CharacterName			()
+{
+	CInventoryOwner* pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
 
 	if (!pInventoryOwner) {
-		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,"CharacterName available only for InventoryOwner");
+		ai().script_engine().script_log		(ScriptStorage::eLuaMessageTypeError,"CharacterName available only for InventoryOwner");
 		return NULL;
 	}
 	return pInventoryOwner->Name();
 }
-
-LPCSTR CScriptGameObject::CharacterIcon() {
-	auto pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
-
-	if (!pInventoryOwner) {
-		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,"CharacterIcon available only for InventoryOwner");
-		return NULL;
-	}
-	return pInventoryOwner->Icon();
-}
-
-LPCSTR CScriptGameObject::CharacterBio() {
-	auto pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
-
-	if (!pInventoryOwner) {
-		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,"CharacterBio available only for InventoryOwner");
-		return NULL;
-	}
-	return pInventoryOwner->Bio();
-}
-
-void CScriptGameObject::IterateActorDialogs(luabind::functor<void> functor) {
-	auto pInventoryOwner = smart_cast<CInventoryOwner*>(&object());
-
-	if (!pInventoryOwner) {
-		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,"IterateActorDialogs available only for InventoryOwner");
-		return ;
-	}
-	DIALOG_ID_VECTOR::const_iterator b = pInventoryOwner->ActorDialogs().begin();
-	DIALOG_ID_VECTOR::const_iterator e = pInventoryOwner->ActorDialogs().end();
-	for ( ; b!=e;++b) {
-		functor((*b).c_str());
-	}
-}
-
 int CScriptGameObject::CharacterRank			()
 {
 	// rank support for monster

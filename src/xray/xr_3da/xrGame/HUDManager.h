@@ -29,7 +29,6 @@ struct CFontManager :public pureDeviceReset			{
 	CGameFont*				pFontGraffiti50Russian;
 	CGameFont*				pFontLetterica25;
 	CGameFont*				pFontStat;
-	CGameFont*				pFontStartup;
 
 	void					InitializeFonts			();
 	void					InitializeFont			(CGameFont*& F, LPCSTR section, u32 flags = 0);

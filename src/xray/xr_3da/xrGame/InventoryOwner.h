@@ -91,9 +91,6 @@ public:
 
 	//игровое имя 
 	virtual LPCSTR	Name        () const;
-	LPCSTR			Icon        () const;
-	LPCSTR			Bio	        () const;
-	const DIALOG_ID_VECTOR& ActorDialogs() const;
 	u32					get_money		() const				{return m_money;}
 	void				set_money		(u32 amount, bool bSendEvent);
 protected:

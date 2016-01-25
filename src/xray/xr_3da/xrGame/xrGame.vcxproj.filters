@@ -6572,15 +6572,6 @@
       <Filter>AI\AScript\ScriptClasses\DerivedClientClasses</Filter>
     </ClInclude>
     <ClInclude Include="script_vars_storage.h" />
-    <ClInclude Include="ui\UI3dStatic.h">
-      <Filter>AI\AScript\ScriptClasses\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="ui\3d_static_shaders.h">
-      <Filter>AI\AScript\ScriptClasses\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="CarHud.h">
-      <Filter>Core\Client\Objects\vehicles\Car</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="damage_manager.cpp">
@@ -9744,12 +9735,6 @@
       <Filter>AI\AScript\ScriptClasses\DerivedClientClasses</Filter>
     </ClCompile>
     <ClCompile Include="script_vars_storage.cpp" />
-    <ClCompile Include="ui\UI3dStatic.cpp">
-      <Filter>AI\AScript\ScriptClasses\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="CarHud.cpp">
-      <Filter>Core\Client\Objects\vehicles\Car</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuildStep Include="graph_abstract.h">

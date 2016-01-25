@@ -26,7 +26,6 @@
 #include "saved_game_wrapper.h"
 #include "game_object_space.h"
 #include "script_callback_ex.h"
-#include "UIZoneMap.h"
 
 #ifdef DEBUG
 #	include "ai/monsters/BaseMonster/base_monster.h"
@@ -130,7 +129,7 @@ void CLevel::IR_OnKeyboardPress	(int key)
 
 	if (!g_bDisableAllInput)
 	{
-//		HUD().GetUI()->UIMainIngameWnd->HudAdjustMode(key); // Real Wolf. 07.09.2014.
+		HUD().GetUI()->UIMainIngameWnd->HudAdjustMode(key); // Real Wolf. 07.09.2014.
 
 		/************************************************** added by Ray Twitty (aka Shadows) START **************************************************/
 		// Колбек на нажатие клавиши
@@ -180,14 +179,6 @@ void CLevel::IR_OnKeyboardPress	(int key)
 
 	if(	g_bDisableAllInput )	return;
 	if ( !b_ui_exist )			return;
-	
-	if (key == DIK_EQUALS) {
-		pHUD->GetUI()->UIMainIngameWnd->GetUIZoneMap()->IncZoom();
-	}
-	else if (key == DIK_MINUS) {
-		pHUD->GetUI()->UIMainIngameWnd->GetUIZoneMap()->DecZoom();
-	}
-	
 
 	if ( b_ui_exist && pHUD->GetUI()->IR_OnKeyboardPress(key)) return;
 
@@ -195,37 +186,25 @@ void CLevel::IR_OnKeyboardPress	(int key)
 
 	if ( game && Game().IR_OnKeyboardPress(key) ) return;
 
-	if (_curr == kCAR_OPEN_DOOR) {
-		luabind::functor<LPCSTR> fl;
-		R_ASSERT2(
-			ai().script_engine().functor<LPCSTR>("bind_car.on_press_open_door", fl),
-			"Failed to get press open door callback!"
-		);
-		fl();
+	if(_curr == kQUICK_SAVE && IsGameTypeSingle())
+	{
+		Console->Execute			("save");
 		return;
 	}
-	
-	if(_curr == kQUICK_SAVE && IsGameTypeSingle()) {
-		luabind::functor<LPCSTR> fl;
-		R_ASSERT2(
-			ai().script_engine().functor<LPCSTR>("olr_save.on_button", fl),
-			"Failed to get save game functor!"
-		);
-		fl();
-		return;
-	}
-	if(_curr == kQUICK_LOAD && IsGameTypeSingle()) {
+	if(_curr == kQUICK_LOAD && IsGameTypeSingle())
+	{
 #ifdef DEBUG
 		FS.get_path					("$game_config$")->m_Flags.set(FS_Path::flNeedRescan, TRUE);
 		FS.get_path					("$game_scripts$")->m_Flags.set(FS_Path::flNeedRescan, TRUE);
 		FS.rescan_pathes			();
 #endif // DEBUG
-		luabind::functor<LPCSTR> fl;
-		R_ASSERT2(
-			ai().script_engine().functor<LPCSTR>("olr_load.on_button", fl),
-			"Failed to get load game functor!"
-		);
-		fl();
+		string_path					saved_game,command;
+		strconcat					(sizeof(saved_game),saved_game,Core.UserName,"_","quicksave");
+		if (!CSavedGameWrapper::valid_saved_game(saved_game))
+			return;
+
+		strconcat					(sizeof(command),command,"load ",saved_game);
+		Console->Execute			(command);
 		return;
 	}
 

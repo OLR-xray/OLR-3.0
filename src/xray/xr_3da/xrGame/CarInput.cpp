@@ -17,7 +17,6 @@
 #include "../skeletoncustom.h"
 #include "level.h"
 #include "CarWeapon.h"
-#include "../../build_config_defines.h"
 
 void	CCar::OnMouseMove(int dx, int dy)
 {
@@ -126,12 +125,8 @@ void CCar::OnKeyboardPress(int cmd)
 	switch (cmd)	
 	{
 	case kCAM_1:	OnCameraChange(ectFirst);	break;
-	
-#if !defined(OFF_CAM_3_IN_CAR)
 	case kCAM_2:	OnCameraChange(ectChase);	break;
 	case kCAM_3:	OnCameraChange(ectFree);	break;
-#endif
-	
 	case kACCEL:	TransmissionUp();			break;
 	case kCROUCH:	TransmissionDown();			break;
 	case kFWD:		PressForward();				break;

@@ -26,9 +26,6 @@ public:
 	const DIALOG_VECTOR&			AvailableDialogs	() {return m_AvailableDialogs;}
 	const DIALOG_SHARED_PTR&		GetDialogByID		(const shared_str& dialog_id) const;
 	bool							HaveAvailableDialog	(const shared_str& dialog_id) const;
-	int								GetAvailableDialogsSize()  {
-		return AvailableDialogs().size();
-	}
 
 protected:
 	virtual bool					AddAvailableDialog	(shared_str dialog_id, CPhraseDialogManager* partner);

@@ -31,8 +31,6 @@
 #	define USE_IK
 #endif // PRIQUEL
 
-#include "../../build_config_defines.h"
-
 void  NodynamicsCollide(bool& do_colide,bool bo1,dContact& c,SGameMtl * /*material_1*/,SGameMtl * /*material_2*/)
 {
 	dBodyID body1=dGeomGetBody(c.geom.g1);
@@ -707,19 +705,18 @@ void CCharacterPhysicsSupport::ActivateShell			( CObject* who )
 	m_eState=esDead;
 	m_flags.set(fl_skeleton_in_shell,TRUE);
 	
-#ifdef DEAD_BODY_COLLISION
-	if (etActor == m_eType)
-#endif //DEAD_BODY_COLLISION
+	if(IsGameTypeSingle())
 	{
-		if(IsGameTypeSingle()) {
-			m_pPhysicsShell->SetPrefereExactIntegration	();//use exact integration for ragdolls in single
-			m_pPhysicsShell->SetRemoveCharacterCollLADisable();
-		}
-		else {
-			m_pPhysicsShell->SetIgnoreDynamic();
-		}
-		m_pPhysicsShell->SetIgnoreSmall();
+		m_pPhysicsShell->SetPrefereExactIntegration	();//use exact integration for ragdolls in single
+		m_pPhysicsShell->SetRemoveCharacterCollLADisable();
 	}
+	else
+	{
+		m_pPhysicsShell->SetIgnoreDynamic();
+	}
+	m_pPhysicsShell->SetIgnoreSmall();
+	//end seting params
+
 
 
 	//fly back after correction
@@ -745,7 +742,6 @@ void CCharacterPhysicsSupport::ActivateShell			( CObject* who )
 	}
 
 }
-
 void CCharacterPhysicsSupport::in_ChangeVisual()
 {
 	

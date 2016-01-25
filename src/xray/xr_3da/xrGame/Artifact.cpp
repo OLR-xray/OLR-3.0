@@ -66,7 +66,7 @@ CArtefact::CArtefact(void)
 	m_pTrailLight				= NULL;
 	m_activationObj				= NULL;
 	m_class_name				= get_class_name<CArtefact>(this);
-	SetSlot (NO_ACTIVE_SLOT);
+	SetSlot (ARTEFACT_SLOT);
 }
 
 

@@ -66,19 +66,12 @@ IDirect3DBaseTexture9*	CTexture::surface_get	()
 	return pSurface;
 }
 
-void CTexture::PostLoad	() {
-	if (pTheora) {
-		bind = fastdelegate::FastDelegate1<u32>(this,&CTexture::apply_theora);
-	}
-	else if (pAVI) {
-		bind = fastdelegate::FastDelegate1<u32>(this,&CTexture::apply_avi);
-	}
-	else if (!seqDATA.empty()) {
-		bind = fastdelegate::FastDelegate1<u32>(this,&CTexture::apply_seq);
-	}
-	else {
-		bind = fastdelegate::FastDelegate1<u32>(this,&CTexture::apply_normal);
-	}
+void CTexture::PostLoad	()
+{
+	if (pTheora)				bind		= fastdelegate::FastDelegate1<u32>(this,&CTexture::apply_theora);
+	else if (pAVI)				bind		= fastdelegate::FastDelegate1<u32>(this,&CTexture::apply_avi);
+	else if (!seqDATA.empty())	bind		= fastdelegate::FastDelegate1<u32>(this,&CTexture::apply_seq);
+	else						bind		= fastdelegate::FastDelegate1<u32>(this,&CTexture::apply_normal);
 }
 
 void CTexture::SetName(LPCSTR _name)
@@ -354,17 +347,13 @@ void CTexture::Unload	()
 		apply_load);
 }
 
-void CTexture::desc_update() {
+void CTexture::desc_update	()
+{
 	desc_cache	= pSurface;
-	if (pSurface) {
-		if (D3DRTYPE_TEXTURE == pSurface->GetType()) {
-			IDirect3DTexture9* T = (IDirect3DTexture9*)pSurface;
-			R_CHK(T->GetLevelDesc(0,&desc));
-		}
-		else if (D3DRTYPE_CUBETEXTURE == pSurface->GetType()) {
-			IDirect3DCubeTexture9* T = (IDirect3DCubeTexture9*)pSurface;
-			R_CHK(T->GetLevelDesc(0,&desc));
-		}
+	if (pSurface && (D3DRTYPE_TEXTURE == pSurface->GetType()))
+	{
+		IDirect3DTexture9*	T	= (IDirect3DTexture9*)pSurface;
+		R_CHK					(T->GetLevelDesc(0,&desc));
 	}
 }
 

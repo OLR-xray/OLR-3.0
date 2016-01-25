@@ -22,8 +22,8 @@
 
 //константы shoot_factor, определяющие 
 //поведение пули при столкновении с объектом
-#define RICOCHET_THRESHOLD		0.9 //01 -- flyer
-#define STUCK_THRESHOLD			0.9 //04 -- flyer
+#define RICOCHET_THRESHOLD		0.1
+#define STUCK_THRESHOLD			0.4
 
 //расстояния не пролетев которого пуля не трогает того кто ее пустил
 #define PARENT_IGNORE_DIST		3.f
@@ -459,13 +459,13 @@ std::pair<float, float>  CBulletManager::ObjectHit	(SBullet* bullet, const Fvect
 
 	float ricoshet_factor	= bullet->dir.dotproduct(tgt_dir);
 
-	float f			= Random.randF	(-4.0f,-4.3); //(0.5f,1.f); -- flyer
+	float f			= Random.randF	(0.5f,1.f);
 	//float f				= Random.randF	(0.0f,0.3);
 //	if(shoot_factor<RICOCHET_THRESHOLD &&  )
 	if (((f+shoot_factor)<ricoshet_factor) && bullet->flags.allow_ricochet)	{
 		//уменьшение скорости полета в зависимости 
 		//от угла падения пули (чем прямее угол, тем больше потеря)
-		float scale = 1.f -_abs(bullet->dir.dotproduct(hit_normal))*m_fCollisionEnergyMin; /// *m_fCollisionEnergyMin -- flyer
+		float scale = 1.f -_abs(bullet->dir.dotproduct(hit_normal))*m_fCollisionEnergyMin;
 		clamp(scale, 0.f, m_fCollisionEnergyMax);
 
 		//вычисление рикошета, делается немного фейком,

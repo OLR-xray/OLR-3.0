@@ -86,8 +86,6 @@ CCar::CCar()
 	m_car_weapon=NULL;
 	m_power_neutral_factor=0.25f;
 	m_steer_angle=0.f;
-	m_loaded = false;
-	m_pHud = xr_new<CCarHud>(this);
 #ifdef DEBUG
 	InitDebug();
 #endif
@@ -103,7 +101,6 @@ CCar::~CCar(void)
 	xr_delete			(inventory);
 	xr_delete			(m_car_weapon);
 	xr_delete			(m_memory);
-	xr_delete			(m_pHud);
  //	xr_delete			(l_tpEntityAction);
 }
 
@@ -147,9 +144,7 @@ void	CCar::Load					( LPCSTR section )
 	inherited::Load					(section);
 	//CPHSkeleton::Load(section);
 	ISpatial*		self				=	smart_cast<ISpatial*> (this);
-	if (self)		self->spatial.type	|=	STYPE_VISIBLEFORAI;
-	
-	m_pHud->Load(section);
+	if (self)		self->spatial.type	|=	STYPE_VISIBLEFORAI;	
 }
 
 BOOL	CCar::net_Spawn				(CSE_Abstract* DC)
@@ -163,19 +158,6 @@ BOOL	CCar::net_Spawn				(CSE_Abstract* DC)
 
 	PKinematics(Visual())->CalculateBones_Invalidate();
 	PKinematics(Visual())->CalculateBones();
-	
-	
-	CKinematics* K = smart_cast<CKinematics*>(Visual());
-	CInifile* pUserData = K->LL_UserData();
-	if(pUserData->line_exist("car_definition","driver_place"))
-		driver_place_bone_id = K->LL_BoneID(pUserData->r_string("car_definition","driver_place"));
-	else {	
-		//Owner()->setVisible(0);
-		driver_place_bone_id = K->LL_GetBoneRoot();
-	}
-	//CBoneInstance& instance=K->LL_GetBoneInstance(u16(id));
-	//m_sits_transforms.clear();
-	//m_sits_transforms.push_back(instance.mTransform);
 
 	CPHSkeleton::Spawn(e);
 	setEnabled						(TRUE);
@@ -191,6 +173,7 @@ BOOL	CCar::net_Spawn				(CSE_Abstract* DC)
 	CDamagableItem::RestoreEffect();
 	
 	
+	CInifile* pUserData		= PKinematics(Visual())->LL_UserData(); 
 	if(pUserData->section_exist("destroyed"))
 		CPHDestroyable::Load(pUserData,"destroyed");
 	if(pUserData->section_exist("mounted_weapon_definition"))
@@ -202,22 +185,16 @@ BOOL	CCar::net_Spawn				(CSE_Abstract* DC)
 		m_memory->reload	(pUserData->r_string("visual_memory_definition", "section"));
 	}
 
+	// Real Wolf: 10.10.2014
 #ifdef CAR_SAVE_FUEL
-	if (m_loaded) {
-		if (co->m_fuel > 0) // Немного кривовато, так как я не нашел возможности получить эти значения в серверном объекте.
-		{
-			m_fuel				= co->m_fuel;
-			m_fuel_consumption	= co->m_fuel_consumption;
-			m_fuel_tank			= co->m_fuel_tank;
-		}
+	if (co->m_fuel > 0) // Немного кривовато, так как я не нашел возможности получить эти значения в серверном объекте.
+	{
+		m_fuel				= co->m_fuel;
+		m_fuel_consumption	= co->m_fuel_consumption;
+		m_fuel_tank			= co->m_fuel_tank;
 	}
 #endif
 	return							(CScriptEntity::net_Spawn(DC) && R);
-}
-
-void CCar::load(IReader &input_packet) {
-	inherited::load		(input_packet);
-	m_loaded = true;
 }
 
 void CCar::ActorObstacleCallback					(bool& do_colide,bool bo1,dContact& c,SGameMtl* material_1,SGameMtl* material_2)	
@@ -459,9 +436,6 @@ void CCar::UpdateCL				( )
 			m_memory->set_camera(m_car_weapon->ViewCameraPos(), m_car_weapon->ViewCameraDir(), m_car_weapon->ViewCameraNorm());
 	}
 	ASCUpdate			();
-	
-	m_pHud->Update();
-	
 	if(Owner()) return;
 //	UpdateEx			(g_fov);
 	VisualUpdate(90);
@@ -482,13 +456,12 @@ void CCar::UpdateCL				( )
 	V.set		(lin_vel);
 
 	m_car_sound->Update();
-	if (Owner()) {
+	if(Owner())
+	{
 		
-		if (m_pPhysicsShell->isEnabled()) {
-			CKinematics* K = smart_cast<CKinematics*>(Visual());
-			K->CalculateBones	();
-			//smart_cast<CKinematics*>(Owner()->Visual())->CalculateBones_Invalidate();
-			Owner()->XFORM().mul_43(XFORM(), K->LL_GetTransform(static_cast<u16>(driver_place_bone_id)));
+		if(m_pPhysicsShell->isEnabled())
+		{
+			Owner()->XFORM().mul_43	(XFORM(),m_sits_transforms[0]);
 		}
 /*
 		if(OwnerActor() && OwnerActor()->IsMyCamera()) 
@@ -514,11 +487,8 @@ void CCar::UpdateCL				( )
 void	CCar::renderable_Render				( )
 {
 	inherited::renderable_Render			();
-	if(m_car_weapon) {
+	if(m_car_weapon)
 		m_car_weapon->Render_internal();
-	}
-	
-	m_pHud->renderable_Render();
 }
 
 void	CCar::net_Export			(NET_Packet& P)
@@ -667,23 +637,23 @@ void CCar::detach_Actor()
 #endif
 }
 
-bool CCar::attach_Actor(CGameObject* actor) {
+bool CCar::attach_Actor(CGameObject* actor)
+{
 	if(Owner()||CPHDestroyable::Destroyed()) return false;
 	CHolderCustom::attach_Actor(actor);
 
-	//CKinematics* K	= smart_cast<CKinematics*>(Visual());
-	//CInifile* ini	= K->LL_UserData();
-	//int id;
-	//if(ini->line_exist("car_definition","driver_place"))
-	//	id=K->LL_BoneID(ini->r_string("car_definition","driver_place"));
-	//else
-	//{	
-	//	Owner()->setVisible(0);
-	//	id=K->LL_GetBoneRoot();
-	//}
-	//CBoneInstance& instance=K->LL_GetBoneInstance				(u16(id));
-	//m_sits_transforms.push_back(instance.mTransform);
-	
+	CKinematics* K	= smart_cast<CKinematics*>(Visual());
+	CInifile* ini	= K->LL_UserData();
+	int id;
+	if(ini->line_exist("car_definition","driver_place"))
+		id=K->LL_BoneID(ini->r_string("car_definition","driver_place"));
+	else
+	{	
+		Owner()->setVisible(0);
+		id=K->LL_GetBoneRoot();
+	}
+	CBoneInstance& instance=K->LL_GetBoneInstance				(u16(id));
+	m_sits_transforms.push_back(instance.mTransform);
 	OnCameraChange(ectFirst);
 	PPhysicsShell()->Enable();
 	PPhysicsShell()->add_ObjectContactCallback(ActorObstacleCallback);
@@ -840,17 +810,14 @@ void CCar::ParseDefinitions()
 		gear_rat[2]*=(1.f/60.f*2.f*M_PI);
 		m_gear_ratious.push_back(gear_rat);
 	}
-	
-	
+
 	///////////////////////////////sound///////////////////////////////////////////////////////
 	m_car_sound->Init();
-	
-	// Real Wolf: 10.10.2014
-	m_fuel_tank = ini->r_float("car_definition","fuel_tank");
-	m_fuel = m_fuel_tank;
-	m_fuel_consumption = ini->r_float("car_definition","fuel_consumption");
-	m_fuel_consumption /= 100000.f;
-	
+	///////////////////////////////fuel///////////////////////////////////////////////////
+	m_fuel_tank=ini->r_float("car_definition","fuel_tank");
+	m_fuel=m_fuel_tank;
+	m_fuel_consumption=ini->r_float("car_definition","fuel_consumption");
+	m_fuel_consumption/=100000.f;
 	if(ini->line_exist("car_definition","exhaust_particles"))
 		m_exhaust_particles = ini->r_string("car_definition","exhaust_particles");
 	///////////////////////////////lights///////////////////////////////////////////////////
@@ -1223,8 +1190,6 @@ void CCar::PressRight()
 	else
 		SteerRight();
 	rsp=true;
-	
-	m_pHud->PlayAnimRotateRight();
 }
 void CCar::PressLeft()
 {
@@ -1235,8 +1200,6 @@ void CCar::PressLeft()
 	else
 		SteerLeft();
 	lsp=true;
-	
-	m_pHud->PlayAnimRotateLeft();
 }
 void CCar::PressForward()
 {
@@ -1294,8 +1257,6 @@ void CCar::ReleaseRight()
 	else
 		SteerIdle();
 	rsp=false;
-	
-	m_pHud->PlayAnimReturnRight();
 }
 void CCar::ReleaseLeft()
 {
@@ -1304,8 +1265,6 @@ void CCar::ReleaseLeft()
 	else
 		SteerIdle();
 	lsp=false;
-	
-	m_pHud->PlayAnimReturnLeft();
 }
 void CCar::ReleaseForward()
 {

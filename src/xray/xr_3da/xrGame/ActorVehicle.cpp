@@ -26,28 +26,25 @@
 #include "script_callback_ex.h"
 #include "script_game_object.h"
 
-#include "inventory_actor_animation.h"
-
-void CActor::attach_Vehicle(CHolderCustom* vehicle) {
+void CActor::attach_Vehicle(CHolderCustom* vehicle)
+{
 	if(!vehicle) return;
 
 	if(m_holder) return;
 	PickupModeOff		();
 	m_holder=vehicle;
 
-	auto V = smart_cast<CKinematicsAnimated*>(Visual());
-	R_ASSERT(V);
+	CKinematicsAnimated* V		= smart_cast<CKinematicsAnimated*>(Visual()); R_ASSERT(V);
 	
 	if(!m_holder->attach_Actor(this)){
 		m_holder=NULL;
 		return;
 	}
 	// temp play animation
-	auto	car						= smart_cast<CCar*>(m_holder);
+	CCar*	car						= smart_cast<CCar*>(m_holder);
 	u16 anim_type					= car->DriverAnimationType();
 	SVehicleAnimCollection& anims	= m_vehicle_anims->m_vehicles_type_collections[anim_type];
 	V->PlayCycle					(anims.idles[0],FALSE);
-	inv_play_cycle					(anims.idles[0],FALSE);
 
 	ResetCallbacks					();
 	u16 head_bone					= V->LL_BoneID("bip01_head");
@@ -68,7 +65,7 @@ void CActor::attach_Vehicle(CHolderCustom* vehicle) {
 void CActor::detach_Vehicle()
 {
 	if(!m_holder) return;
-	auto car=smart_cast<CCar*>(m_holder);
+	CCar* car=smart_cast<CCar*>(m_holder);
 	if(!car)return;
 	CPHShellSplitterHolder*sh= car->PPhysicsShell()->SplitterHolder();
 	if(sh)sh->Deactivate();
@@ -88,13 +85,12 @@ void CActor::detach_Vehicle()
 	r_model_yaw_dest=r_model_yaw;
 	m_holder=NULL;
 	SetCallbacks		();
-	auto V= smart_cast<CKinematicsAnimated*>(Visual()); R_ASSERT(V);
+	CKinematicsAnimated* V= smart_cast<CKinematicsAnimated*>(Visual()); R_ASSERT(V);
 	V->PlayCycle		(m_anims->m_normal.legs_idle);
 	V->PlayCycle		(m_anims->m_normal.m_torso_idle);
-	inv_play_cycle		(m_anims->m_normal.legs_idle);
-	inv_play_cycle		(m_anims->m_normal.m_torso_idle);
 	m_holderID=u16(-1);
 
+//.	SetWeaponHideState(whs_CAR, FALSE);
 	SetWeaponHideState(INV_STATE_CAR, false);
 
 	// Real Wolf: колбек на высадку из машины. 01.08.2014.
@@ -104,6 +100,7 @@ void CActor::detach_Vehicle()
 bool CActor::use_Vehicle(CHolderCustom* object)
 {
 	
+//	CHolderCustom* vehicle=smart_cast<CHolderCustom*>(object);
 	CHolderCustom* vehicle=object;
 	Fvector center;
 	Center(center);

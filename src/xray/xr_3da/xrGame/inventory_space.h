@@ -1,40 +1,38 @@
 #pragma once
 #include "../../build_config_defines.h"
 
-//#undef INV_NEW_SLOTS_SYSTEM
+#define CMD_START	(1<<0)
+#define CMD_STOP	(1<<1)
 
-const u32 CMD_START = 1 << 0;
-const u32 CMD_STOP = 1 << 1;
+#define NO_ACTIVE_SLOT		0xffffffff
+#define KNIFE_SLOT			0
+#define PISTOL_SLOT			1
+#define RIFLE_SLOT			2
+#define GRENADE_SLOT		3
+#define APPARATUS_SLOT		4
+#define BOLT_SLOT			5
+#define OUTFIT_SLOT			6
+#define PDA_SLOT			7
+#define DETECTOR_SLOT		8
+#define TORCH_SLOT			9
+#define ARTEFACT_SLOT		10
 
-const u32 NO_ACTIVE_SLOT = 0xffffffff;
-const u32 KNIFE_SLOT = 0; //
-const u32 PISTOL_SLOT = 1;
-const u32 RIFLE_SLOT = 2;
-const u32 GRENADE_SLOT = 3;
-const u32 APPARATUS_SLOT = 4; //
-const u32 BOLT_SLOT = 5;
-const u32 OUTFIT_SLOT = 6;
-const u32 PDA_SLOT = 7;
-const u32 DETECTOR_SLOT = 8;
-const u32 TORCH_SLOT = 9; // 
-const u32 ARTEFACT_SLOT = 10;
-
-#if defined(INV_NEW_SLOTS_SYSTEM) && !defined(OLR_SLOTS)
-const u32 HELMET_SLOT = 11;
-const u32 SLOT_QUICK_ACCESS_0 = 12;
-const u32 SLOT_QUICK_ACCESS_1 = 13;
-const u32 SLOT_QUICK_ACCESS_2 = 14;
-const u32 SLOT_QUICK_ACCESS_3 = 15;
-const u32 SLOTS_TOTAL = 16;
-   // alpet: ограничение по вхождению предмета
-const u32 SLOT_QUICK_CELLS_X = 1;
-const u32 SLOT_QUICK_CELLS_Y = 1;
+#ifdef INV_NEW_SLOTS_SYSTEM
+	#define HELMET_SLOT			11
+	#define SLOT_QUICK_ACCESS_0 12
+	#define SLOT_QUICK_ACCESS_1 13
+	#define SLOT_QUICK_ACCESS_2 14
+	#define SLOT_QUICK_ACCESS_3 15
+	#define SLOTS_TOTAL			16
+    // alpet: ограничение по вхождению предмета
+	#define SLOT_QUICK_CELLS_X	1
+	#define SLOT_QUICK_CELLS_Y	1
 #else
-const u32 SLOTS_TOTAL = 11;
+	#define SLOTS_TOTAL			11	
 #endif
 
-const u32 RUCK_HEIGHT = 280;
-const u32 RUCK_WIDTH = 7;
+#define RUCK_HEIGHT			280
+#define RUCK_WIDTH			7
 
 class CInventoryItem;
 class CInventory;
@@ -43,7 +41,8 @@ typedef CInventoryItem*				PIItem;
 typedef xr_vector<PIItem>			TIItemContainer;
 
 
-enum EItemPlace {			
+enum EItemPlace
+{			
 	eItemPlaceUndefined,
 	eItemPlaceSlot,
 	eItemPlaceBelt,

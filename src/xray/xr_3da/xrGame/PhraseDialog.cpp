@@ -148,12 +148,10 @@ bool CPhraseDialog::SayPhrase (DIALOG_SHARED_PTR& phrase_dialog, const shared_st
 
 	//сообщить CDialogManager, что сказана фраза
 	//и ожидается ответ
-	if(first_is_speaking) {
+	if(first_is_speaking)
 		phrase_dialog->SecondSpeaker()->ReceivePhrase(phrase_dialog);
-	}
-	else {
+	else
 		phrase_dialog->FirstSpeaker()->ReceivePhrase(phrase_dialog);
-	}
 
 
 	return phrase_dialog?!phrase_dialog->m_bFinished:true;
@@ -320,19 +318,3 @@ bool CPhraseDialog::allIsDummy	()
 
 	return bAllIsDummy;
 }
-
-bool CPhraseDialog::IsWeSpeaking(CScriptGameObject* dialog_manager) const {
-	if (!dialog_manager) return false;
-	auto obj = smart_cast<CPhraseDialogManager*>(&dialog_manager->object());
-	if (!obj) return false;
-	return IsWeSpeaking(obj);
-}
-
-void CPhraseDialog::ForeachPhraseList(luabind::functor<void> func) {
-	PHRASE_VECTOR::const_iterator b = PhraseList().begin();
-	PHRASE_VECTOR::const_iterator e = PhraseList().end();
-	for ( ; b!=e;++b) {
-		func(*b);
-	}
-}
-

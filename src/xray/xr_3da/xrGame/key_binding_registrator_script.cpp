@@ -14,7 +14,6 @@ void key_binding_registrator::script_register(lua_State *L)
 {
 	module(L)
 	[
-		def("is_binded",		&is_binded),
 		def("dik_to_bind",		&dik_to_bind),
 
 		class_<enum_exporter<EGameActions> >("key_bindings")
@@ -64,9 +63,6 @@ void key_binding_registrator::script_register(lua_State *L)
 				value("kINVENTORY",					int(kINVENTORY)),
 				value("kBUY",						int(kBUY)),
 				value("kSKIN",						int(kSKIN)),
-				value("kMAP",						int(kMAP)),
-				value("kACTIVE_JOBS",				int(kACTIVE_JOBS)),
-				value("kCONTACTS",					int(kCONTACTS)),
 				value("kTEAM",						int(kTEAM))
 			],
 		class_<key_binding_registrator >("DIK_keys")

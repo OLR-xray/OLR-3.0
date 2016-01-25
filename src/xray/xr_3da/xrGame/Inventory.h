@@ -2,8 +2,6 @@
 #include "inventory_item.h"
 #include "../../build_config_defines.h"
 
-//#undef INV_NO_ACTIVATE_APPARATUS_SLOT
-
 class CInventory;
 class CInventoryItem;
 class CHudItem;
@@ -80,7 +78,6 @@ public:
 	// Ищет на поясе или в рюкзаке IItem с указанным CLS_ID
 	PIItem					Get					(CLASS_ID cls_id,  bool bSearchRuck) const;
 	PIItem					GetAny				(const char *name) const;//search both (ruck and belt)
-	PIItem					GetAmmoOnBelt				(const char *name) const;
 	PIItem					item				(CLASS_ID cls_id) const;
 	
 	// get all the items with the same section name

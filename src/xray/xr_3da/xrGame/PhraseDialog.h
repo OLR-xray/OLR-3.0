@@ -6,10 +6,6 @@
 #include "PhraseDialogDefs.h"
 #include "xml_str_id_loader.h"
 
-#include "script_game_object.h"
-
-
-
 typedef CGraphAbstract<CPhrase*, float, shared_str> CPhraseGraph;
 
 
@@ -79,17 +75,11 @@ public:
 	static bool				SayPhrase			(DIALOG_SHARED_PTR& phrase_dialog, const shared_str& phrase_id);
 
 		LPCSTR				GetPhraseText		(const shared_str& phrase_id, bool current_speaking = true);
-		LPCSTR				GetPhraseText		(LPCSTR phrase_id) {
-			const shared_str sid = shared_str(phrase_id);
-			return GetPhraseText(sid);
-		}
 		LPCSTR				GetLastPhraseText	() {return GetPhraseText(m_SaidPhraseID, false);}
 		const shared_str&	GetDialogID			() const {return m_DialogId;}
-		LPCSTR				GetDialogIDStr		() const {return m_DialogId.c_str();}
 
 	//заголовок, диалога, если не задан, то 0-я фраза
 		const shared_str&	GetLastPhraseID		() {return m_SaidPhraseID;}
-		LPCSTR				GetLastPhraseIDStr	() {return m_SaidPhraseID.c_str();}
 			LPCSTR			DialogCaption		();
 			int				Priority			();
 
@@ -108,21 +98,9 @@ public:
 	IC bool					FirstIsSpeaking		()	const {return m_bFirstIsSpeaking;}
 	IC bool					SecondIsSpeaking	()	const {return !m_bFirstIsSpeaking;}
 
-	IC bool					IsWeSpeaking		(CPhraseDialogManager* dialog_manager) const {
-		return (FirstSpeaker()==dialog_manager && FirstIsSpeaking()) ||
-																							(SecondSpeaker()==dialog_manager && SecondIsSpeaking());
-																							}
-	bool					IsWeSpeaking		(CScriptGameObject* dialog_manager) const;
+	IC bool					IsWeSpeaking		(CPhraseDialogManager* dialog_manager) const  {return (FirstSpeaker()==dialog_manager && FirstIsSpeaking()) ||
+																							(SecondSpeaker()==dialog_manager && SecondIsSpeaking());}
 	CPhraseDialogManager*	OurPartner			(CPhraseDialogManager* dialog_manager) const;
-
-	int						GetPhraseListSize	() const {
-		return PhraseList().size();
-	}
-	
-	CPhrase*				GetRandomPhrase		() {
-		return PhraseList()[Random.randI(PhraseList().size())];
-	}
-	void					ForeachPhraseList	(luabind::functor<void> func);
 
 protected:
 	//идентификатор диалога
@@ -158,6 +136,4 @@ public:
 protected:
 
 	static void				InitXmlIdToIndex();
-
 };
-

@@ -3,13 +3,9 @@
 
 #pragma once
 
-#define READ_IF_EXISTS(ltx,method,section,name,default_value)\
-	((ltx->line_exist(section,name)) ? (ltx->method(section,name)) : (default_value))
-
 #ifdef _EDITOR
 	#include "..\editors\ECore\stdafx.h"
 #else
-
 
 #include "../xrCore/xrCore.h"
 

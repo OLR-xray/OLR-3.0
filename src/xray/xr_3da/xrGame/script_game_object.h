@@ -111,7 +111,6 @@ class CScriptGameObject;
 #endif
 
 class CScriptGameObject;
-class CPhraseDialog;
 
 namespace SightManager {
 	enum ESightType;
@@ -217,15 +216,6 @@ public:
 			LPCSTR				WhoHitSectionName	();
 
 			void				ChangeTeam			(u8 team, u8 squad, u8 group);
-			
-			void				UpdateAvailableDialogs(CScriptGameObject* s_partner);
-			void				SayPhrase(CPhraseDialog* phrase_dialog, LPCSTR phrase_id);
-			void				AvailableDialogsForeach(luabind::functor<void> func);
-			int					GetAvailableDialogsSize() const;
-			const CPhraseDialog* GetAvailableDialogsFront() const;
-			const CPhraseDialog* GetDialogByID(LPCSTR dialog_id) const;
-			bool				HaveAvailableDialog(LPCSTR dialog_id) const;
-			void 				InitDialog (CScriptGameObject* dialog_partner, CPhraseDialog* phrase_dialog);
 
 	// CAI_Stalker
 			CScriptGameObject	*GetCurrentWeapon	() const;
@@ -327,9 +317,6 @@ public:
 
 			LPCSTR				ProfileName			();
 			LPCSTR				CharacterName		();
-			LPCSTR				CharacterIcon		();
-			LPCSTR				CharacterBio		();
-			void				IterateActorDialogs	(luabind::functor<void> functor);
 			LPCSTR				CharacterCommunity	();
 			int					CharacterRank		();
 			int					CharacterReputation	();
@@ -519,8 +506,6 @@ public:
 			CHangingLamp*		get_hanging_lamp		();
 			CHolderCustom*		get_custom_holder		();
 			CHolderCustom*		get_current_holder		(); //actor only
-			
-			void AddAnswerNews(LPCSTR SpeakerName, LPCSTR str, LPCSTR icon_name, Frect icon_rect);
 
 			Fvector				bone_position			(LPCSTR bone_name) const;
 			bool				is_body_turning			() const;
@@ -679,15 +664,6 @@ public:
 			void DetachVehicle();
 			void SetDirection(const Fvector &dir, float bank);
 			void SetPosition(const Fvector &pos);
-			
-			u32 GetHudItemState() const;
-			void SetHudItemState(u32 value);
-			
-			void ActorPlayHudAnimation(LPCSTR M, bool bMixIn);
-			u32 ActorGetState() const;
-			
-			CScriptGameObject* GetHolderOwner() const;
-			
 
 			void HealWounds(float);
 			CScriptIniFile* GetVisualIni() const;

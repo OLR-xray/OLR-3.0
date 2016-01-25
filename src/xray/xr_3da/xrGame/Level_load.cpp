@@ -13,7 +13,6 @@
 #include "PhysicsCommon.h"
 #include "level_sounds.h"
 #include "GamePersistent.h"
-//#include "level_background.h"
 
 ENGINE_API	bool g_dedicated_server;
 
@@ -94,16 +93,10 @@ BOOL CLevel::Load_GameSpecific_After()
 		// loading scripts
 		ai().script_engine().remove_script_process(ScriptEngine::eScriptProcessorLevel);
 
-		if (pLevel->section_exist("level_scripts") && pLevel->line_exist("level_scripts","script")) {
+		if (pLevel->section_exist("level_scripts") && pLevel->line_exist("level_scripts","script"))
 			ai().script_engine().add_script_process(ScriptEngine::eScriptProcessorLevel,xr_new<CScriptProcess>("level",pLevel->r_string("level_scripts","script")));
-		}
-		else {
+		else
 			ai().script_engine().add_script_process(ScriptEngine::eScriptProcessorLevel,xr_new<CScriptProcess>("level",""));
-		}
-		
-		//if (pLevel->section_exist("level_background") && pLevel->line_exist("level_background","background")) {
-		//	m_level_background->LoadVisual(pLevel->r_string("level_background","background"));
-		//}
 	}
 		
 	BlockCheatLoad();

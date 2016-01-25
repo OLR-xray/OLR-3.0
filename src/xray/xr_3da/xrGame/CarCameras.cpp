@@ -50,11 +50,7 @@ void	CCar::OnCameraChange		(int type)
 	{
 		if	(type==ectFirst)
 		{
-#ifdef DRAW_ACTOR_VISUAL_IN_CAR
-			Owner()->setVisible(TRUE);
-#else //DRAW_ACTOR_VISUAL_IN_CAR
 			Owner()->setVisible(FALSE);
-#endif //DRAW_ACTOR_VISUAL_IN_CAR
 		}
 		else if(active_camera->tag==ectFirst)
 		{

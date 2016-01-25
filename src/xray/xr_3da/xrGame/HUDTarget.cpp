@@ -25,7 +25,6 @@
 
 #include "inventory_item.h"
 #include "inventory.h"
-#include "../../build_config_defines.h"
 
 u32 C_ON_ENEMY		D3DCOLOR_XRGB(0xff,0,0);
 u32 C_ON_NEUTRAL	D3DCOLOR_XRGB(0xff,0xff,0x80);
@@ -152,7 +151,6 @@ void CHUDTarget::Render()
 		F->OutNext		("%4.1f",RQ.range);
 	}
 
-#ifndef OFF_DRAW_NPC_INFO_IN_HUD
 	if (psHUD_Flags.test(HUD_INFO)){ 
 		if (RQ.O){
 			CEntityAlive*	E		= smart_cast<CEntityAlive*>	(RQ.O);
@@ -234,7 +232,6 @@ void CHUDTarget::Render()
 		}
 		clamp(fuzzyShowInfo,0.f,1.f);
 	}
-#endif // OFF_DRAW_NPC_INFO_IN_HUD
 
 	//отрендерить кружочек или крестик
 	if(!m_bShowCrosshair || !HUDCrosshair.IsEnabled() ){

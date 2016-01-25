@@ -11,7 +11,6 @@
 #include "GameMtlLib.h"
 #include "ui/UIMainIngameWnd.h"
 #include "Grenade.h"
-#include "eatable_item_object.h"
 #include "clsid_game.h"
 
 #include "game_cl_base.h"
@@ -173,8 +172,7 @@ void	CActor::PickupModeUpdate_COD	()
 		if (pGrenade && !pGrenade->Useful()) continue;
 
 		CMissile*	pMissile	= smart_cast<CMissile*> (spatial->dcast_CObject        ());
-		CEatableItemObject*	pEatable	= smart_cast<CEatableItemObject*> (spatial->dcast_CObject        ());
-		if (!pEatable && pMissile && !pMissile->Useful()) continue;
+		if (pMissile && !pMissile->Useful()) continue;
 		
 		Fvector A, B, tmp; 
 		pIItem->object().Center			(A);

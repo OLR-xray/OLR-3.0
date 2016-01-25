@@ -74,13 +74,6 @@ CEnvironment::CEnvironment	()
 
 	tsky0					= Device.Resources->_CreateTexture("$user$sky0");
 	tsky1					= Device.Resources->_CreateTexture("$user$sky1");
-	
-	m_background_loaded = false;
-	m_background_min_y = 0.f;
-	m_background_max_y = 0.f;
-	m_background_min_cam_y = 0.f;
-	m_background_max_cam_y = 0.f;
-	background_shader_name = "";
 }
 CEnvironment::~CEnvironment	()
 {
@@ -336,9 +329,6 @@ void CEnvironment::OnFrame()
 
 	// final lerp
 	CurrentEnv.lerp				(this,*Current[0],*Current[1],current_weight,EM,mpower);
-	
-	
-	
 #ifndef SUN_DIR_NOT_DEBUG
 	if(CurrentEnv.sun_dir.y>0)
 	{
@@ -360,13 +350,11 @@ void CEnvironment::OnFrame()
 			CurrentEnv.sky_r_textures.push_back		(mk_pair(u32(D3DVERTEXTEXTURESAMPLER0),tonemap));	//. hack
 			CurrentEnv.sky_r_textures_env.push_back	(mk_pair(u32(D3DVERTEXTEXTURESAMPLER0),tonemap));	//. hack
 			CurrentEnv.clouds_r_textures.push_back	(mk_pair(u32(D3DVERTEXTEXTURESAMPLER0),tonemap));	//. hack
-			CurrentEnv.background_r_textures.push_back	(mk_pair(u32(D3DVERTEXTEXTURESAMPLER0),tonemap));	//. hack
 		} else {
 			// tonemapping in PS
 			CurrentEnv.sky_r_textures.push_back		(mk_pair(2,tonemap));								//. hack
 			CurrentEnv.sky_r_textures_env.push_back	(mk_pair(2,tonemap));								//. hack
 			CurrentEnv.clouds_r_textures.push_back	(mk_pair(2,tonemap));								//. hack
-			CurrentEnv.background_r_textures.push_back	(mk_pair(2,tonemap));								//. hack
 		}
 		
 	}
@@ -391,22 +379,5 @@ void CEnvironment::OnFrame()
 	CHK_DX(HW.pDevice->SetRenderState( D3DRS_FOGCOLOR,	color_rgba_f(CurrentEnv.fog_color.x,CurrentEnv.fog_color.y,CurrentEnv.fog_color.z,0) )); 
 	CHK_DX(HW.pDevice->SetRenderState( D3DRS_FOGSTART,	*(u32 *)(&CurrentEnv.fog_near)	));
 	CHK_DX(HW.pDevice->SetRenderState( D3DRS_FOGEND,	*(u32 *)(&CurrentEnv.fog_far)	));
-}
-
-float CEnvironment::GetAddY() const {
-	const float cam_h = Device.vCameraPosition.y;
-	if (cam_h < m_background_min_cam_y) {
-		return m_background_min_y;
-	}
-	else if (cam_h > m_background_max_cam_y) {
-		return m_background_max_y;
-	}
-	else {
-		const float dist = _abs(m_background_max_cam_y - m_background_min_cam_y);
-		const float dist_2 = _abs(m_background_max_y - m_background_min_y);
-		const float len = _abs(cam_h - m_background_min_cam_y);
-		const float q = (dist==0.f)?1.f:len/dist;
-		return -(m_background_min_y + dist_2*q);
-	}
 }
 

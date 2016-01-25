@@ -49,8 +49,6 @@ void CWeaponKnife::Load	(LPCSTR section)
 #if defined(KNIFE_SPRINT_MOTION)
 	animGet(mhud_idle_sprint, pSettings->r_string(*hud_sect,"anim_idle_sprint") );
 #endif
-	animGet(mhud_idle_walk, pSettings->r_string(*hud_sect,"anim_idle_walk") );
-	animGet(mhud_idle_walk_slow, pSettings->r_string(*hud_sect,"anim_idle_walk_slow") );
 
 	HUD_SOUND::LoadSound(section,"snd_shoot"		, m_sndShot		, ESoundTypes(SOUND_TYPE_WEAPON_SHOOTING)		);
 	
@@ -75,7 +73,6 @@ void CWeaponKnife::OnStateSwitch	(u32 S)
 		switch2_Hidden	();
 		break;
 	case eFire:
-		Msg("CWeaponKnife::OnStateSwitch(fire)");
 		{
 			//-------------------------------------------
 			m_eHitType		= m_eHitType_1;
@@ -100,7 +97,6 @@ void CWeaponKnife::OnStateSwitch	(u32 S)
 			switch2_Attacking	(S);
 		}break;
 	case eFire2:
-		Msg("CWeaponKnife::OnStateSwitch(fire2)");
 		{
 			//-------------------------------------------
 			m_eHitType		= m_eHitType_2;
@@ -190,8 +186,6 @@ void CWeaponKnife::OnAnimationEnd(u32 state)
 			} 
 			else 
 				SwitchState(eIdle);
-				
-			this->onMovementChanged(mcAnyMove);
 		}break;
 	case eShowing:
 	case eIdle:	
@@ -216,47 +210,12 @@ void CWeaponKnife::switch2_Attacking	(u32 state)
 	m_bPending		= true;
 }
 
-bool CWeaponKnife::TryPlayAnimIdle() {
-
-	CActor* pActor = smart_cast<CActor*>(H_Parent());
-	if (pActor) {
-		CEntity::SEntityState st;
-		pActor->g_State(st);
-		if (st.bSprint) {
-			if (mhud_idle_sprint.size()) {
-				m_pHUD->animPlay(random_anim(mhud_idle_sprint), TRUE, NULL, GetState());
-				return true;
-			}
-		}
-		else if (st.bWalk) {
-			MotionSVec* m = NULL;
-			const bool is_slow = (st.bAccel || st.bCrouch);
-			if (is_slow && mhud_idle_walk_slow.size()) {
-				m = &mhud_idle_walk_slow;
-			}
-			else if (mhud_idle_walk.size()) {
-				m = &mhud_idle_walk;
-			}
-			if (m!=NULL) {
-				m_pHUD->animPlay(random_anim(*m), TRUE, NULL, GetState());
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
 void CWeaponKnife::switch2_Idle	()
 {
-	m_bPending = false;
-	PlayAnimIdle();
-}
-
-void CWeaponKnife::PlayAnimIdle() {
 	VERIFY(GetState()==eIdle);
-	if (TryPlayAnimIdle()) return;
 
 	m_pHUD->animPlay(random_anim(mhud_idle), TRUE, this, GetState());
+	m_bPending = false;
 }
 
 void CWeaponKnife::switch2_Hiding	()
@@ -354,7 +313,6 @@ void CWeaponKnife::LoadFireParams(LPCSTR section, LPCSTR prefix)
 
 void CWeaponKnife::StartIdleAnim()
 {
-	if (TryPlayAnimIdle()) return;
 	m_pHUD->animDisplay(mhud_idle[Random.randI(mhud_idle.size())], TRUE);
 }
 void CWeaponKnife::GetBriefInfo(xr_string& str_name, xr_string& icon_sect_name, xr_string& str_count)
@@ -365,15 +323,15 @@ void CWeaponKnife::GetBriefInfo(xr_string& str_name, xr_string& icon_sect_name, 
 }
 
 // Real Wolf: Анимация бега. 17.07.2014.
-void CWeaponKnife::onMovementChanged(ACTOR_DEFS::EMoveCommand cmd) {
-	const bool b = (
-		cmd == ACTOR_DEFS::mcSprint ||
-		cmd == ACTOR_DEFS::mcAnyMove ||
-		cmd == ACTOR_DEFS::mcCrouch ||
-		cmd == ACTOR_DEFS::mcAccel
-	);
-	if (b && (GetState() == eIdle)) {
-		this->PlayAnimIdle();
+#if defined(KNIFE_SPRINT_MOTION)
+void CWeaponKnife::onMovementChanged(ACTOR_DEFS::EMoveCommand cmd)
+{
+	if (g_actor->get_state() & mcSprint)
+	{
+		SetState(eIdle);
+		m_pHUD->animPlay(random_anim(mhud_idle_sprint), TRUE, this,  eIdle);
 	}
+	else
+		SwitchState(GetState() );
 }
-
+#endif

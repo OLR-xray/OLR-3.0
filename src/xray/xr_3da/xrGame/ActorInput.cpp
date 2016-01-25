@@ -26,14 +26,12 @@
 #include "InventoryBox.h"
 #include "../../build_config_defines.h"
 
-////#undef INV_NEW_SLOTS_SYSTEM
-
 #ifdef INV_NEW_SLOTS_SYSTEM
 	#include "silencer.h"
 	#include "scope.h"
 	#include "grenadelauncher.h"
 	#include "Artifact.h"
-	#include "eatable_item_object.h"
+	#include "eatable_item.h"
 	#include "BottleItem.h"
 	#include "medkit.h"
 	#include "antirad.h"
@@ -149,10 +147,8 @@ void CActor::IR_OnKeyboardPress(int cmd)
 		ActorUse();
 		break;
 	case kDROP:
-		if (!IsEat()) {
-			b_DropActivated = TRUE;
-			f_DropPower = 0;
-		}
+		b_DropActivated			= TRUE;
+		f_DropPower				= 0;
 		break;
 	case kNEXT_SLOT:
 		{
@@ -180,7 +176,7 @@ void CActor::IR_OnKeyboardPress(int cmd)
 				}
 			}
 		}break;
-#if defined(INV_NEW_SLOTS_SYSTEM) && !defined(OLR_SLOTS)
+#ifdef INV_NEW_SLOTS_SYSTEM
 	case kUSE_SLOT_QUICK_ACCESS_0:
 	case kUSE_SLOT_QUICK_ACCESS_1:
 	case kUSE_SLOT_QUICK_ACCESS_2:
@@ -206,28 +202,25 @@ void CActor::IR_OnKeyboardPress(int cmd)
 				}
 
 				if (itm){
-					CMedkit* pMedkit = smart_cast<CMedkit*>(itm);
-					CAntirad* pAntirad = smart_cast<CAntirad*>(itm);
-					CEatableItemObject* pEatableItem = smart_cast<CEatableItemObject*>(itm);
-					CBottleItem* pBottleItem = smart_cast<CBottleItem*>(itm);				
+					CMedkit*			pMedkit				= smart_cast<CMedkit*>			(itm);
+					CAntirad*			pAntirad			= smart_cast<CAntirad*>			(itm);
+					CEatableItem*		pEatableItem		= smart_cast<CEatableItem*>		(itm);
+					CBottleItem*		pBottleItem			= smart_cast<CBottleItem*>		(itm);				
 					string1024					str;
 					
-					if (pEatableItem && !pEatableItem->IsUseHud()) {
-						if(pMedkit || pAntirad || pBottleItem){
-							PIItem iitm = inventory().Same(itm,true);
-							if(iitm){
-								inventory().Eat(iitm);
-								strconcat(sizeof(str),str,*CStringTable().translate("st_item_used"),": ", iitm->Name());
-							}
-							else{
-								inventory().Eat(itm);
-								strconcat(sizeof(str),str,*CStringTable().translate("st_item_used"),": ", itm->Name());
-							}
-						
-							SDrawStaticStruct* _s = HUD().GetUI()->UIGame()->AddCustomStatic("item_used", true);
-							_s->m_endTime = Device.fTimeGlobal+3.0f;// 3sec
-							_s->wnd()->SetText(str);
+					if(pMedkit || pAntirad || pEatableItem || pBottleItem){
+						PIItem iitm = inventory().Same(itm,true);
+						if(iitm){
+							inventory().Eat(iitm);
+							strconcat(sizeof(str),str,*CStringTable().translate("st_item_used"),": ", iitm->Name());
+						}else{
+							inventory().Eat(itm);
+							strconcat(sizeof(str),str,*CStringTable().translate("st_item_used"),": ", itm->Name());
 						}
+						
+						SDrawStaticStruct* _s		= HUD().GetUI()->UIGame()->AddCustomStatic("item_used", true);
+						_s->m_endTime				= Device.fTimeGlobal+3.0f;// 3sec
+						_s->wnd()->SetText			(str);
 					}
 				}
 			}
@@ -270,18 +263,11 @@ void CActor::IR_OnKeyboardRelease(int cmd)
 
 
 
-		switch(cmd) {
-			case kJUMP: {
-				mstate_wishful &=~mcJump;
-			} break;
-			case kDROP: {
-				if(!IsEat() && GAME_PHASE_INPROGRESS == Game().Phase()) {
-					g_PerformDrop();
-				}
-			} break;
-			case kCROUCH: {
-				g_bAutoClearCrouch = true;
-			}
+		switch(cmd)
+		{
+		case kJUMP:		mstate_wishful &=~mcJump;		break;
+		case kDROP:		if(GAME_PHASE_INPROGRESS == Game().Phase()) g_PerformDrop();				break;
+		case kCROUCH:	g_bAutoClearCrouch = true;
 		}
 	}
 }
@@ -400,13 +386,14 @@ bool CActor::use_Holder				(CHolderCustom* holder)
 	}
 }
 
-void CActor::ActorUse() {
+void CActor::ActorUse()
+{
 	//mstate_real = 0;
 	PickupModeOn();
 
-	if (this->IsEat()) return ;
 		
-	if (m_holder) {
+	if (m_holder)
+	{
 		CGameObject*	GO			= smart_cast<CGameObject*>(m_holder);
 		NET_Packet		P;
 		CGameObject::u_EventGen		(P, GEG_PLAYER_DETACH_HOLDER, ID());
@@ -415,7 +402,7 @@ void CActor::ActorUse() {
 		return;
 	}
 				
-	if(character_physics_support()->movement()->PHCapture()) 
+	if(character_physics_support()->movement()->PHCapture())
 		character_physics_support()->movement()->PHReleaseObject();
 
 	
@@ -433,7 +420,8 @@ void CActor::ActorUse() {
 	{
 		if(m_pPersonWeLookingAt)
 		{
-			auto pEntityAliveWeLookingAt = smart_cast<CEntityAlive*>(m_pPersonWeLookingAt);
+			CEntityAlive* pEntityAliveWeLookingAt = 
+				smart_cast<CEntityAlive*>(m_pPersonWeLookingAt);
 
 			VERIFY(pEntityAliveWeLookingAt);
 
@@ -522,7 +510,7 @@ void	CActor::OnNextWeaponSlot()
 	{
 		if (inventory().ItemFromSlot(SlotsToCheck[i]))
 		{
-			if (SlotsToCheck[i] == NO_ACTIVE_SLOT) 
+			if (SlotsToCheck[i] == ARTEFACT_SLOT) 
 			{
 				IR_OnKeyboardPress(kARTEFACT);
 			}

@@ -31,12 +31,11 @@ void CWeaponPistol::Load	(LPCSTR section)
 
 	HUD_SOUND::LoadSound(section, "snd_close", sndClose, m_eSoundClose);
 
-	animGet				(mhud_pistol.mhud_empty,				pSettings->r_string(*hud_sect, "anim_empty"));
-	animGet				(mhud_pistol.mhud_shot_l,				pSettings->r_string(*hud_sect, "anim_shot_last"));
-	animGet				(mhud_pistol.mhud_close,				pSettings->r_string(*hud_sect, "anim_close"));
-	animGet				(mhud_pistol.mhud_show_empty,			pSettings->r_string(*hud_sect, "anim_draw_empty"));
-	animGet				(mhud_pistol.mhud_reload_empty,			pSettings->r_string(*hud_sect, "anim_reload_empty"));
-
+	animGet				(mhud_pistol.mhud_empty,		pSettings->r_string(*hud_sect, "anim_empty"));
+	animGet				(mhud_pistol.mhud_shot_l,		pSettings->r_string(*hud_sect, "anim_shot_last"));
+	animGet				(mhud_pistol.mhud_close,		pSettings->r_string(*hud_sect, "anim_close"));
+	animGet				(mhud_pistol.mhud_show_empty,	pSettings->r_string(*hud_sect, "anim_draw_empty"));
+	animGet				(mhud_pistol.mhud_reload_empty,	pSettings->r_string(*hud_sect, "anim_reload_empty"));
 
 	string128			str;
 	strconcat(sizeof(str),str,pSettings->r_string(*hud_sect, "anim_empty"),"_r");
@@ -52,18 +51,15 @@ void CWeaponPistol::Load	(LPCSTR section)
 	animGet				(mhud_pistol_r.mhud_show_empty,	str);
 
 	strconcat(sizeof(str),str,pSettings->r_string(*hud_sect, "anim_reload_empty"),"_r");
-	animGet				(mhud_pistol_r.mhud_reload_empty,	str); 
+	animGet				(mhud_pistol_r.mhud_reload_empty,	str);
 
-	// дефолт подгружаем
+
 
 	strconcat(sizeof(str),str,pSettings->r_string(*hud_sect, "anim_idle"),"_r");
 	animGet				(wm_mhud_r.mhud_idle,	str);
 
-	strconcat(sizeof(str), str, pSettings->r_string(*hud_sect, "anim_reload"), "_r");
-	animGet				(wm_mhud_r.mhud_reload, str);
-
-	strconcat(sizeof(str), str, pSettings->r_string(*hud_sect, "anim_reload_jammed"), "_r");
-	animGet				(wm_mhud_r.mhud_reload_jammed, str);
+	strconcat(sizeof(str),str,pSettings->r_string(*hud_sect, "anim_reload"),"_r");
+	animGet				(wm_mhud_r.mhud_reload,	str);
 
 	strconcat(sizeof(str),str,pSettings->r_string(*hud_sect, "anim_draw"),"_r");
 	animGet				(wm_mhud_r.mhud_show,	str);
@@ -120,20 +116,20 @@ void CWeaponPistol::PlayAnimIdle	()
 	}
 }
 
-void CWeaponPistol::PlayAnimReload()
-{
-	VERIFY(GetState() == eReload);
-	if (m_opened) {
+void CWeaponPistol::PlayAnimReload	()
+{	
+	VERIFY(GetState()==eReload);
+	if(m_opened){ 
 		CWeaponPistol::WWPMotions& m = wwpm_current();
 		m_pHUD->animPlay(random_anim(m.mhud_reload_empty), TRUE, this, GetState());
-	}
-	else {
+	}else{
 		CWeaponMagazined::SWMmotions& m = swm_current();
 		m_pHUD->animPlay(random_anim(m.mhud_reload), TRUE, this, GetState());
 	}
-
-	m_opened = false;
+	
+	m_opened = false;		
 }
+
 
 void CWeaponPistol::PlayAnimHide()
 {

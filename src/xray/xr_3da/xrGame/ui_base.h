@@ -54,10 +54,10 @@ class ui_core: public CDeviceResetNotifier
 	Fvector2		m_pp_scale_;
 	Fvector2		m_scale_;
 	Fvector2*		m_current_scale;
-	
-public:
+
 	IC float		ClientToScreenScaledX			(float left)				{return left * m_current_scale->x;};
 	IC float		ClientToScreenScaledY			(float top)					{return top * m_current_scale->y;};
+public:
 	xr_stack<Frect> m_Scissors;
 	
 					ui_core							();

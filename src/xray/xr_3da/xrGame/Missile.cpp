@@ -85,8 +85,6 @@ void CMissile::Load(LPCSTR section)
 	m_sAnimHide			= pSettings->r_string(*hud_sect, "anim_hide");
 	m_sAnimIdle			= pSettings->r_string(*hud_sect, "anim_idle");
 	m_sAnimIdleSprint	= READ_IF_EXISTS (pSettings, r_string, *hud_sect, "anim_idle_sprint", *m_sAnimIdle);
-	m_sAnimIdleWalk		= READ_IF_EXISTS (pSettings, r_string, *hud_sect, "anim_idle_walk", *m_sAnimIdle);
-	m_sAnimIdleWalkSlow	= READ_IF_EXISTS (pSettings, r_string, *hud_sect, "anim_idle_walk_slow", *m_sAnimIdle);
 	m_sAnimPlaying		= pSettings->r_string(*hud_sect, "anim_playing");
 	m_sAnimThrowBegin	= pSettings->r_string(*hud_sect, "anim_throw_begin");
 	m_sAnimThrowIdle	= pSettings->r_string(*hud_sect, "anim_throw_idle");
@@ -181,26 +179,13 @@ void CMissile::OnH_B_Independent(bool just_before_destroy)
 	}
 }
 
-u32 CMissile::idle_state() {
-	CActor* actor = smart_cast<CActor*>(H_Parent());
-	if (actor) {
-		if (actor->get_state() & mcSprint) {
-			return MS_IDLE_SPRINT;
-		}
-		else if (actor->get_state() & mcAnyMove) {
-			const bool is_slow = (
-				actor->get_state() & mcAccel ||
-				actor->get_state() & mcCrouch
-			);
-			if (is_slow) {
-				return MS_IDLE_WALK_SLOW;
-			}
-			else {
-				return MS_IDLE_WALK;
-			}
-		}
-	}
-	return MS_IDLE;
+u32 CMissile::idle_state()
+{
+	CActor	*actor = smart_cast<CActor*>(H_Parent());
+	if (actor && actor->get_state() & mcSprint)
+		return MS_IDLE_SPRINT;
+	else
+		return MS_IDLE;
 }
 
 void CMissile::UpdateCL() 
@@ -213,7 +198,7 @@ void CMissile::UpdateCL()
 	// alpet: поддержка анимации спринта для болтов
 	CActor	*actor = smart_cast<CActor*>(H_Parent());
 	u32		state = GetState();
-	bool	idle = ( MS_IDLE == state ) || ( MS_IDLE_SPRINT == state ) || ( MS_IDLE_WALK == state ) || ( MS_IDLE_WALK_SLOW == state );	
+	bool	idle = ( MS_IDLE == state ) || ( MS_IDLE_SPRINT == state );	
 	if (idle && state != idle_state())
 	{
 		// Msg("# missile %5d state 0x%x, but must 0x%x ", ID(), state, idle_state());		
@@ -272,16 +257,6 @@ void CMissile::State(u32 state)
 		{
 			m_bPending = false;
 			m_pHUD->animPlay(m_pHUD->animGet(*m_sAnimIdleSprint), TRUE, this, GetState());
-		} break;
-	case MS_IDLE_WALK:
-		{
-			m_bPending = false;
-			m_pHUD->animPlay(m_pHUD->animGet(*m_sAnimIdleWalk), TRUE, this, GetState());
-		} break;
-	case MS_IDLE_WALK_SLOW:
-		{
-			m_bPending = false;
-			m_pHUD->animPlay(m_pHUD->animGet(*m_sAnimIdleWalkSlow), TRUE, this, GetState());
 		} break;
 	case MS_HIDING:
 		{

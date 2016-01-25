@@ -18,7 +18,6 @@
 #include "memory_manager.h"
 #include "visual_memory_manager.h"
 #include "danger_object_location.h"
-#include "eatable_item_object.h"
 
 const float GRENADE_RADIUS	= 10.f;
 const u32 AFTER_GRENADE_DESTROYED_INTERVAL = 1000;
@@ -59,8 +58,7 @@ void CAgentExplosiveManager::register_explosive	(const CExplosive *explosive, co
 	
 	u32									interval = AFTER_GRENADE_DESTROYED_INTERVAL;
 	const CMissile						*missile = smart_cast<const CMissile*>(explosive);
-	const CEatableItemObject	*eatable = smart_cast<const CEatableItemObject*>(explosive);
-	if (!eatable && missile && (missile->destroy_time() > Device.dwTimeGlobal))
+	if (missile && (missile->destroy_time() > Device.dwTimeGlobal))
 		interval						= missile->destroy_time() - Device.dwTimeGlobal + AFTER_GRENADE_DESTROYED_INTERVAL;
 
 	object().location().add				(xr_new<CDangerObjectLocation>(game_object,Device.dwTimeGlobal,interval,GRENADE_RADIUS));

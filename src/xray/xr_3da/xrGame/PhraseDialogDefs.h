@@ -1,6 +1,8 @@
 #pragma once
+//#include "boost/shared_ptr.hpp"
 
 class CPhraseDialog;
+//typedef boost::shared_ptr<CPhraseDialog>	DIALOG_SHARED_PTR;
 typedef intrusive_ptr<CPhraseDialog>		DIALOG_SHARED_PTR;
 
 
@@ -13,4 +15,3 @@ typedef intrusive_ptr<CPhraseDialog>		DIALOG_SHARED_PTR;
 //. #define  START_PHRASE			0
 //. #define  START_PHRASE_STR		"0"
 #include "PhraseDialog.h"
-

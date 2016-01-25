@@ -16,8 +16,6 @@
 #include "Explosive.h"
 #include "PHDestroyable.h"
 #include "DelayedActionFuse.h"
-#include "CarHud.h"
-
 // refs
 class ENGINE_API			CBoneInstance;
 class						CActor;
@@ -50,7 +48,6 @@ class CCar :
 	public CDelayedActionFuse
 {
 private:
-	int						driver_place_bone_id;
 	collide::rq_results		RQR;
 
 #ifdef DEBUG
@@ -383,7 +380,6 @@ private:
 	u16						m_bone_steer;
 	CCameraBase*			camera[3];
 	CCameraBase*			active_camera;
-	CCarHud*				m_pHud;
 
 	Fvector					m_camera_position;
 
@@ -531,7 +527,6 @@ IC	size_t				CurrentTransmission					(){return m_current_transmission_num;}
 	static void				cb_Steer					(CBoneInstance* B);
 	virtual	void			Hit							(SHit* pHDS);
 	virtual void			Die							(CObject* who);
-	virtual void			load(IReader &input_packet);
 	virtual void PHHit									(float P,Fvector &dir, CObject *who,s16 element,Fvector p_in_object_space, float impulse, ALife::EHitType hit_type/* =ALife::eHitTypeWound */);
 			bool WheelHit								(float P,s16 element,ALife::EHitType hit_type);
 			bool DoorHit								(float P,s16 element,ALife::EHitType hit_type);
@@ -647,8 +642,6 @@ private:
 
 private:
 	car_memory	*m_memory;
-	
-	bool m_loaded;
 
 public:
 	DECLARE_SCRIPT_REGISTER_FUNCTION

@@ -16,9 +16,6 @@
 #include "step_manager.h"
 #include "xr_level_controller.h"
 
-#include "Inventory.h"
-#include "eatable_item_object.h"
-
 using namespace ACTOR_DEFS;
 
 class CInfoPortion;
@@ -129,8 +126,6 @@ public:
 
 	virtual void	 NewPdaContact		(CInventoryOwner*);
 	virtual void	 LostPdaContact		(CInventoryOwner*);
-	
-	void 			AddAnswerNews(LPCSTR SpeakerName, LPCSTR str, LPCSTR icon_name, Frect icon_rect);
 
 protected:
 //	virtual void AddMapLocationsFromInfo (const CInfoPortion* info_portion) const;
@@ -183,11 +178,6 @@ public:
 	virtual void OnItemDropUpdate ();
 
 	virtual	void OnPlayHeadShotParticle (NET_Packet P);
-	
-	bool		IsEat() const {
-		CEatableItemObject* pEatable = smart_cast<CEatableItemObject*>(inventory().ActiveItem());
-		return pEatable && pEatable->IsEat();
-	}
 
 
 	virtual void						Die				(CObject* who);
@@ -282,15 +272,9 @@ public:
 	void					attach_Vehicle			(CHolderCustom* vehicle);
 
 	virtual bool			can_attach				(const CInventoryItem *inventory_item) const;
-
-	u16						GetHolderID				() const {
-		return m_holderID;
-	}
-private:
+protected:
 	CHolderCustom*			m_holder;
 	u16						m_holderID;
-
-protected:
 	bool					use_Holder				(CHolderCustom* holder);
 
 	bool					use_Vehicle				(CHolderCustom* object);
@@ -342,10 +326,6 @@ public:
 
 	void					g_SetAnimation		(u32 mstate_rl);
 	void					g_SetSprintAnimation(u32 mstate_rl,MotionID &head,MotionID &torso,MotionID &legs);
-	void					g_UpdateWalkAnimation(u32 mstate_rl);
-	void					g_UpdateWalkAnimation() {
-		this->g_UpdateWalkAnimation(mstate_real);
-	}
 	//////////////////////////////////////////////////////////////////////////
 	// HUD
 	//////////////////////////////////////////////////////////////////////////

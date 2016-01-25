@@ -76,9 +76,8 @@ void CPhraseDialogManager::SayPhrase(DIALOG_SHARED_PTR& phrase_dialog, const sha
 	THROW(phrase_dialog->IsWeSpeaking		(this));
 	bool coninue_talking					= CPhraseDialog::SayPhrase(phrase_dialog, phrase_id);
 
-	if(!coninue_talking) {
+	if(!coninue_talking)
 		m_ActiveDialogs.erase(it);
-	}
 }
 
 
@@ -108,11 +107,8 @@ bool CPhraseDialogManager::AddAvailableDialog(shared_str dialog_id, CPhraseDialo
 
 	//вызвать скриптовую присоединенную функцию 
 	//активируется после сказанной фразы
-	const CGameObject*	pSpeakerGO1 = smart_cast<const CGameObject*>(this);
-	VERIFY(pSpeakerGO1);
-	
-	const CGameObject*	pSpeakerGO2 = smart_cast<const CGameObject*>(partner);
-	VERIFY(pSpeakerGO2);
+	const CGameObject*	pSpeakerGO1 = smart_cast<const CGameObject*>(this);		VERIFY(pSpeakerGO1);
+	const CGameObject*	pSpeakerGO2 = smart_cast<const CGameObject*>(partner);	VERIFY(pSpeakerGO2);
 
 	bool predicate_result = phrase_dialog->Precondition(pSpeakerGO1, pSpeakerGO2);
 	if(predicate_result) m_AvailableDialogs.push_back(phrase_dialog);

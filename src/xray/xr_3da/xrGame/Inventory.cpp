@@ -6,7 +6,7 @@
 
 #include "ui/UIInventoryUtilities.h"
 
-#include "eatable_item_object.h"
+#include "eatable_item.h"
 #include "script_engine.h"
 #include "xrmessages.h"
 //#include "game_cl_base.h"
@@ -17,9 +17,6 @@
 #include "game_base_space.h"
 #include "clsid_game.h"
 #include "../../build_config_defines.h"
-
-#undef INV_NEW_SLOTS_SYSTEM
-//#undef INV_NO_ACTIVATE_APPARATUS_SLOT
 
 
 #include "HUDManager.h"
@@ -56,31 +53,26 @@ bool activate_slot(u32 slot)
 #endif
 
 // what to block
-u32	INV_STATE_LADDER_OR_CAR		= (1<<RIFLE_SLOT);
+u32	INV_STATE_LADDER		= (1<<RIFLE_SLOT);
 u32	INV_STATE_BLOCK_ALL		= 0xffffffff;
 u32	INV_STATE_INV_WND		= INV_STATE_BLOCK_ALL;
 u32	INV_STATE_BUY_MENU		= INV_STATE_BLOCK_ALL;
-
 #if defined(HIDE_WEAPON_IN_CAR)
 u32	INV_STATE_CAR			= INV_STATE_BLOCK_ALL;
 #else
-u32	INV_STATE_CAR			= INV_STATE_LADDER_OR_CAR;
+u32	INV_STATE_CAR			= INV_STATE_LADDER;
 #endif
 
-#if defined(HIDE_WEAPON_IN_LADDER)
-u32	INV_STATE_LADDER		= INV_STATE_BLOCK_ALL;
-#else
-u32	INV_STATE_LADDER		= INV_STATE_LADDER_OR_CAR;
-#endif
-
-CInventorySlot::CInventorySlot() {
+CInventorySlot::CInventorySlot() 
+{
 	m_pIItem				= NULL;
 	m_bVisible				= true;
 	m_bPersistent			= false;
 	m_blockCounter			= 0;
 }
 
-CInventorySlot::~CInventorySlot() {
+CInventorySlot::~CInventorySlot() 
+{
 }
 
 bool CInventorySlot::CanBeActivated() const 
@@ -248,16 +240,14 @@ void CInventory::Take(CGameObject *pObj, bool bNotActivate, bool strict_placemen
 	VERIFY								(pIItem->m_eItemPlace != eItemPlaceUndefined);
 }
 
-bool CInventory::DropItem(CGameObject* pObj)  {
-	CInventoryItem* pIItem				= smart_cast<CInventoryItem*>(pObj);
-	CEatableItemObject* pEatable		= smart_cast<CEatableItemObject*>(pObj);
-	
-	
-	if (!pIItem) {
-		return false;
-	}
+bool CInventory::DropItem(CGameObject *pObj) 
+{
+	CInventoryItem *pIItem				= smart_cast<CInventoryItem*>(pObj);
+	VERIFY								(pIItem);
+	if( !pIItem )						return false;
 
-	if (pIItem->m_pCurrentInventory!=this) {
+	if(pIItem->m_pCurrentInventory!=this)
+	{
 		Msg("ahtung !!! [%d]", Device.dwFrame);
 		Msg("CInventory::DropItem pIItem->m_pCurrentInventory!=this");
 		Msg("this = [%d]", GetOwner()->object_id());
@@ -456,7 +446,8 @@ bool CInventory::Ruck(PIItem pIItem)
 
 	pIItem->OnMoveToRuck							();
 
-	if(in_slot) pIItem->object().processing_deactivate();
+	if(in_slot)
+		pIItem->object().processing_deactivate();
 
 	return true;
 }
@@ -672,12 +663,12 @@ bool CInventory::Action(s32 cmd, u32 flags)
 			{
 			}break;
 		
-		case kDROP: {
-			if (!pActor->IsEat()) {
+		case kDROP:		
+		
+			{
 				SendActionEvent(cmd, flags);
 				return true;
-			}
-		} break;
+			}break;
 
 		case kWPN_NEXT:
 		case kWPN_RELOAD:
@@ -739,7 +730,7 @@ bool CInventory::Action(s32 cmd, u32 flags)
 				{
 					b_send_event = Activate(NO_ACTIVE_SLOT);
 				}else {
-					b_send_event = Activate(NO_ACTIVE_SLOT);
+					b_send_event = Activate(ARTEFACT_SLOT);
 				}
 			}
 		}break;
@@ -905,13 +896,6 @@ PIItem CInventory::GetAny(const char *name) const
 	return itm;
 }
 
-// by Karlan // патроны используются только с пояса (в общем получение итема с пояса)
-PIItem CInventory::GetAmmoOnBelt(const char *name) const
-{
-	PIItem itm = Get(name, false);
-	return itm;
-}
-
 PIItem CInventory::item(CLASS_ID cls_id) const
 {
 	const TIItemContainer &list = m_all;
@@ -1003,7 +987,7 @@ bool CInventory::Eat(PIItem pIItem)
 {
 	R_ASSERT(pIItem->m_pCurrentInventory==this);
 	//устанаовить съедобна ли вещь
-	CEatableItemObject* pItemToEat = smart_cast<CEatableItemObject*>(pIItem);
+	CEatableItem* pItemToEat = smart_cast<CEatableItem*>(pIItem);
 	R_ASSERT				(pItemToEat);
 
 	CEntityAlive *entity_alive = smart_cast<CEntityAlive*>(m_pOwner);
@@ -1065,7 +1049,6 @@ bool CInventory::CanPutInSlot(PIItem pIItem) const
 //при этом реально ничего не меняется
 bool CInventory::CanPutInBelt(PIItem pIItem)
 {
-
 	if(InBelt(pIItem))					return false;
 	if(!m_bBeltUseful)					return false;
 	if(!pIItem || !pIItem->Belt())		return false;

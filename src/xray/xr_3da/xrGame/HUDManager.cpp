@@ -23,7 +23,6 @@ CFontManager::CFontManager()
 	m_all_fonts.push_back(&pFontGraffiti50Russian	);
 	m_all_fonts.push_back(&pFontLetterica25			);
 	m_all_fonts.push_back(&pFontStat				);
-	m_all_fonts.push_back(&pFontStartup				);
 
 	FONTS_VEC_IT it		= m_all_fonts.begin();
 	FONTS_VEC_IT it_e	= m_all_fonts.end();
@@ -48,7 +47,6 @@ void CFontManager::InitializeFonts()
 	InitializeFont(pFontGraffiti50Russian	,"ui_font_graff_50"				);
 	InitializeFont(pFontLetterica25			,"ui_font_letter_25"			);
 	InitializeFont(pFontStat				,"stat_font",					CGameFont::fsDeviceIndependent);
-	InitializeFont(pFontStartup				,"startup_font",					CGameFont::fsDeviceIndependent);
 
 }
 

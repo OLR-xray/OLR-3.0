@@ -242,14 +242,6 @@ class_<CScriptGameObject> &script_register_game_object1(class_<CScriptGameObject
 		.def("set_actor_position",			&CScriptGameObject::SetActorPosition)
 		.def("set_actor_direction",			&CScriptGameObject::SetActorDirection)
 
-		.def("play_hud_animation",			&CScriptGameObject::ActorPlayHudAnimation)
-		.def("get_actor_state",				&CScriptGameObject::ActorGetState)
-		
-		.def("get_holder_owner",			&CScriptGameObject::GetHolderOwner)
-		
-		.def("get_hud_item_state",			&CScriptGameObject::GetHudItemState)
-		.def("set_hud_item_state",			&CScriptGameObject::SetHudItemState)
-		
 		.def("vertex_in_direction",			&CScriptGameObject::vertex_in_direction)
 
 		.def("item_in_slot",				&CScriptGameObject::item_in_slot)

@@ -15,7 +15,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 // half box def
-static	Fvector3	hbox_verts[sky_ver_count]	=
+static	Fvector3	hbox_verts[24]	=
 {
 	{-1.f,	-1.f,	-1.f}, {-1.f,	-1.01f,	-1.f},	// down
 	{ 1.f,	-1.f,	-1.f}, { 1.f,	-1.01f,	-1.f},	// down
@@ -30,7 +30,7 @@ static	Fvector3	hbox_verts[sky_ver_count]	=
 	{ 1.f,	 0.f,	 1.f}, { 1.f,	-1.f,	 1.f},	// half
 	{-1.f,	 0.f,	 1.f}, {-1.f,	-1.f,	 1.f}	// half
 };
-static	u16			hbox_faces[sky_fac_count]	=
+static	u16			hbox_faces[20*3]	=
 {
 	0,	 2,	 3,
 	3,	 1,	 0,
@@ -60,7 +60,8 @@ struct v_skybox				{
 	u32			color;
 	Fvector3	uv	[2];
 
-	void		set			(const Fvector3 _p, const u32 _c, const Fvector3 _tc) {
+	void		set			(Fvector3& _p, u32 _c, Fvector3& _tc)
+	{
 		p					= _p;
 		color				= _c;
 		uv[0]				= _tc;
@@ -68,12 +69,12 @@ struct v_skybox				{
 	}
 };
 const	u32 v_skybox_fvf	= D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX2 | D3DFVF_TEXCOORDSIZE3(0) | D3DFVF_TEXCOORDSIZE3(1);
-const u32 v_background_fvf = v_skybox_fvf;
 struct v_clouds				{
 	Fvector3	p;
 	u32			color;
 	u32			intensity;
-	void		set			(Fvector3& _p, u32 _c, u32 _i) {
+	void		set			(Fvector3& _p, u32 _c, u32 _i)
+	{
 		p					= _p;
 		color				= _c;
 		intensity			= _i;
@@ -87,7 +88,7 @@ const	u32 v_clouds_fvf	= D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_SPECULAR;
 //-----------------------------------------------------------------------------
 extern float psHUD_FOV;
 BOOL bNeed_re_create_env = FALSE;
-void CEnvironment::RenderSky		() {
+void CEnvironment::RenderSky		()
 {
 #ifndef _EDITOR
 	if (0==g_pGameLevel)		return	;
@@ -105,18 +106,6 @@ void CEnvironment::RenderSky		() {
 		sh_2geom.create			(v_skybox_fvf,RCache.Vertex.Buffer(), RCache.Index.Buffer());
 		clouds_sh.create		("clouds","null");
 		clouds_geom.create		(v_clouds_fvf,RCache.Vertex.Buffer(), RCache.Index.Buffer());
-
-		if (m_background_loaded) {
-			sh_2background.create(
-				background_shader_name.c_str(), "null"
-			);
-			background_geom.create(
-				v_background_fvf,
-				RCache.Vertex.Buffer(),
-				RCache.Index.Buffer()
-			);
-		}
-		
 		bNeed_re_create_env		= FALSE;
 	}
 	::Render->rmFar				();
@@ -148,59 +137,7 @@ void CEnvironment::RenderSky		() {
 
 	// Sun
 	::Render->rmNormal			();
-	eff_LensFlare->Render(TRUE,FALSE,FALSE);
-	}
-	
-	if (m_background_loaded) {
-#ifndef _EDITOR
-	if (0==g_pGameLevel)		return	;
-#endif
-
-	::Render->rmFar				();
-
-	// draw sky box
-	Fmatrix						mSky;
-	mSky.translate_over			(Device.vCameraPosition);
-
-	u32		i_offset,v_offset;
-	const u32 C = color_rgba(iFloor(CurrentEnv.sky_color.x*255.f), iFloor(CurrentEnv.sky_color.y*255.f), iFloor(CurrentEnv.sky_color.z*255.f), iFloor(CurrentEnv.weight*255.f));
-
-	// Fill index buffer
-	u16* pib = RCache.Index.Lock	(20*3,i_offset);
-	CopyMemory(pib,hbox_faces,20*3*2);
-	RCache.Index.Unlock(20*3);
-
-	// Fill vertex buffer
-	v_skybox* pv = (v_skybox*) RCache.Vertex.Lock(12,background_geom.stride(),v_offset);
-	for (u32 v=0; v<12; v++) {
-		const float pAddY = GetAddY();
-		const Fvector3 A = {
-			hbox_verts[v*2].x,
-			hbox_verts[v*2].y + pAddY,
-			hbox_verts[v*2].z
-		};
-		const Fvector3 B = {
-			hbox_verts[v*2+1].x,
-			hbox_verts[v*2+1].y + pAddY,
-			hbox_verts[v*2+1].z
-		};
-		pv[v].set(A,C,B);
-	}
-	RCache.Vertex.Unlock(12,background_geom.stride());
-
-	// Render
-	RCache.set_xform_world		(mSky);
-	RCache.set_Geometry			(background_geom);
-	RCache.set_Shader			(sh_2background);
-	RCache.set_Textures			(&CurrentEnv.background_r_textures);
-	RCache.Render				(D3DPT_TRIANGLELIST,v_offset,0,12,i_offset,20);
-	
-	// Sun
-	::Render->rmNormal			();
-	}
-	
-	//this->RenderBackground();
-	
+	eff_LensFlare->Render		(TRUE,FALSE,FALSE);
 }
 
 void CEnvironment::RenderClouds			()
@@ -208,7 +145,6 @@ void CEnvironment::RenderClouds			()
 #ifndef _EDITOR
 	if (0==g_pGameLevel)		return	;
 #endif
-
 	// draw clouds
 	if (fis_zero(CurrentEnv.clouds_color.w,EPS_L))	return;
 
@@ -248,7 +184,6 @@ void CEnvironment::RenderClouds			()
 	RCache.Render				(D3DPT_TRIANGLELIST,v_offset,0,CloudsVerts.size(),i_offset,CloudsIndices.size()/3);
 
 	::Render->rmNormal			();
-	
 }
 
 void CEnvironment::RenderFlares		()
@@ -270,46 +205,9 @@ void CEnvironment::RenderLast		()
 	eff_Thunderbolt->Render			();
 }
 
-void CEnvironment::BackgroundTextureLoad() {
-
-	R_ASSERT (g_pGameLevel) ;
-	R_ASSERT (g_pGameLevel->pLevel) ;
-	
-	if (g_pGameLevel->pLevel->section_exist("background_texture")) {
-		LPCSTR shader_line = (::Render->get_generation()==IRender_interface::GENERATION_R2)?"shader_r2":"shader";
-		background_texture_name = g_pGameLevel->pLevel->r_string("background_texture", "name");
-		background_texture_empty_name = g_pGameLevel->pLevel->r_string("background_texture", "name_empty");
-		background_texture.create(background_texture_name.c_str());
-		background_empty_texture.create(background_texture_empty_name.c_str());
-		background_shader_name = g_pGameLevel->pLevel->r_string("background_texture", shader_line);
-		
-		m_background_min_y = READ_IF_EXISTS(g_pGameLevel->pLevel, r_float, "background_texture", "min_y", 0.f);
-		m_background_max_y = READ_IF_EXISTS(g_pGameLevel->pLevel, r_float, "background_texture", "max_y", 0.f);
-		
-		m_background_min_cam_y = READ_IF_EXISTS(g_pGameLevel->pLevel, r_float, "background_texture", "min_cam_y", 0.f);
-		m_background_max_cam_y = READ_IF_EXISTS(g_pGameLevel->pLevel, r_float, "background_texture", "max_cam_y", 0.f);
-		
-		m_background_loaded = true;
-		
-	}
-	else {
-		m_background_loaded = false;
-	}
-	
-}
-
-void CEnvironment::BackgroundTextureDestroy() {
-	if (m_background_loaded) {
-		background_texture.destroy			();
-		background_empty_texture.destroy			();
-		m_background_loaded = false;
-	}
-}
-
 void CEnvironment::OnDeviceCreate()
 {
 //.	bNeed_re_create_env			= TRUE;
-
 	sh_2sky.create			(&m_b_skybox,"skybox_2t");
 	sh_2geom.create			(v_skybox_fvf,RCache.Vertex.Buffer(), RCache.Index.Buffer());
 	clouds_sh.create		("clouds","null");
@@ -346,10 +244,6 @@ void CEnvironment::OnDeviceDestroy()
 	
 	sh_2sky.destroy							();
 	sh_2geom.destroy						();
-	
-	sh_2background.destroy							();
-	background_geom.destroy						();
-	
 	clouds_sh.destroy						();
 	clouds_geom.destroy						();
 	// weathers
@@ -370,9 +264,7 @@ void CEnvironment::OnDeviceDestroy()
 			for (EnvIt it=_I->second.begin(); it!=_I->second.end(); it++)
 				(*it)->on_device_destroy();
 	}
-	
 	CurrentEnv.destroy();
-	
 
 }
 

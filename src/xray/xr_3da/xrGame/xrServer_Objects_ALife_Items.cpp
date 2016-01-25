@@ -1077,18 +1077,22 @@ BOOL CSE_ALifeItemCustomOutfit::Net_Relevant		()
 }
 
 
-//#include "eatable_item.h"
+#include "eatable_item.h"
 ////////////////////////////////////////////////////////////////////////////
 // CSE_ALifeItemEatable by Real Wolf. 09.09.2014.
 ////////////////////////////////////////////////////////////////////////////
 CSE_ALifeItemEatable::CSE_ALifeItemEatable(LPCSTR caSection) : CSE_ALifeItem(caSection)
 {
 	m_portions_num = pSettings->r_s32(caSection, "eat_portions_num");
-	if (m_portions_num < 1) m_portions_num = 1;
 }
 
 CSE_ALifeItemEatable::~CSE_ALifeItemEatable()
 {
+}
+
+BOOL CSE_ALifeItemEatable::Net_Relevant()
+{
+	return inherited::Net_Relevant();
 }
 
 
@@ -1112,7 +1116,7 @@ void CSE_ALifeItemEatable::UPDATE_Read(NET_Packet	&tNetPacket)
 void CSE_ALifeItemEatable::UPDATE_Write(NET_Packet	&tNetPacket)
 {
 	inherited::UPDATE_Write(tNetPacket);	
-	if (m_wVersion > 118)
+	// if (m_wVersion > 118)
 		tNetPacket.w_s32(m_portions_num);
 }
 

@@ -9,22 +9,20 @@ class CGameObject;
 class CCameraBase;
 class CActor;
 
-class CHolderCustom {
+class CHolderCustom
+{
 private:
 	CGameObject*			m_owner;
 	CActor*					m_ownerActor;
+protected:
+	CGameObject*			Owner				(){return m_owner;}
+	CActor*					OwnerActor			(){return m_ownerActor;}
 public:
-	CGameObject*			Owner				() const {return m_owner;}
-	CActor*					OwnerActor			() const {return m_ownerActor;}
-
-							CHolderCustom		() {
-								m_owner=NULL;
-								m_ownerActor=NULL;
-							}
+							CHolderCustom		()				{m_owner=NULL;m_ownerActor=NULL;}
 	virtual					~CHolderCustom		()				{;}
 	virtual	void			UpdateEx			(float fov){}; //called by owner
-	virtual CHolderCustom	*cast_holder_custom	() {return this;}
-			bool			Engaged				() const {return m_owner!=NULL;}
+	virtual CHolderCustom	*cast_holder_custom	()				{return this;}
+			bool			Engaged				()				{return m_owner!=NULL;}
 	virtual void			OnMouseMove			(int x, int y)	= 0;
 	virtual void			OnKeyboardPress		(int dik)		= 0;
 	virtual void			OnKeyboardRelease	(int dik)		= 0;
@@ -32,19 +30,19 @@ public:
 	// Inventory for the car
 	virtual CInventory*		GetInventory		()				= 0;
 
-	virtual void			cam_Update			(float dt, float fov=90.0f) = 0;
+	virtual void			cam_Update			(float dt, float fov=90.0f)		= 0;
 
 	virtual bool			Use					(const Fvector& pos,const Fvector& dir,const Fvector& foot_pos)=0;
 	virtual bool			attach_Actor		(CGameObject* actor);
 	virtual void			detach_Actor		();
-	virtual bool			allowWeapon			() const = 0;
-	virtual bool			HUDView				() const = 0;
-	virtual Fvector			ExitPosition		() = 0;
-	virtual Fvector			ExitVelocity		() const {return Fvector().set(0,0,0);}
-	virtual CCameraBase*	Camera				() = 0;
-	virtual void			Action				(int id, u32 flags) {};
-	virtual void			SetParam			(int id, Fvector2 val) {};
-	virtual void			SetParam			(int id, Fvector val) {};
+	virtual bool			allowWeapon			()	const		= 0;
+	virtual bool			HUDView				() const		= 0;
+	virtual Fvector			ExitPosition		()				= 0;
+	virtual Fvector			ExitVelocity		()				{return Fvector().set(0,0,0);}
+	virtual CCameraBase*	Camera				()				= 0;
+	virtual void			Action				(int id, u32 flags)				{};
+	virtual void			SetParam			(int id, Fvector2 val)			{};
+	virtual void			SetParam			(int id, Fvector val)			{};
 	DECLARE_SCRIPT_REGISTER_FUNCTION
 };
 

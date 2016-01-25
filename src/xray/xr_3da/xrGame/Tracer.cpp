@@ -77,17 +77,17 @@ IC void FillSprite_Line	(FVF::LIT*& pv, const Fvector& pos, const Fvector& dir, 
     b.add           (Vt,Vr);
     c.invert        (a);
     d.invert        (b);
-    pv->set         (d.x+pos.x,d.y+pos.y,d.z+pos.z, color, 0.f,0.4f);        pv++;
-    pv->set         (a.x+pos.x,a.y+pos.y,a.z+pos.z, color, 0.f,0.4f);        pv++;
-    pv->set         (c.x+pos.x,c.y+pos.y,c.z+pos.z, color, 0.4f,1.f);        pv++;
-    pv->set         (b.x+pos.x,b.y+pos.y,b.z+pos.z, color, 0.4f,0.1f);        pv++;
+    pv->set         (d.x+pos.x,d.y+pos.y,d.z+pos.z, color, 0.f,1.f);        pv++;
+    pv->set         (a.x+pos.x,a.y+pos.y,a.z+pos.z, color, 0.f,0.5f);        pv++;
+    pv->set         (c.x+pos.x,c.y+pos.y,c.z+pos.z, color, 1.f,1.f);        pv++;
+    pv->set         (b.x+pos.x,b.y+pos.y,b.z+pos.z, color, 1.f,0.5f);        pv++;
 }
 
 void  CTracer::Render	(FVF::LIT*&verts, const Fvector& pos, const Fvector& center, const Fvector& dir, float length, float width, u8 colorID)
 {
-	if (::Render->ViewBase.testSphere_dirty((Fvector&)center,length*.1f)){
+	if (::Render->ViewBase.testSphere_dirty((Fvector&)center,length*.5f)){
 		if (colorID >= m_aColors.size()) colorID = 0;
-		FillSprite_Circle	(verts,pos,width*.1f,width*.1f, m_aColors[colorID]);
-		FillSprite_Line	(verts,center,dir,width*.1f,length*.1f, m_aColors[colorID]);
+		FillSprite_Circle	(verts,pos,width*.5f,width*.5f, m_aColors[colorID]);
+		FillSprite_Line	(verts,center,dir,width*.5f,length*.5f, m_aColors[colorID]);
 	}
 }

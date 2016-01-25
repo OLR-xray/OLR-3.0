@@ -251,7 +251,7 @@ BOOL CDemoRecord::Process(Fvector &P, Fvector &D, Fvector &N, float& fFov, float
 		if (psHUD_Flags.test(HUD_DRAW)){
 			if ((Device.dwTimeGlobal/750)%3!=0) {
 //				pApp->pFontSystem->SetSizeI	(0.02f);
-				pApp->pFontSystem->SetColor	(color_rgba(255,255,255,255));
+				pApp->pFontSystem->SetColor	(color_rgba(255,0,0,255));
 				pApp->pFontSystem->SetAligment(CGameFont::alCenter);
 				pApp->pFontSystem->OutSetI	(0,-.05f);
 				pApp->pFontSystem->OutNext	("%s","RECORDING");
@@ -335,9 +335,9 @@ void CDemoRecord::IR_OnKeyboardPress	(int dik)
 	{	
 		if (g_pGameLevel->CurrentEntity())
 		{
-
+#ifndef NDEBUG
 			g_pGameLevel->CurrentEntity()->ForceTransform(m_Camera);
-
+#endif
 			fLifeTime		= -1; 
 		}
 	}

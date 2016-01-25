@@ -24,8 +24,6 @@
    Alexander Petrov
 */
 
-//#undef INV_NEW_SLOTS_SYSTEM
-
 
 using namespace luabind;
 #pragma optimize("s", on)
@@ -97,7 +95,7 @@ void CEatableItemScript::script_register(lua_State *L)
 {
 	module(L)
 		[
-			class_<CEatableItem>("CEatableItem")
+			class_<CEatableItem, CInventoryItem>("CEatableItem")
 			.def_readwrite("eat_health"					,			&CEatableItem::m_fHealthInfluence)
 			.def_readwrite("eat_power"					,			&CEatableItem::m_fPowerInfluence)
 			.def_readwrite("eat_satiety"				,			&CEatableItem::m_fSatietyInfluence)
@@ -107,7 +105,7 @@ void CEatableItemScript::script_register(lua_State *L)
 			.def_readwrite("eat_portions_num"			,			&CEatableItem::m_iPortionsNum)
 			.def_readwrite("eat_max_power"				,			&CEatableItem::m_iStartPortionsNum)			
 			,
-			class_<CEatableItemObject, bases<CInventoryItemObject, CEatableItem>>("CEatableItemObject")
+			class_<CEatableItemObject, bases<CEatableItem, CGameObject>>("CEatableItemObject")
 		];
 }
 

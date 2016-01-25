@@ -814,38 +814,31 @@ void CScriptGameObject::SetDirection (const Fvector &dir, float bank)
 		se_obj->angle() = dir;	
 }
 
-void CScriptGameObject::SetPosition(const Fvector &pos) {
-	if (!g_pGameLevel) {
+void CScriptGameObject::SetPosition(const Fvector &pos)
+{
+	if (!g_pGameLevel)
+	{
 		Msg("Error! CScriptGameObject::SetPosition : game level doesn't exist.");
 		return;
 	}
 
-	if (this->IsActor() ) {
+	if (this->IsActor() )
 		this->SetActorPosition(pos);
-	}
-	else {
+	else
+	{
 		NET_Packet						PP;
 		CGameObject::u_EventGen			(PP, GE_CHANGE_POS, object().ID() );
 		PP.w_vec3						(pos);
 		CGameObject::u_EventSend		(PP);
 		// alpet: явное перемещение визуалов объектов
-		if (smart_cast<CInventoryItem*>(&object()) == NULL) {
-			Fmatrix m = object().XFORM();
-			m.translate_over(pos);
-			if (smart_cast<CInventoryBox*>(&object() ) == NULL) {
-				object().UpdateXFORM(m);
-			}
-			else {
-				object().XFORM().set(m);
-			}
-		}
+		Fmatrix m = object().XFORM();
+		m.translate_over(pos);
+		object().UpdateXFORM(m);		
 
 		// alpet: сохранение позиции в серверный экземпляр
 		CSE_ALifeDynamicObject* se_obj = alife_object();
-		if (se_obj) {
+		if (se_obj)
 			se_obj->position() = pos;
-		}
-		
 
 	}
 }

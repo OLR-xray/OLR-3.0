@@ -63,20 +63,7 @@
 #include "script_callback_ex.h"
 #include "InventoryBox.h"
 #include "location_manager.h"
-
-#include "eatable_item_object.h"
-
-#include "UIGameSP.h"
-#include "ui/UICarBodyWnd.h"
-#include "ui/UIInventoryWnd.h"
-#include "ui/UITalkWnd.h"
-#include "ui/UITradeWnd.h"
-
 #include "../../build_config_defines.h"
-
-
-////#undef INV_NEW_SLOTS_SYSTEM
-
 
 const u32		patch_frames	= 50;
 const float		respawn_delay	= 1.f;
@@ -951,11 +938,7 @@ void CActor::UpdateCL	()
 			float fire_disp_full = pWeapon->GetFireDispersion(true);
 
 			HUD().SetCrosshairDisp(fire_disp_full, 0.02f);
-#ifdef CIRCLE_CROSSHAIR_IN_ALL_WEAPON
-			HUD().ShowCrosshair(false);
-#else // CIRCLE_CROSSHAIR_IN_ALL_WEAPON
 			HUD().ShowCrosshair(pWeapon->use_crosshair());
-#endif // CIRCLE_CROSSHAIR_IN_ALL_WEAPON
 
 			psHUD_Flags.set( HUD_CROSSHAIR_RT2, pWeapon->show_crosshair() );
 			psHUD_Flags.set( HUD_DRAW_RT,		pWeapon->show_indicators() );
@@ -999,30 +982,14 @@ void CActor::shedule_Update	(u32 DT)
 
 	//установить режим показа HUD для текущего активного слота
 	CHudItem* pHudItem = smart_cast<CHudItem*>(inventory().ActiveItem());	
-	if(pHudItem)  {
+	if(pHudItem) 
 		pHudItem->SetHUDmode(HUDview());
-	}
-#if defined(HIDE_WEAPON_IN_CAR)
-	if (m_holder && pHudItem) {
-		auto pEatable = smart_cast<CEatableItemObject*>(pHudItem);
-		if (pEatable) {
-			pEatable->SilentHide();
-		}
-		else {
-			u32 ActiveSlot = inventory().GetActiveSlot();
-			if (inventory().Activate(NO_ACTIVE_SLOT)) {
-				inventory().SetPrevActiveSlot(ActiveSlot);
-			}
-		}
-	}
-#endif
-
 
 	//обновление инвентаря
 	UpdateInventoryOwner			(DT);
 	if (GameID() == GAME_SINGLE)
 		GameTaskManager().UpdateTasks	();
-	
+
 	if(m_holder || !getEnabled() || !Ready())
 	{
 		m_sDefaultObjAction				= NULL;
@@ -1191,50 +1158,52 @@ void CActor::shedule_Update	(u32 DT)
 	collide::rq_result& RQ = HUD().GetCurrentRayQuery();
 	
 
-	if(!input_external_handler_installed() && RQ.O &&  RQ.range<inventory().GetTakeDist()) {
+	if(!input_external_handler_installed() && RQ.O &&  RQ.range<inventory().GetTakeDist()) 
+	{
 		m_pObjectWeLookingAt			= smart_cast<CGameObject*>(RQ.O);
 		
-		auto game_object 				= smart_cast<CGameObject*>(RQ.O);
+		CGameObject						*game_object = smart_cast<CGameObject*>(RQ.O);
 		m_pUsableObject					= smart_cast<CUsableScriptObject*>(game_object);
 		m_pInvBoxWeLookingAt			= smart_cast<CInventoryBox*>(game_object);
 		inventory().m_pTarget			= smart_cast<PIItem>(game_object);
 		m_pPersonWeLookingAt			= smart_cast<CInventoryOwner*>(game_object);
 		m_pVehicleWeLookingAt			= smart_cast<CHolderCustom*>(game_object);
-		auto pEntityAlive				= smart_cast<CEntityAlive*>(game_object);
+		CEntityAlive* pEntityAlive		= smart_cast<CEntityAlive*>(game_object);
 		
-		if (GameID() == GAME_SINGLE) {
-			const bool eat = this->IsEat();
-			if (m_pUsableObject && m_pUsableObject->tip_text() && !eat) {
-				m_sDefaultObjAction = CStringTable().translate(m_pUsableObject->tip_text());
+		if (GameID() == GAME_SINGLE )
+		{
+			if (m_pUsableObject && m_pUsableObject->tip_text())
+			{
+				m_sDefaultObjAction = CStringTable().translate( m_pUsableObject->tip_text() );
 			}
-			else if (m_pPersonWeLookingAt && pEntityAlive->g_Alive() && !eat) {
-				m_sDefaultObjAction = m_sCharacterUseAction;
-			}
-			else if (pEntityAlive && !pEntityAlive->g_Alive() && !eat) {
-				bool b_allow_drag = !!pSettings->line_exist("ph_capture_visuals",pEntityAlive->cNameVisual());
+			else
+			{
+				if (m_pPersonWeLookingAt && pEntityAlive->g_Alive())
+					m_sDefaultObjAction = m_sCharacterUseAction;
+
+				else if (pEntityAlive && !pEntityAlive->g_Alive())
+				{
+					bool b_allow_drag = !!pSettings->line_exist("ph_capture_visuals",pEntityAlive->cNameVisual());
 				
-				if(b_allow_drag) {
-					m_sDefaultObjAction = m_sDeadCharacterUseOrDragAction;
-				}
-				else {
-					m_sDefaultObjAction = m_sDeadCharacterUseAction;
-				}
-			}
-			else if (m_pVehicleWeLookingAt && !eat) {
-				m_sDefaultObjAction = m_sCarCharacterUseAction;
-			}
-			else if (inventory().m_pTarget && inventory().m_pTarget->CanTake() ) {
-				m_sDefaultObjAction = m_sInventoryItemUseAction;
-			}
-//.			else if (m_pInvBoxWeLookingAt) {
-//.				m_sDefaultObjAction = m_sInventoryBoxUseAction;
-//.			}
-			else {
-				m_sDefaultObjAction = NULL;
+					if(b_allow_drag)
+						m_sDefaultObjAction = m_sDeadCharacterUseOrDragAction;
+					else
+						m_sDefaultObjAction = m_sDeadCharacterUseAction;
+
+				}else if (m_pVehicleWeLookingAt)
+					m_sDefaultObjAction = m_sCarCharacterUseAction;
+
+				else if (inventory().m_pTarget && inventory().m_pTarget->CanTake() )
+					m_sDefaultObjAction = m_sInventoryItemUseAction;
+//.				else if (m_pInvBoxWeLookingAt)
+//.					m_sDefaultObjAction = m_sInventoryBoxUseAction;
+				else 
+					m_sDefaultObjAction = NULL;
 			}
 		}
 	}
-	else {
+	else 
+	{
 		inventory().m_pTarget	= NULL;
 		m_pPersonWeLookingAt	= NULL;
 		m_sDefaultObjAction		= NULL;
@@ -1266,7 +1235,6 @@ void CActor::renderable_Render	()
 		((!m_holder) || (m_holder && m_holder->allowWeapon() && m_holder->HUDView())))
 		)
 		CInventoryOwner::renderable_Render	();
-		
 }
 
 BOOL CActor::renderable_ShadowGenerate	() 
@@ -1305,20 +1273,6 @@ void CActor::OnHUDDraw	(CCustomHUD* /**hud/**/)
 	{
 		inventory().ActiveItem()->renderable_Render();
 	}
-	
-	CUIGameSP* game_sp = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
-	if (game_sp) {
-		if (game_sp->UICarBodyMenu && (game_sp->UICarBodyMenu)->IsShown()) {
-			(game_sp->UICarBodyMenu)->Draw3DStatic();
-		}
-		if (game_sp->InventoryMenu && (game_sp->InventoryMenu)->IsShown()) {
-			(game_sp->InventoryMenu)->Draw3DStatic();
-		}
-		if (game_sp->TalkMenu && game_sp->TalkMenu->GetTradeWnd() && (game_sp->TalkMenu->GetTradeWnd())->IsShown()) {
-			(game_sp->TalkMenu->GetTradeWnd())->Draw3DStatic();
-		}
-	}
-		
 
 #if 0//ndef NDEBUG
 	if (Level().CurrentControlEntity() == this && g_ShowAnimationInfo)
@@ -1631,7 +1585,6 @@ float	CActor::HitArtefactsOnBelt		(float hit_power, ALife::EHitType hit_type)
 	}
 
 #if defined(INV_NEW_SLOTS_SYSTEM) && !defined(ARTEFACTS_FROM_RUCK)
-#	if !defined(OLR_SLOTS)
 	PIItem helmet = inventory().m_slots[HELMET_SLOT].m_pIItem;
 	if (helmet){
 		CArtefact* helmet_artefact = smart_cast<CArtefact*>(helmet);
@@ -1640,7 +1593,6 @@ float	CActor::HitArtefactsOnBelt		(float hit_power, ALife::EHitType hit_type)
 			_af_count		+= 1.0f;
 		}
 	}
-#	endif
 #endif
 	res_hit_power_k			-= _af_count;
 	return					res_hit_power_k * hit_power;

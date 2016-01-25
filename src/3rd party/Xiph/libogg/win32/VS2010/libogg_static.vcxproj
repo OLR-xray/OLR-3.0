@@ -73,6 +73,9 @@
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\..\xray\xrLua\src;..\..\..\FreeImage\FreeImage\Source;..\..\..\..\xray\xrCore;..\..\..\MagicSoftware\FreeMagic\Include;..\..\..\OpenAL\Include;..\..\..\loki;..\..\..\eax\Include;..\..\..\Xiph\Include;..\..\..\boost;$(WindowsSdkDir)include;..\..\..\dxsdk\Include;$(IncludePath)</IncludePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\dxsdk\Lib\x86;..\..\..\OpenAL\libs\Win32;..\..\..\eax;..\..\..\..\..\libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>libogg_static</TargetName>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>

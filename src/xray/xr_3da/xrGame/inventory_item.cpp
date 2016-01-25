@@ -22,7 +22,7 @@
 #include "ai_object_location.h"
 #include "object_broker.h"
 #include "../igame_persistent.h"
-#include "eatable_item_object.h"
+#include "eatable_item.h"
 
 #ifdef DEBUG
 #	include "debug_renderer.h"
@@ -95,7 +95,6 @@ CInventoryItem::CInventoryItem()
 	m_Description		= "";
 	m_cell_item			= NULL;
 	need_slot			= false;
-	m_start_allow_sprint = TRUE;
 }
 
 CInventoryItem::~CInventoryItem() 
@@ -167,8 +166,7 @@ void CInventoryItem::Load(LPCSTR section)
 	}	
 	
 	// alpet: разрешение некоторым объектам попадать в слоты быстрого доступа независимо от настроек
-#	if !defined(OLR_SLOTS)
-	if ( smart_cast<CEatableItemObject*>(&object()) &&
+	if ( smart_cast<CEatableItem*>(&object()) &&
 		 GetGridWidth () <= SLOT_QUICK_CELLS_X && 
 		 GetGridHeight() <= SLOT_QUICK_CELLS_Y) 
 	{
@@ -177,7 +175,6 @@ void CInventoryItem::Load(LPCSTR section)
 		m_slots.push_back(SLOT_QUICK_ACCESS_2);
 		m_slots.push_back(SLOT_QUICK_ACCESS_3);
 	}
-#	endif
 #else
 	m_slot				= READ_IF_EXISTS(pSettings,r_u32,section,"slot", NO_ACTIVE_SLOT);
 #endif
@@ -198,42 +195,9 @@ void CInventoryItem::Load(LPCSTR section)
 	//время убирания объекта с уровня
 	m_dwItemRemoveTime			= READ_IF_EXISTS(pSettings, r_u32, section,"item_remove_time",			ITEM_REMOVE_TIME);
 
-	m_start_allow_sprint = READ_IF_EXISTS	(pSettings, r_bool, section,"sprint_allowed", TRUE);
-	m_flags.set					(FAllowSprint, m_start_allow_sprint);
+	m_flags.set					(FAllowSprint,READ_IF_EXISTS	(pSettings, r_bool, section,"sprint_allowed",			TRUE));
 	m_fControlInertionFactor	= READ_IF_EXISTS(pSettings, r_float,section,"control_inertion_factor",	1.0f);
 	m_icon_name					= READ_IF_EXISTS(pSettings, r_string,section,"icon_name",				NULL);
-	
-	m_3d_static_rotate_x		= READ_IF_EXISTS(
-		pSettings,
-		r_float,
-		section,
-		"3d_static_rotate_x",
-		0.f
-	);
-
-	m_3d_static_rotate_z		= READ_IF_EXISTS(
-		pSettings,
-		r_float,
-		section,
-		"3d_static_rotate_z",
-		0.f
-	);
-
-	m_3d_static_scale		= READ_IF_EXISTS(
-		pSettings,
-		r_float,
-		section,
-		"3d_static_scale",
-		1.f
-	);
-
-	m_3d_static_visual_name		= READ_IF_EXISTS(
-		pSettings,
-		r_string,
-		section,
-		"3d_static_visual_name",
-		NULL
-	);
 
 }
 
@@ -282,7 +246,7 @@ u32		CInventoryItem::GetSlot() const
 		{
 			Msg("!#WARN: no active slot for object %s  class %s",
 				object().Name_script(), typeid((*this)).name());
-			R_ASSERT2(0, "slot not configured for inventory item");
+			R_ASSERT(0, "slot not configured for inventory item");
 		}
 		return NO_ACTIVE_SLOT;
 	}

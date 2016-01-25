@@ -7,8 +7,6 @@
 #include "string_table.h"
 #include "../../build_config_defines.h"
 
-//#undef INV_NEW_SLOTS_SYSTEM
-
 _binding	g_key_bindings		[bindings_count]; 
 _key_group	g_current_keygroup	= _sp;
 
@@ -98,14 +96,13 @@ _action  actions[]		= {
 	{ "use_bandage",		kUSE_BANDAGE			,_sp},		
 	{ "use_medkit",			kUSE_MEDKIT				,_sp},		
 	{ "quick_save",			kQUICK_SAVE				,_sp},		
-	{ "quick_load",			kQUICK_LOAD				,_sp},			
+	{ "quick_load",			kQUICK_LOAD				,_sp},		
 #ifdef INV_NEW_SLOTS_SYSTEM
 	{ "use_slot_quick_access_0",			kUSE_SLOT_QUICK_ACCESS_0				,_sp},
 	{ "use_slot_quick_access_1",			kUSE_SLOT_QUICK_ACCESS_1				,_sp},
 	{ "use_slot_quick_access_2",			kUSE_SLOT_QUICK_ACCESS_2				,_sp},
 	{ "use_slot_quick_access_3",			kUSE_SLOT_QUICK_ACCESS_3				,_sp},
-#endif
-	{ "car_open_door",		kCAR_OPEN_DOOR			,_sp},	
+#endif																	
 	{ NULL, 				kLASTACTION				,_both}		
 };															
 

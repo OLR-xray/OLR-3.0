@@ -67,7 +67,7 @@ void CActor::AddEncyclopediaArticle	 (const CInfoPortion* info_portion) const
 		callback(GameObject::eArticleInfo)(lua_game_object(), g, n, _atype);
 
 		if( HUD().GetUI() ){
-			auto pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
+			CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
 			pda_section::part p = pda_section::encyclopedia;
 			switch (article.data()->articleType){
 				case ARTICLE_DATA::eEncyclopediaArticle:	p = pda_section::encyclopedia;	break;
@@ -106,23 +106,17 @@ void  CActor::AddGameNews			 (GAME_NEWS_DATA& news_data)
 
 	if(HUD().GetUI()){
 		HUD().GetUI()->UIMainIngameWnd->ReceiveNews(&news_data);
-		auto pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
+		CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
 		if(pGameSP) 
 			pGameSP->PdaMenu->PdaContentsChanged	(pda_section::news);
 	}
 }
 
-static inline void script_need_update_questions() {
-	luabind::functor<void> functor;
-	R_ASSERT(ai().script_engine().functor("olr_pda._g_need_update_questions",functor));
-	functor();
-}
 
 bool CActor::OnReceiveInfo(shared_str info_id) const
 {
-	if(!CInventoryOwner::OnReceiveInfo(info_id)) {
+	if(!CInventoryOwner::OnReceiveInfo(info_id))
 		return false;
-	}
 
 	CInfoPortion info_portion;
 	info_portion.Load(info_id);
@@ -135,14 +129,12 @@ bool CActor::OnReceiveInfo(shared_str info_id) const
 	if(!HUD().GetUI())
 		return false;
 	//только если находимся в режиме single
-	auto pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
+	CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
 	if(!pGameSP) return false;
 
-	if (pGameSP->TalkMenu->IsShown()) {
+	if(pGameSP->TalkMenu->IsShown())
+	{
 		pGameSP->TalkMenu->NeedUpdateQuestions();
-	}
-	else {
-		script_need_update_questions();
 	}
 
 
@@ -158,34 +150,26 @@ void CActor::OnDisableInfo(shared_str info_id) const
 		return;
 
 	//только если находимся в режиме single
-	auto pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
+	CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
 	if(!pGameSP) return;
 
-	if (pGameSP->TalkMenu->IsShown()) {
+	if(pGameSP->TalkMenu->IsShown())
 		pGameSP->TalkMenu->NeedUpdateQuestions();
-	}
-	else {
-		script_need_update_questions();
-	}
 }
 
 void  CActor::ReceivePhrase		(DIALOG_SHARED_PTR& phrase_dialog)
 {
 	//только если находимся в режиме single
-	auto pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
-	if (!pGameSP) return;
+	CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
+	if(!pGameSP) return;
 
-	if (pGameSP->TalkMenu->IsShown()) {
+	if(pGameSP->TalkMenu->IsShown())
 		pGameSP->TalkMenu->NeedUpdateQuestions();
-	}
-	else {
-		script_need_update_questions();
-	}
 
 	CPhraseDialogManager::ReceivePhrase(phrase_dialog);
 }
 
-void CActor::UpdateAvailableDialogs	(CPhraseDialogManager* partner)
+void   CActor::UpdateAvailableDialogs	(CPhraseDialogManager* partner)
 {
 	m_AvailableDialogs.clear();
 	m_CheckedDialogs.clear();
@@ -205,15 +189,10 @@ void CActor::UpdateAvailableDialogs	(CPhraseDialogManager* partner)
 	}
 
 	//добавить актерский диалог собеседника
-	auto pInvOwnerPartner = smart_cast<CInventoryOwner*>(partner);
-	VERIFY(pInvOwnerPartner);
-	auto pBaseMonster = smart_cast<CBaseMonster*>(partner);
+	CInventoryOwner* pInvOwnerPartner = smart_cast<CInventoryOwner*>(partner); VERIFY(pInvOwnerPartner);
 	
-	if (!pBaseMonster) {
-		for(u32 i = 0; i<pInvOwnerPartner->CharacterInfo().ActorDialogs().size(); i++) {
-			AddAvailableDialog(pInvOwnerPartner->CharacterInfo().ActorDialogs()[i], partner);
-		}
-	}
+	for(u32 i = 0; i<pInvOwnerPartner->CharacterInfo().ActorDialogs().size(); i++)
+		AddAvailableDialog(pInvOwnerPartner->CharacterInfo().ActorDialogs()[i], partner);
 
 	CPhraseDialogManager::UpdateAvailableDialogs(partner);
 }
@@ -235,7 +214,7 @@ void CActor::RunTalkDialog(CInventoryOwner* talk_partner)
 	{	
 		StartTalk(talk_partner);
 		//только если находимся в режиме single
-		auto pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
+		CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
 		if(pGameSP)
 		{
 			if(pGameSP->MainInputReceiver())
@@ -247,7 +226,7 @@ void CActor::RunTalkDialog(CInventoryOwner* talk_partner)
 
 void CActor::StartTalk (CInventoryOwner* talk_partner)
 {
-	//auto GO = smart_cast<CGameObject*>(talk_partner); VERIFY(GO);
+	CGameObject* GO = smart_cast<CGameObject*>(talk_partner); VERIFY(GO);
 	//обновить информацию о контакте
 //.	UpdateContact(GO->ID());
 
@@ -283,17 +262,16 @@ void CActor::NewPdaContact		(CInventoryOwner* pInvOwner)
 	Level().MapManager().AddRelationLocation		( pInvOwner );
 
 	if( HUD().GetUI() ){
-		auto pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
+		CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
 
-		if(pGameSP) {
+		if(pGameSP)
 			pGameSP->PdaMenu->PdaContentsChanged	(pda_section::contacts);
-		}
 	}
 }
 
 void CActor::LostPdaContact		(CInventoryOwner* pInvOwner)
 {
-	auto GO = smart_cast<CGameObject*>(pInvOwner);
+	CGameObject* GO = smart_cast<CGameObject*>(pInvOwner);
 	if (GO){
 
 		for(int t = ALife::eRelationTypeFriend; t<ALife::eRelationTypeLast; ++t){
@@ -304,7 +282,7 @@ void CActor::LostPdaContact		(CInventoryOwner* pInvOwner)
 	};
 
 	if( HUD().GetUI() ){
-		auto pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
+		CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
 		if(pGameSP){
 			pGameSP->PdaMenu->PdaContentsChanged	(pda_section::contacts);
 		}
@@ -336,7 +314,7 @@ void CActor::UpdateDefferedMessages()
 
 bool CActor::OnDialogSoundHandlerStart(CInventoryOwner *inv_owner, LPCSTR phrase)
 {
-	auto trader = smart_cast<CAI_Trader*>(inv_owner);
+	CAI_Trader *trader = smart_cast<CAI_Trader*>(inv_owner);
 	if (!trader) return false;
 
 	trader->dialog_sound_start(phrase);
@@ -344,31 +322,9 @@ bool CActor::OnDialogSoundHandlerStart(CInventoryOwner *inv_owner, LPCSTR phrase
 }
 bool CActor::OnDialogSoundHandlerStop(CInventoryOwner *inv_owner)
 {
-	auto trader = smart_cast<CAI_Trader*>(inv_owner);
+	CAI_Trader *trader = smart_cast<CAI_Trader*>(inv_owner);
 	if (!trader) return false;
 
 	trader->dialog_sound_stop();
 	return true;
 }
-
-void CActor::AddAnswerNews(LPCSTR SpeakerName, LPCSTR str, LPCSTR icon_name, Frect icon_rect) {
-	GAME_NEWS_DATA					news_data;
-	xr_string						str_ = SpeakerName;
-	str_							+= " >> ";
-	str_							+= str;
-
-	news_data.m_type				= GAME_NEWS_DATA::eTalk;
-	news_data.news_text				= str_.c_str();
-//.	news_data.texture_name			= "ui\\ui_icons_npc";
-
-	news_data.texture_name			= icon_name;
-	news_data.tex_rect				= icon_rect;
-	news_data.tex_rect.x2			= news_data.tex_rect.width();
-	news_data.tex_rect.y2			= news_data.tex_rect.height();
-	news_data.receive_time			= Level().GetGameTime();
-
-	if (this->game_news_registry) {
-		this->game_news_registry->registry().objects().push_back(news_data);
-	}
-}
-

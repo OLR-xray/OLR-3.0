@@ -2,19 +2,17 @@
 #include "hud_item_object.h"
 #include "HudSound.h"
 
-const u32 MS_HIDDEN = 0;
-const u32 MS_SHOWING = 1;
-const u32 MS_IDLE = 2;
-const u32 MS_THREATEN = 3;
-const u32 MS_READY = 4;
-const u32 MS_THROW = 5;
-const u32 MS_END = 6;
-const u32 MS_EMPTY = 7;
-const u32 MS_HIDING = 8;
-const u32 MS_PLAYING = 9;
-const u32 MS_IDLE_SPRINT = 10;
-const u32 MS_IDLE_WALK = 11;
-const u32 MS_IDLE_WALK_SLOW = 12;
+#define MS_HIDDEN		0
+#define MS_SHOWING		1
+#define MS_IDLE			2
+#define MS_THREATEN		3
+#define MS_READY		4
+#define MS_THROW		5
+#define MS_END			6
+#define MS_EMPTY		7
+#define MS_HIDING		8
+#define MS_PLAYING		9
+#define MS_IDLE_SPRINT	10
 
 struct dContact;
 struct SGameMtl;
@@ -52,7 +50,6 @@ public:
 	virtual bool 			IsHidden					() const {return GetState() == MS_HIDDEN;}
 	virtual bool 			IsHiding					() const {return GetState() == MS_HIDING;}
 	virtual bool 			IsShowing					() const {return GetState() == MS_SHOWING;}
-	virtual void			SilentHide					()	{OnStateSwitch(MS_HIDDEN);}
 
 	virtual void 			Throw();
 	virtual void 			Destroy();
@@ -109,8 +106,6 @@ protected:
 	shared_str				m_sAnimHide;
 	shared_str				m_sAnimIdle;
 	shared_str				m_sAnimIdleSprint;
-	shared_str				m_sAnimIdleWalk;
-	shared_str				m_sAnimIdleWalkSlow;
 	shared_str				m_sAnimPlaying;
 	shared_str				m_sAnimThrowBegin;
 	shared_str				m_sAnimThrowIdle;

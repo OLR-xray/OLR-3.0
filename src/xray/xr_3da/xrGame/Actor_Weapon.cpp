@@ -87,8 +87,6 @@ BOOL CActor::g_State (SEntityState& state) const
 	state.bCrouch		= !!(mstate_real&mcCrouch);
 	state.bFall			= !!(mstate_real&mcFall);
 	state.bSprint		= !!(mstate_real&mcSprint);
-	state.bWalk			= !!(mstate_real&mcAnyMove);
-	state.bAccel		= !!(mstate_real&mcAccel);
 	state.fVelocity		= character_physics_support()->movement()->GetVelocityActual();
 	state.fAVelocity	= fCurAVelocity;
 	return TRUE;
