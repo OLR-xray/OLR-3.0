@@ -19,6 +19,7 @@ private:
 protected:
 	void				SetRelation				(ALife::ERelationType relation, CHARACTER_GOODWILL goodwill);
 	void				ResetAllStrings			();
+	void				UpdateRelation			();
 	bool				hasOwner()			{return (m_ownerID!=u16(-1));}
 	// Biography
 	CUIScrollView*		pUIBio;
@@ -52,13 +53,9 @@ public:
 	void				ClearInfo				();
 
 	virtual void		Update					();
-	void				UpdateRelation			();
 
 	u16					OwnerID					()	const {return m_ownerID;}
 	CUIStatic&			UIIcon					()		{VERIFY(m_icons[eUIIcon]);return *m_icons[eUIIcon];}	
 	CUIStatic&			UIName()				{VERIFY(m_icons[eUIName]);return *m_icons[eUIName];}	
-	CUIStatic&			UIRelation()			{VERIFY(m_icons[eUIRelation]);return *m_icons[eUIRelation];}	
-	CUIStatic&			UIRelationCaption()		{VERIFY(m_icons[eUIRelationCaption]);return *m_icons[eUIRelationCaption];}	
 	const shared_str&	IconName				() {return m_texture_name;}
 };
-

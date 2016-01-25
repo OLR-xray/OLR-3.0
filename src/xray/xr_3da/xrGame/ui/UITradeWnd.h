@@ -3,7 +3,7 @@
 #include "../inventory_space.h"
 
 class CInventoryOwner;
-class CEatableItemObject;
+class CEatableItem;
 class CTrade;
 struct CUITradeInternal;
 
@@ -28,8 +28,6 @@ public:
 	virtual void 		Update						();
 	virtual void 		Show						();
 	virtual void 		Hide						();
-	
-	void				Draw3DStatic				();
 
 	void 				DisableAll					();
 	void 				EnableAll					();

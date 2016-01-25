@@ -55,12 +55,6 @@ public:
 	virtual void				ItemToBelt					(const shared_str& sectionName);
 	virtual void				ItemToRuck					(const shared_str& sectionName, u32 addons);
 	virtual void				ItemToSlot					(const shared_str& sectionName, u32 addons);
-	
-	
-	void Draw3DStatic() {
-		m_itemInfo.Draw3DStatic();
-	}
-
 
 	/////
 

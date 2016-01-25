@@ -2,7 +2,6 @@
 
 #include "uiiteminfo.h"
 #include "uistatic.h"
-#include "ui3dstatic.h"
 #include "UIXmlInit.h"
 
 #include "UIListWnd.h"
@@ -21,7 +20,6 @@ CUIItemInfo::CUIItemInfo()
 	UIItemImageSize.set			(0.0f,0.0f);
 	UICondProgresBar			= NULL;
 	UICondition					= NULL;
-	UIConditionStr				= NULL;
 	UICost						= NULL;
 	UIWeight					= NULL;
 	UIItemImage					= NULL;
@@ -90,14 +88,6 @@ void CUIItemInfo::Init(LPCSTR xml_name){
 		xml_init.InitStatic			(uiXml, "static_condition", 0,		UICondition);
 	}
 
-	if(uiXml.NavigateToNode("static_condition_str",0))
-	{
-		UIConditionStr					= xr_new<CUIStatic>();	 
-		AttachChild					(UIConditionStr);
-		UIConditionStr->SetAutoDelete	(true);
-		xml_init.InitStatic			(uiXml, "static_condition_str", 0,		UIConditionStr);
-	}
-
 	if(uiXml.NavigateToNode("condition_progress",0))
 	{
 		UICondProgresBar			= xr_new<CUIProgressBar>(); AttachChild(UICondProgresBar);UICondProgresBar->SetAutoDelete(true);
@@ -120,7 +110,7 @@ void CUIItemInfo::Init(LPCSTR xml_name){
 
 	if (uiXml.NavigateToNode("image_static", 0))
 	{	
-		UIItemImage					= xr_new<CUI3dStatic>();	 
+		UIItemImage					= xr_new<CUIStatic>();	 
 		AttachChild					(UIItemImage);	
 		UIItemImage->SetAutoDelete	(true);
 		xml_init.InitStatic			(uiXml, "image_static", 0, UIItemImage);
@@ -128,7 +118,6 @@ void CUIItemInfo::Init(LPCSTR xml_name){
 
 		UIItemImage->TextureOff			();
 		UIItemImage->ClipperOn			();
-		UIItemImage->SetRotatedMode(true);
 		UIItemImageSize.set				(UIItemImage->GetWidth(),UIItemImage->GetHeight());
 	}
 
@@ -143,73 +132,78 @@ void CUIItemInfo::Init(float x, float y, float width, float height, LPCSTR xml_n
 
 bool				IsGameTypeSingle();
 
-void CUIItemInfo::InitItem(CInventoryItem* pInvItem) {
-	m_pInvItem = pInvItem;
-	if(!m_pInvItem) return;
+void CUIItemInfo::InitItem(CInventoryItem* pInvItem)
+{
+	m_pInvItem				= pInvItem;
+	if(!m_pInvItem)			return;
 
-	string256 str;
-	if(UIName) {
-		UIName->SetText(pInvItem->Name());
+	string256				str;
+	if(UIName)
+	{
+		UIName->SetText		(pInvItem->Name());
 	}
-	if(UIWeight) {
-		sprintf_s(str, "%3.2f kg", pInvItem->Weight());
+	if(UIWeight)
+	{
+		sprintf_s				(str, "%3.2f kg", pInvItem->Weight());
 		UIWeight->SetText	(str);
 	}
-	if( UICost && IsGameTypeSingle() ) {
-		sprintf_s(str, "%d %s", pInvItem->Cost(),*CStringTable().translate("ui_st_money_regional"));		// will be owerwritten in multiplayer
-		UICost->SetText(str);
-	}
-
-	if(UIConditionStr)
+	if( UICost && IsGameTypeSingle() )
 	{
-		float cond							= (pInvItem->GetConditionToShow())*100;
-		sprintf				(str, "%3.2f %%", cond);
-		UIConditionStr->SetText	(str);
+		sprintf_s				(str, "%d %s", pInvItem->Cost(),*CStringTable().translate("ui_st_money_regional"));		// will be owerwritten in multiplayer
+		UICost->SetText		(str);
 	}
 
-	if(UICondProgresBar) {
-		float cond = pInvItem->GetConditionToShow();
-		UICondProgresBar->Show(true);
-		UICondProgresBar->SetProgressPos( cond*100.0f+1.0f-EPS );
+	if(UICondProgresBar)
+	{
+		float cond							= pInvItem->GetConditionToShow();
+		UICondProgresBar->Show				(true);
+		UICondProgresBar->SetProgressPos	( cond*100.0f+1.0f-EPS );
 	}
 
-	if(UIDesc) {
-		UIDesc->Clear();
-		VERIFY(0==UIDesc->GetSize());
-		TryAddWpnInfo(pInvItem->object().cNameSect());
-		TryAddArtefactInfo(pInvItem->object().cNameSect());
-		if(m_desc_info.bShowDescrText) {
-			CUIStatic* pItem = xr_new<CUIStatic>();
-			pItem->SetTextColor(m_desc_info.uDescClr);
-			pItem->SetFont(m_desc_info.pDescFont);
-			pItem->SetWidth(UIDesc->GetDesiredChildWidth());
-			pItem->SetTextComplexMode(true);
-			pItem->SetText(*pInvItem->ItemDescription());
-			pItem->AdjustHeightToText();
-			UIDesc->AddWindow(pItem, true);
+	if(UIDesc)
+	{
+		UIDesc->Clear						();
+		VERIFY								(0==UIDesc->GetSize());
+		TryAddWpnInfo						(pInvItem->object().cNameSect());
+		TryAddArtefactInfo					(pInvItem->object().cNameSect());
+		if(m_desc_info.bShowDescrText)
+		{
+			CUIStatic* pItem					= xr_new<CUIStatic>();
+			pItem->SetTextColor					(m_desc_info.uDescClr);
+			pItem->SetFont						(m_desc_info.pDescFont);
+			pItem->SetWidth						(UIDesc->GetDesiredChildWidth());
+			pItem->SetTextComplexMode			(true);
+			pItem->SetText						(*pInvItem->ItemDescription());
+			pItem->AdjustHeightToText			();
+			UIDesc->AddWindow					(pItem, true);
 		}
-		UIDesc->ScrollToBegin();
+		UIDesc->ScrollToBegin				();
 	}
-	if(UIItemImage) {
+	if(UIItemImage)
+	{
 		// Загружаем картинку
+		UIItemImage->SetShader				(InventoryUtilities::GetEquipmentIconsShader());
 
-		const int iGridWidth = pInvItem->GetGridWidth();
-		const int iGridHeight = pInvItem->GetGridHeight();
-		
-		Frect v_r = {
-			0.0f,
-			0.0f,
-			float(iGridWidth*INV_GRID_WIDTH),
-			float(iGridHeight*INV_GRID_HEIGHT)
-		};
-		if(UI()->is_16_9_mode()) {
+		int iGridWidth						= pInvItem->GetGridWidth();
+		int iGridHeight						= pInvItem->GetGridHeight();
+		int iXPos							= pInvItem->GetXPos();
+		int iYPos							= pInvItem->GetYPos();
+
+		UIItemImage->GetUIStaticItem().SetOriginalRect(	float(iXPos*INV_GRID_WIDTH), float(iYPos*INV_GRID_HEIGHT),
+														float(iGridWidth*INV_GRID_WIDTH),	float(iGridHeight*INV_GRID_HEIGHT));
+		UIItemImage->TextureOn				();
+		UIItemImage->ClipperOn				();
+		UIItemImage->SetStretchTexture		(true);
+		Frect v_r							= {	0.0f, 
+												0.0f, 
+												float(iGridWidth*INV_GRID_WIDTH),	
+												float(iGridHeight*INV_GRID_HEIGHT)};
+		if(UI()->is_16_9_mode())
 			v_r.x2 /= 1.328f;
-		}
 
-		//UIItemImage->GetUIStaticItem().SetRect	(v_r);
-		UIItemImage->SetWidth(_min(v_r.width(), UIItemImageSize.x));
-		UIItemImage->SetHeight(_min(v_r.height(), UIItemImageSize.y));
-		UIItemImage->SetGameObject(pInvItem);
+		UIItemImage->GetUIStaticItem().SetRect	(v_r);
+		UIItemImage->SetWidth					(_min(v_r.width(),	UIItemImageSize.x));
+		UIItemImage->SetHeight					(_min(v_r.height(),	UIItemImageSize.y));
 	}
 }
 

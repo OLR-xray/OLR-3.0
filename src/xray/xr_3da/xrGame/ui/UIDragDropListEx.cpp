@@ -104,11 +104,6 @@ void CUIDragDropListEx::CreateDragItem(CUICellItem* itm)
 
 	m_drag_item							= itm->CreateDragItem();
 	GetParent()->SetCapture				(m_drag_item, true);
-	
-	Fvector2 p;
-	itm->GetAbsolutePos(p);
-	itm->OnMouse(p.x, p.y, EUIMessages::DRAG_DROP_ITEM_DRAG);
-
 }
 
 void CUIDragDropListEx::DestroyDragItem()
@@ -154,13 +149,6 @@ void CUIDragDropListEx::OnItemDrop(CUIWindow* w, void* pData)
 	CUICellItem*		itm				= smart_cast<CUICellItem*>(w);
 	VERIFY								(itm->OwnerList() == itm->OwnerList());
 
-	if (itm)
-	{
-		Fvector2 p;
-		itm->GetAbsolutePos(p);
-		itm->OnMouse(p.x, p.y, EUIMessages::DRAG_DROP_ITEM_DROP);
-	}
-	
 	if(m_f_item_drop && m_f_item_drop(itm) ){
 		DestroyDragItem						();
 		return;
@@ -785,6 +773,7 @@ void CUICellContainer::Draw()
 	// calculate cell size in screen pixels
 	Fvector2 f_len;
 	UI()->ClientToScreenScaled(f_len, float(cell_sz.x), float(cell_sz.y) );
+
 	
 	// fill cell buffer
 	u32 vOffset = 0;
@@ -792,23 +781,8 @@ void CUICellContainer::Draw()
 	FVF::TL* pv = start_pv;
 	for (int x = 0; x <= tgt_cells.width(); ++x){
 		for (int y = 0; y <= tgt_cells.height(); ++y){
-		
 			Fvector2			tp;
-			Ivector2 cpos;
-			cpos.set( x, y );
-			cpos.add( TopVisibleCell() );
-			CUICell& ui_cell = GetCellAt( cpos );
-			
-			if (( !ui_cell.Empty() )&&(ui_cell.m_item->m_selected))
-			{
-				tp.set(0.50f,0.0f);
-			}else{
-				tp.set(0.0f,0.0f);
-			}
-			
-			Fvector2			rect_offset;
-			rect_offset.set		( (drawLT.x + f_len.x*x), (drawLT.y + f_len.y*y ) );
-
+			GetTexUVLT(tp, tgt_cells.x1 + x, tgt_cells.y1 + y);
 			for (u32 k = 0; k < 6; ++k, ++pv){
 				const Fvector2& p = pts[k];
 				const Fvector2& uv = uvs[k];

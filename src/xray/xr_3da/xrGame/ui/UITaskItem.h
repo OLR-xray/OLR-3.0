@@ -29,13 +29,8 @@ public:
 	CGameTask*		GameTask				()	{return m_GameTask;}
 	u16				ObjectiveIdx			()	{return m_TaskObjectiveIdx;}
 	SGameTaskObjective*	Objective			();
-	
-	virtual CUIStatic* GetCaptionStatic		() {
-		return NULL;
-	}
 
 	CUIEventsWnd*	m_EventsWnd;
-	
 };
 
 class CUITaskRootItem :public CUITaskItem
@@ -46,7 +41,7 @@ protected:
 	CUIStatic*		m_captionStatic;
 	CUIStatic*		m_captionTime;
 	CUIStatic*		m_remTimeStatic;
-	//CUI3tButton*	m_switchDescriptionBtn;
+	CUI3tButton*	m_switchDescriptionBtn;
 	bool			m_curr_descr_mode;
 	void			Init					();
 public:	
@@ -58,11 +53,6 @@ public:
 
 	virtual void	MarkSelected			(bool b);
 	virtual bool	OnDbClick				();
-	
-	virtual CUIStatic* GetCaptionStatic		() {
-		return m_captionStatic;
-	}
-
 };
 
 class CUITaskSubItem :public CUITaskItem
@@ -76,23 +66,65 @@ protected:
 	CUI3tButton*	m_showDescriptionBtn;
 	CUIStatic*		m_descriptionStatic;
 	CUIStatic*		m_stateStatic;
-	CUITaskRootItem* m_root_item;
 
 	void			Init					();
 
 public:	
-					CUITaskSubItem			(CUIEventsWnd* w, CUITaskRootItem* root_item);
+					CUITaskSubItem			(CUIEventsWnd* w);
 	virtual			~CUITaskSubItem			();
 	virtual void	Update					();
 	virtual void	SetGameTask				(CGameTask* gt, u16 obj_idx);
-
+			void	OnActiveObjectiveClicked();
+	void __stdcall	OnShowDescriptionClicked(CUIWindow*, void*);
 	virtual void	MarkSelected			(bool b);
 	virtual bool	OnDbClick				();
-	
-	virtual CUIStatic* GetCaptionStatic		() {
-		return m_root_item->GetCaptionStatic();
-	}
+};
+/*
+class CUIUserTaskEditWnd;
+class CUIUserTaskItem :public CUITaskItem
+{
+	typedef			CUITaskItem	inherited;
+protected:
+	CUI3tButton*	m_showPointerBtn;
+	CUI3tButton*	m_showLocationBtn;
+	CUI3tButton*	m_editTextBtn;
+	CUI3tButton*	m_removeBtn;
+	CUIStatic*		m_captionStatic;
+	CUIStatic*		m_descriptionStatic;
+	CUIStatic*		m_image;
+	CUIUserTaskEditWnd* m_edtWnd;
+	void			Init					();
 
+public:	
+					CUIUserTaskItem			(CUIEventsWnd* w);
+	virtual			~CUIUserTaskItem			();
+	virtual void	Update					();
+	virtual void	SetGameTask				(CGameTask* gt, u16 obj_idx);
+			void	OnShowLocationClicked	();
+			void	OnShowPointerClicked	();
+			void	OnDescriptionChanged	();
+			void	OnEditTextClicked		();
+			void	OnRemoveClicked			();
+
+	virtual bool	OnDbClick				()	{return true;};
+	virtual void	MarkSelected			(bool b);
 };
 
+class CUIUserTaskEditWnd : public CUIDialogWnd, public CUIWndCallback
+{
+	CUIUserTaskItem*		m_userTask;
+	CUI3tButton*			m_btnOk;
+	CUI3tButton*			m_btnCancel;
+	CUIFrameWindow*			m_background;
 
+	CUIEditBox*			m_editCaption;
+	CUIEditBoxEx*			m_editDescription;
+protected:
+			void			OnOk					();
+			void			OnCancel				();
+			void			Init					();
+public:
+							CUIUserTaskEditWnd		(CUIUserTaskItem* itm);
+	virtual void			SendMessage				(CUIWindow* pWnd, s16 msg, void* pData = NULL);
+			void			Start					();
+};*/

@@ -9,7 +9,6 @@
 #include "../scope.h"
 #include "../silencer.h"
 #include "../grenadelauncher.h"
-#include "../eatable_item_object.h"
 #include "../game_cl_Deathmatch.h"
 #include "UIOutfitSlot.h"
 #include "UIListBoxItem.h"
@@ -104,11 +103,8 @@ void CUIBuyWnd::Hide()
 	inherited::Hide			();
 
 	CActor *pActor			= smart_cast<CActor*>(Level().CurrentEntity());
-	if(pActor) {
+	if(pActor)
         pActor->SetWeaponHideState(INV_STATE_BUY_MENU, false);
-	}
-	
-	m_itemInfo.SetItemImageDefaultValues();
 }
 
 void CUIBuyWnd::DestroyAllItems()
@@ -794,32 +790,26 @@ MP_BUY_SLOT CUIBuyWnd::GetLocalSlot(u32 slot){
 	}
 }
 
-void CUIBuyWnd::ActivatePropertiesBox() {
+void CUIBuyWnd::ActivatePropertiesBox()
+{
 	// Флаг-признак для невлючения пункта контекстного меню: Dreess Outfit, если костюм уже надет
-	bool bAlreadyDressed = false; 
+	bool bAlreadyDressed				= false; 
 
 		
 	m_propertiesBox.RemoveAll();
 	
-	auto pOutfit = smart_cast<CCustomOutfit*>(CurrentIItem());
-	auto pWeapon = smart_cast<CWeapon*>(CurrentIItem());
-	auto pScope = smart_cast<CScope*>(CurrentIItem());
-	auto pSilencer = smart_cast<CSilencer*>(CurrentIItem());
-	auto pGrenadeLauncher = smart_cast<CGrenadeLauncher*>(CurrentIItem());
-	auto pEatableItem = smart_cast<CEatableItemObject*>(CurrentIItem());
-	
-	const bool eat_in_hud = pEatableItem == NULL || (pEatableItem != NULL && pEatableItem->IsUseHud());
+	CCustomOutfit* pOutfit				= smart_cast<CCustomOutfit*>	(CurrentIItem());
+	CWeapon* pWeapon					= smart_cast<CWeapon*>			(CurrentIItem());
+	CScope* pScope						= smart_cast<CScope*>			(CurrentIItem());
+	CSilencer* pSilencer				= smart_cast<CSilencer*>		(CurrentIItem());
+	CGrenadeLauncher* pGrenadeLauncher	= smart_cast<CGrenadeLauncher*>	(CurrentIItem());
     
 
 
-	if (eat_in_hud) {
-	if((pWeapon || pOutfit ) && m_bag.IsInBag(CurrentItem()) && m_bag.CanBuy(CurrentItem()) /*&& m_list[GetLocalSlot(CurrentIItem()->GetSlot())]->ItemsCount()*/ && CurrentIItem()->GetSlot() == NO_ACTIVE_SLOT )
+	if((pWeapon || pOutfit ) && m_bag.IsInBag(CurrentItem()) && m_bag.CanBuy(CurrentItem()) /*&& m_list[GetLocalSlot(CurrentIItem()->GetSlot())]->ItemsCount()*/)
 	{
 		m_propertiesBox.AddItem("st_move_to_slot",  NULL, INVENTORY_TO_SLOT_ACTION);
 	}
-	}
-	
-	
 	if(CurrentIItem()->Belt() && CanPutInBelt(CurrentIItem()))
 	{
 		m_propertiesBox.AddItem("st_move_on_belt",  NULL, INVENTORY_TO_BELT_ACTION);
@@ -838,7 +828,7 @@ void CUIBuyWnd::ActivatePropertiesBox() {
 	}
 	//
 	//отсоединение аддонов от вещи
-	if(pWeapon && pEatableItem == NULL)
+	if(pWeapon)
 	{
 		if(pWeapon->GrenadeLauncherAttachable())
 		{
@@ -932,8 +922,9 @@ void CUIBuyWnd::ActivatePropertiesBox() {
 				m_propertiesBox.AddItem("st_attach_gl_to_rifle",  (void*)pIItem, INVENTORY_ATTACH_ADDON);
 		}
 	}
-	else if (pOutfit) {
-		
+	else if (pOutfit)
+	{
+
 	}
 
 	if (m_propertiesBox.GetItemsCount() == 0) return;
@@ -1003,60 +994,63 @@ CWeapon* CUIBuyWnd::GetRifle()
 		return					NULL;
 }
 
-bool CUIBuyWnd::ToSlot(CUICellItem* itm, bool force_place) {
-	PIItem	iitem = (PIItem)itm->m_pData;
-	u32 _slot = GetLocalSlot(iitem->GetSlot());
+bool CUIBuyWnd::ToSlot(CUICellItem* itm, bool force_place)
+{
+	PIItem	iitem							= (PIItem)itm->m_pData;
+	u32 _slot								= GetLocalSlot(iitem->GetSlot());
 
-	auto pScope = smart_cast<CScope*>(iitem);
-	auto pSilencer = smart_cast<CSilencer*>(iitem);
-	auto pEatable = smart_cast<CEatableItemObject*>(iitem);
-	auto pGrenadeLauncher = smart_cast<CGrenadeLauncher*>(iitem);
+	CScope* pScope						= smart_cast<CScope*>			(iitem);
+	CSilencer* pSilencer				= smart_cast<CSilencer*>		(iitem);
+	CGrenadeLauncher* pGrenadeLauncher	= smart_cast<CGrenadeLauncher*>	(iitem);
 
-	CWeapon* pPistol = GetPistol();
-	CWeapon* pRifle = GetRifle();
+	CWeapon*	pPistol 				= GetPistol();
+	CWeapon*	pRifle					= GetRifle();
 	
-	if (pEatable && !pEatable->IsUseHud()) return false;
-	
-	if (pSilencer) {		// try to buy silencer
-		if (pRifle && pRifle->SilencerAttachable() && !pRifle->IsSilencerAttached()) {
-			if (pRifle->Attach(pSilencer, true)) {
+	if (pSilencer)
+	{		// try to buy silencer
+		if (pRifle && pRifle->SilencerAttachable() && !pRifle->IsSilencerAttached())
+		{
+			if (pRifle->Attach(pSilencer, true))
+			{
 				m_bag.BuyItem(itm);					// BUY
 				return true;
 			}
-			else {
+			else
 				return false;
-			}
 		}
 		
-		if (pPistol && pPistol->SilencerAttachable() && !pPistol->IsSilencerAttached()) {
-			if (pPistol->Attach(pSilencer, true)) {
+		if (pPistol && pPistol->SilencerAttachable() && !pPistol->IsSilencerAttached())
+		{
+			if (pPistol->Attach(pSilencer, true))
+			{
 				m_bag.BuyItem(itm);					// BUY
 				return true;
 			}
-			else {
+			else
 				return false;
-			}
 		}
 	}
-	if (pScope) {
-		if (pRifle && pRifle->ScopeAttachable() && !pRifle->IsScopeAttached()) {
-			if (pRifle->Attach(pScope, true)) {
+	if (pScope){
+		if (pRifle && pRifle->ScopeAttachable() && !pRifle->IsScopeAttached())
+		{
+			if (pRifle->Attach(pScope, true))
+			{
 				m_bag.BuyItem(itm);					// BUY
 				return true;
 			}
-			else {
+			else
 				return false;
-			}
 		}
 
-		if (pPistol && pPistol->ScopeAttachable() && !pPistol->IsScopeAttached()) {
-			if(pPistol->Attach(pScope, true)) {
+		if (pPistol && pPistol->ScopeAttachable() && !pPistol->IsScopeAttached())
+		{
+			if(pPistol->Attach(pScope, true))
+			{
 				m_bag.BuyItem(itm);					// BUY
 				return true;
 			}
-			else {
+			else
 				return false;
-			}
 		}
 	}
 	if (	pGrenadeLauncher					&& 
@@ -1065,56 +1059,56 @@ bool CUIBuyWnd::ToSlot(CUICellItem* itm, bool force_place) {
 			!pRifle->IsGrenadeLauncherAttached()
 		)
 	{
-		if (pRifle->Attach(pGrenadeLauncher, true)) {
-			m_bag.BuyItem(itm);
-			return true;
+		if (pRifle->Attach(pGrenadeLauncher, true))
+		{
+			m_bag.BuyItem		(itm);
+			return				true;
 		}
-		else {
-			return false;
-		}
+		else
+			return				false;
 	}
 
-	if(CanPutInSlot(iitem)) {
+	if(CanPutInSlot(iitem))
+	{
 
-		CUIDragDropListEx* slot = GetSlotList(_slot);
-		VERIFY(slot);
+		CUIDragDropListEx* slot		= GetSlotList(_slot);
+		VERIFY						(slot);
 
-		CUICellItem* i = m_bag.CreateItem(*iitem->object().cNameSect());
-		i->m_index = itm->m_index;
+		CUICellItem* i				= m_bag.CreateItem(*iitem->object().cNameSect());
+		i->m_index					= itm->m_index;
 
-		slot->SetItem(i);
-		m_bag.BuyItem(i);
+		slot->SetItem				(i);
+		m_bag.BuyItem				(i);
 
-		AfterBuy();
-		HightlightCurrAmmo();
-		SetCurrentItem(itm);
+		AfterBuy					();
+		HightlightCurrAmmo			();
+		SetCurrentItem				(itm);
 
-		return true;
-	}
-	else { // in case slot is busy
+		return						true;
+	}else
+	{ // in case slot is busy
 		if(!force_place ||  iitem->GetSlot()==NO_ACTIVE_SLOT ) return false;
 
-		CUIDragDropListEx* slot = GetSlotList(_slot);
+		CUIDragDropListEx* slot		= GetSlotList(_slot);
 
-		CUICellItem* i = slot->GetItemIdx(0);
+		CUICellItem* i				= slot->GetItemIdx(0);
 
 		if (iitem->GetSlot()==OUTFIT_SLOT)
-			slot->RemoveItem(i, false);
+			slot->RemoveItem		(i, false);
 		else
-			slot->RemoveItem(i, true);
+			slot->RemoveItem		(i, true);
 
-		m_bag.SellItem(i);
-		m_bag.DestroyItem(i);
-		xr_delete(i);
+		m_bag.SellItem				(i);
+		m_bag.DestroyItem			(i);
+		xr_delete					(i);
 
-		return ToSlot(itm, false);
+		return ToSlot				(itm, false);
 	}
 }
 
-bool CUIBuyWnd::ToBag(CUICellItem* itm, bool b_use_cursor_pos) {
-	PIItem	iitem = (PIItem)itm->m_pData;
-	auto pEatable = smart_cast<CEatableItemObject*>(iitem);
-	if (pEatable && pEatable->IsEat()) return false;
+bool CUIBuyWnd::ToBag(CUICellItem* itm, bool b_use_cursor_pos)
+{
+	PIItem	iitem					= (PIItem)itm->m_pData;
 
 	if(CanPutInBag(iitem))
 	{
@@ -1376,8 +1370,8 @@ void CUIBuyWnd::SetSkin(u8 SkinID)
 	string256			item;
 	_GetItem			(skins, SkinID, item);
 
-	//CUIOutfitDragDropList* lst = (CUIOutfitDragDropList*)m_list[MP_SLOT_OUTFIT];
-	//lst->SetDefaultOutfit(item);
+	CUIOutfitDragDropList* lst = (CUIOutfitDragDropList*)m_list[MP_SLOT_OUTFIT];
+	lst->SetDefaultOutfit(item);
 }
 
 void CUIBuyWnd::SetMoneyAmount(u32 money)

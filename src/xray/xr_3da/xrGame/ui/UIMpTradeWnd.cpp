@@ -234,8 +234,6 @@ void CUIMpTradeWnd::Hide()
 		pActor->SetWeaponHideState(INV_STATE_BUY_MENU, false);
 
 	CleanUserItems			();
-	
-	m_item_info->SetItemImageDefaultValues();
 }
 
 bool	CUIMpTradeWnd::IsIgnoreMoneyAndRank			()

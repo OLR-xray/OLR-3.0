@@ -16,7 +16,7 @@
 #include "UICellItemFactory.h"
 #include "../WeaponMagazined.h"
 #include "../Actor.h"
-#include "../eatable_item_object.h"
+#include "../eatable_item.h"
 #include "../alife_registry_wrappers.h"
 #include "UI3tButton.h"
 #include "UIListBoxItem.h"
@@ -222,7 +222,6 @@ void CUICarBodyWnd::Hide()
 	inherited::Hide								();
 	if(m_pInventoryBox)
 		m_pInventoryBox->m_in_use				= false;
-	m_pUIItemInfo->SetItemImageDefaultValues();
 }
 
 void CUICarBodyWnd::UpdateLists()
@@ -305,7 +304,7 @@ void CUICarBodyWnd::Draw()
 }
 
 
-void CUICarBodyWnd::Update() 
+void CUICarBodyWnd::Update()
 {
 	if(	m_b_need_update||
 		m_pOurObject->inventory().ModifyFrame()==Device.dwFrame || 
@@ -357,9 +356,6 @@ void CUICarBodyWnd::SetCurrentItem(CUICellItem* itm)
 	if(m_pCurrentCellItem == itm) return;
 	m_pCurrentCellItem		= itm;
 	m_pUIItemInfo->InitItem(CurrentIItem());
-	if (itm==NULL) {
-		m_pUIItemInfo->SetItemImageDefaultValues();
-	}
 }
 
 void CUICarBodyWnd::TakeAll()
@@ -419,32 +415,29 @@ void CUICarBodyWnd::ActivatePropertiesBox()
 		
 	m_pUIPropertiesBox->RemoveAll();
 	
-//.	CWeaponMagazined* pWeapon = smart_cast<CWeaponMagazined*>(CurrentIItem());
-	CEatableItemObject* pEatableItem	= smart_cast<CEatableItemObject*>(CurrentIItem());
-	CMedkit* pMedkit = smart_cast<CMedkit*>(CurrentIItem());
-	CAntirad* pAntirad = smart_cast<CAntirad*>(CurrentIItem());
-	CBottleItem* pBottleItem = smart_cast<CBottleItem*>(CurrentIItem());
-    bool b_show = false;
+//.	CWeaponMagazined*		pWeapon			= smart_cast<CWeaponMagazined*>(CurrentIItem());
+	CEatableItem*			pEatableItem	= smart_cast<CEatableItem*>(CurrentIItem());
+	CMedkit*				pMedkit			= smart_cast<CMedkit*>			(CurrentIItem());
+	CAntirad*				pAntirad		= smart_cast<CAntirad*>			(CurrentIItem());
+	CBottleItem*			pBottleItem		= smart_cast<CBottleItem*>		(CurrentIItem());
+    bool					b_show			= false;
 	
 	LPCSTR _action				= NULL;
-	if (pEatableItem && !pEatableItem->IsUseHud()) {
-		if(pMedkit || pAntirad) {
-			_action						= "st_use";
-			b_show						= true;
-		}
-		else {
-			if(pBottleItem) {
-				_action					= "st_drink";
-			}
-			else {
-				_action					= "st_eat";
-			}
-			b_show						= true;
-		}
-		if(_action) {
-			m_pUIPropertiesBox->AddItem(_action,  NULL, INVENTORY_EAT_ACTION);
-		}
+	if(pMedkit || pAntirad)
+	{
+		_action						= "st_use";
+		b_show						= true;
 	}
+	else if(pEatableItem)
+	{
+		if(pBottleItem)
+			_action					= "st_drink";
+		else
+			_action					= "st_eat";
+		b_show						= true;
+	}
+	if(_action)
+		m_pUIPropertiesBox->AddItem(_action,  NULL, INVENTORY_EAT_ACTION);
 
 
 	if(b_show){
@@ -568,16 +561,7 @@ bool CUICarBodyWnd::OnItemDbClick(CUICellItem* itm)
 
 bool CUICarBodyWnd::OnItemSelected(CUICellItem* itm)
 {
-	if(m_pCurrentCellItem != itm){
-		if(m_pCurrentCellItem)
-			m_pCurrentCellItem->m_selected = false;
-	}
-	
 	SetCurrentItem		(itm);
-
-	if(m_pCurrentCellItem)
-		m_pCurrentCellItem->m_selected = true;
-	
 	return				false;
 }
 
@@ -637,4 +621,3 @@ void CUICarBodyWnd::BindDragDropListEnents(CUIDragDropListEx* lst)
 	lst->m_f_item_selected			= CUIDragDropListEx::DRAG_DROP_EVENT(this,&CUICarBodyWnd::OnItemSelected);
 	lst->m_f_item_rbutton_click		= CUIDragDropListEx::DRAG_DROP_EVENT(this,&CUICarBodyWnd::OnItemRButtonClick);
 }
-

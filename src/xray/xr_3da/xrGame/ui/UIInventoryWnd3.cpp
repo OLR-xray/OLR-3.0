@@ -5,7 +5,7 @@
 #include "../scope.h"
 #include "../grenadelauncher.h"
 #include "../Artifact.h"
-#include "../eatable_item_object.h"
+#include "../eatable_item.h"
 #include "../BottleItem.h"
 #include "../WeaponMagazined.h"
 #include "../inventory.h"
@@ -17,8 +17,6 @@
 #include "../CustomOutfit.h"
 
 
-//#undef INV_NEW_SLOTS_SYSTEM
-
 void CUIInventoryWnd::EatItem(PIItem itm)
 {
 	SetCurrentItem							(NULL);
@@ -29,7 +27,7 @@ void CUIInventoryWnd::EatItem(PIItem itm)
 	PlaySnd									(eInvItemUse);
 }
 
-#if defined(INV_NEW_SLOTS_SYSTEM) && !defined(OLR_SLOTS)
+#if defined(INV_NEW_SLOTS_SYSTEM)
 // вернет true если слот назначени€ быстрый, и не зан€т аналогичным предметом
 bool is_quick_slot(u32 slot, PIItem item, CInventory *inv)
 {
@@ -58,7 +56,7 @@ void CUIInventoryWnd::ActivatePropertiesBox()
 
 	CMedkit*			pMedkit				= smart_cast<CMedkit*>			(CurrentIItem());
 	CAntirad*			pAntirad			= smart_cast<CAntirad*>			(CurrentIItem());
-	CEatableItemObject*		pEatableItem		= smart_cast<CEatableItemObject*>		(CurrentIItem());
+	CEatableItem*		pEatableItem		= smart_cast<CEatableItem*>		(CurrentIItem());
 	CCustomOutfit*		pOutfit				= smart_cast<CCustomOutfit*>	(CurrentIItem());
 	CWeapon*			pWeapon				= smart_cast<CWeapon*>			(CurrentIItem());
 	CScope*				pScope				= smart_cast<CScope*>			(CurrentIItem());
@@ -68,17 +66,17 @@ void CUIInventoryWnd::ActivatePropertiesBox()
     
 	bool	b_show			= false;
 
-	char temp[64];
 
-#if defined(INV_NEW_SLOTS_SYSTEM) && !defined(OLR_SLOTS)
+#if defined(INV_NEW_SLOTS_SYSTEM)
 	// ƒобавим в контекстное меню выбор слота. Real Wolf.
 	auto slots = CurrentIItem()->GetSlots();
+	char temp[64];
 	for(u8 i = 0; i < (u8)slots.size(); ++i) 
 	{
 		if (slots[i] != NO_ACTIVE_SLOT && slots[i] != GRENADE_SLOT)
 			if (!m_pInv->m_slots[slots[i]].m_pIItem || m_pInv->m_slots[slots[i]].m_pIItem != CurrentIItem() )
 			{
-				CEatableItemObject *eat = smart_cast<CEatableItemObject*>(CurrentIItem() );
+				CEatableItem *eat = smart_cast<CEatableItem*>(CurrentIItem() );
 				// ƒл€ еды разрешены только быстрые слоты.
 
 				if (!eat || is_quick_slot(u32(slots[i]), CurrentIItem(), m_pInv) )
@@ -90,28 +88,10 @@ void CUIInventoryWnd::ActivatePropertiesBox()
 			}
 	};
 #else
-	const u32 current_slot = CurrentIItem()->GetSlot();
-	const bool eat_in_hud = (
-		!pEatableItem ||
-		(pEatableItem && pEatableItem->IsUseHud())
-	);
-	const bool add_move = (
-		eat_in_hud &&
-		!pOutfit &&
-		current_slot != NO_ACTIVE_SLOT &&
-		!m_pInv->m_slots[current_slot].m_bPersistent &&
-		m_pInv->GetOwner()->CanPutInSlot(CurrentIItem(), current_slot) &&
-		m_pInv->IsSlotsUseful() &&
-		m_pInv->m_slots[current_slot].m_pIItem == NULL
-	);
-
-	if (add_move) {
-		UIPropertiesBox.AddItem(
-			"st_move_to_slot",
-			NULL,
-			INVENTORY_TO_SLOT_ACTION
-		);
-		b_show = true;
+	if(!pOutfit && CurrentIItem()->GetSlot()!=NO_ACTIVE_SLOT && !m_pInv->m_slots[CurrentIItem()->GetSlot()].m_bPersistent && m_pInv->CanPutInSlot(CurrentIItem()))
+	{
+		UIPropertiesBox.AddItem("st_move_to_slot",  NULL, INVENTORY_TO_SLOT_ACTION);
+		b_show			= true;
 	}
 #endif
 
@@ -151,7 +131,7 @@ void CUIInventoryWnd::ActivatePropertiesBox()
 #endif
 	
 	//отсоединение аддонов от вещи
-	if(pWeapon && pEatableItem == NULL)
+	if(pWeapon)
 	{
 		if(pWeapon->GrenadeLauncherAttachable() && pWeapon->IsGrenadeLauncherAttached())
 		{
@@ -277,26 +257,23 @@ void CUIInventoryWnd::ActivatePropertiesBox()
 	};		
 	#endif
 	}
-	
-	if (pEatableItem && !pEatableItem->IsUseHud()) {
-		LPCSTR _action = NULL;
-		
-		if(pMedkit || pAntirad) {
-			_action					= "st_use";
-		}
-		else {
-			if(pBottleItem) {
-				_action					= "st_drink";
-			}
-			else {
-				_action					= "st_eat";
-			}
-		}
+	LPCSTR _action = NULL;
 
-		if (_action){
-			UIPropertiesBox.AddItem(_action,  NULL, INVENTORY_EAT_ACTION);
-			b_show			= true;
-		}
+	if(pMedkit || pAntirad)
+	{
+		_action					= "st_use";
+	}
+	else if(pEatableItem)
+	{
+		if(pBottleItem)
+			_action					= "st_drink";
+		else
+			_action					= "st_eat";
+	}
+
+	if(_action){
+		UIPropertiesBox.AddItem(_action,  NULL, INVENTORY_EAT_ACTION);
+		b_show			= true;
 	}
 
 	bool disallow_drop	= (pOutfit&&bAlreadyDressed);
@@ -340,13 +317,6 @@ void CUIInventoryWnd::ProcessPropertiesBoxClicked	()
 			case INVENTORY_TO_SLOT0_ACTION:
 				CurrentIItem()->SetSlot(KNIFE_SLOT);
 				break;
-			case INVENTORY_TO_SLOT4_ACTION:
-				CurrentIItem()->SetSlot(APPARATUS_SLOT);
-				break;
-			case INVENTORY_TO_SLOT9_ACTION:
-				CurrentIItem()->SetSlot(TORCH_SLOT);
-				break;
-//#	if !defined(OLR_SLOTS)
 			case INVENTORY_TO_SLOT1_ACTION:
 				CurrentIItem()->SetSlot(PISTOL_SLOT);
 				break;
@@ -355,6 +325,9 @@ void CUIInventoryWnd::ProcessPropertiesBoxClicked	()
 				break;
 			case INVENTORY_TO_SLOT3_ACTION:
 				CurrentIItem()->SetSlot(GRENADE_SLOT);
+				break;
+			case INVENTORY_TO_SLOT4_ACTION:
+				CurrentIItem()->SetSlot(APPARATUS_SLOT);
 				break;
 			case INVENTORY_TO_SLOT5_ACTION:
 				CurrentIItem()->SetSlot(BOLT_SLOT);
@@ -368,10 +341,12 @@ void CUIInventoryWnd::ProcessPropertiesBoxClicked	()
 			case INVENTORY_TO_SLOT8_ACTION:
 				CurrentIItem()->SetSlot(DETECTOR_SLOT);
 				break;
-			case INVENTORY_TO_SLOT10_ACTION:
-				CurrentIItem()->SetSlot(NO_ACTIVE_SLOT);
+			case INVENTORY_TO_SLOT9_ACTION:
+				CurrentIItem()->SetSlot(TORCH_SLOT);
 				break;
-#	if !defined(OLR_SLOTS)
+			case INVENTORY_TO_SLOT10_ACTION:
+				CurrentIItem()->SetSlot(ARTEFACT_SLOT);
+				break;
 			case INVENTORY_TO_SLOT11_ACTION:
 				CurrentIItem()->SetSlot(HELMET_SLOT);
 				break;
@@ -387,7 +362,6 @@ void CUIInventoryWnd::ProcessPropertiesBoxClicked	()
 			case INVENTORY_TO_SLOT15_ACTION:
 				CurrentIItem()->SetSlot(SLOT_QUICK_ACCESS_3);
 				break;
-#	endif
 			}
 			ToSlot(CurrentItem(), true);
 			return;
@@ -443,10 +417,15 @@ void CUIInventoryWnd::ProcessPropertiesBoxClicked	()
 	}
 }
 
-bool CUIInventoryWnd::TryUseItem(PIItem itm) {
-	CEatableItemObject* pEatableItem = smart_cast<CEatableItemObject*>(itm);
-	
-	if (pEatableItem && !pEatableItem->IsUseHud()) {
+bool CUIInventoryWnd::TryUseItem(PIItem itm)
+{
+	CBottleItem*		pBottleItem			= smart_cast<CBottleItem*>		(itm);
+	CMedkit*			pMedkit				= smart_cast<CMedkit*>			(itm);
+	CAntirad*			pAntirad			= smart_cast<CAntirad*>			(itm);
+	CEatableItem*		pEatableItem		= smart_cast<CEatableItem*>		(itm);
+
+	if(pMedkit || pAntirad || pEatableItem || pBottleItem)
+	{
 		EatItem(itm);
 		return true;
 	}

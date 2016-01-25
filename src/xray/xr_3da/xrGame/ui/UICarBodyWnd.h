@@ -2,10 +2,10 @@
 
 #include "UIDialogWnd.h"
 #include "UIEditBox.h"
-#include "UIItemInfo.h"
 #include "../inventory_space.h"
 
 class CUIDragDropListEx;
+class CUIItemInfo;
 class CUICharacterInfo;
 class CUIPropertiesBox;
 class CUI3tButton;
@@ -94,11 +94,5 @@ protected:
 
 	bool					TransferItem				(PIItem itm, CInventoryOwner* owner_from, CInventoryOwner* owner_to, bool b_check);
 	void					BindDragDropListEnents		(CUIDragDropListEx* lst);
-	
-public:
-	void Draw3DStatic() {
-		if (m_pUIItemInfo) m_pUIItemInfo->Draw3DStatic();
-	}
-
 
 };

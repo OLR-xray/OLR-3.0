@@ -13,7 +13,6 @@ CUICellItem::CUICellItem()
 	m_pData				= NULL;
 	m_custom_draw		= NULL;
 	m_b_already_drawn	= false;
-	m_selected			= false;
 	SetAccelerator		(0);
 	m_b_destroy_childs	= true;
 }
@@ -38,7 +37,7 @@ void CUICellItem::Draw()
 bool CUICellItem::OnMouse(float x, float y, EUIMessages mouse_action)
 {
 	if(mouse_action == WINDOW_LBUTTON_DOWN){
-		GetMessageTarget()->SendMessage(this, DRAG_DROP_ITEM_DRAG, NULL);
+		GetMessageTarget()->SendMessage(this, DRAG_DROP_ITEM_SELECTED, NULL);
 		return false;
 	}else
 	if(mouse_action == WINDOW_MOUSE_MOVE && pInput->iGetAsyncBtnState(0)){
@@ -193,10 +192,10 @@ void CUIDragItem::Init(const ref_shader& sh, const Frect& rect, const Frect& tex
 	m_static.SetShader				(sh);
 	m_static.SetOriginalRect		(text_rect);
 	m_static.SetWndPos				(0.0f,0.0f);
-	m_static.SetWndSize				(Fvector2().set(GetWndSize().x*1.2, GetWndSize().y*1.2));
+	m_static.SetWndSize				(GetWndSize());
 	m_static.TextureAvailable		(true);
 	m_static.TextureOn				();
-	m_static.SetColor				(color_rgba(255,255,255,255));
+	m_static.SetColor				(color_rgba(255,255,255,170));
 	m_static.SetStretchTexture		(true);
 	m_pos_offset.sub				(rect.lt, GetUICursor()->GetCursorPosition());
 }

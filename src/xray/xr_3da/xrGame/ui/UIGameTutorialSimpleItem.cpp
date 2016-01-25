@@ -195,12 +195,12 @@ void CUISequenceSimpleItem::Start()
 			}else if(!stricmp(m_pda_section,"pda_diary")){
 				ui_game_sp->PdaMenu->SetActiveSubdialog(eptDiary);
 				bShowPda = true;
-//			}else if(!stricmp(m_pda_section,"pda_ranking")){
-//				ui_game_sp->PdaMenu->SetActiveSubdialog(eptRanking);
-//				bShowPda = true;
-//			}else if(!stricmp(m_pda_section,"pda_statistics")){
-//				ui_game_sp->PdaMenu->SetActiveSubdialog(eptActorStatistic);
-//				bShowPda = true;
+			}else if(!stricmp(m_pda_section,"pda_ranking")){
+				ui_game_sp->PdaMenu->SetActiveSubdialog(eptRanking);
+				bShowPda = true;
+			}else if(!stricmp(m_pda_section,"pda_statistics")){
+				ui_game_sp->PdaMenu->SetActiveSubdialog(eptActorStatistic);
+				bShowPda = true;
 			}else if(!stricmp(m_pda_section,"pda_encyclopedia")){
 				ui_game_sp->PdaMenu->SetActiveSubdialog(eptEncyclopedia);
 				bShowPda = true;

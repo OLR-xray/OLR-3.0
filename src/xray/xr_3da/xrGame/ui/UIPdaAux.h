@@ -14,8 +14,8 @@ enum EPdaTabs
 	eptMap,
 	eptDiary,
 	eptContacts,
-	//eptRanking,
-	//eptActorStatistic,
+	eptRanking,
+	eptActorStatistic,
 	eptEncyclopedia,
 	eptNoActiveTab		= u16(-1)
 };
@@ -29,9 +29,9 @@ namespace pda_section{
 		map				=(1<<9),
 		diary			=(1<<10),
 		contacts		=(1<<11),
-		//ranking			=(1<<12),
-		//statistics		=(1<<13),
-		encyclopedia	=(1<<12),
+		ranking			=(1<<12),
+		statistics		=(1<<13),
+		encyclopedia	=(1<<14),
 
 		news			=diary|(1<<1),
 		info			=diary|(1<<2),

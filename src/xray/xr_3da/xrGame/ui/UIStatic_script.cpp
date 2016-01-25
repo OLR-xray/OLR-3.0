@@ -31,7 +31,6 @@ void CUIStatic::script_register(lua_State *L)
 		.def("AdjustWidthToText",	&CUIStatic::AdjustWidthToText)
 
 		.def("SetOriginalRect",		(void(CUIStatic::*)(float,float,float,float))&CUIStatic::SetOriginalRect)
-		.def("GetOriginalRect",		&CUIStatic::GetOriginalRect)
 		.def("SetStretchTexture",	&CUIStatic::SetStretchTexture)
 		.def("GetStretchTexture",	&CUIStatic::GetStretchTexture)
 

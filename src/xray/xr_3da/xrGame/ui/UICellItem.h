@@ -57,7 +57,6 @@ public:
 				int			m_index;
 				bool		m_b_already_drawn;
 				bool		m_b_destroy_childs;
-				bool		m_selected;
 };
 
 class CUIDragItem: public CUIWindow, public pureRender, public pureFrame

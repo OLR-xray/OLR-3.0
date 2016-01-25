@@ -187,7 +187,6 @@ void CUITradeWnd::InitTrade(CInventoryOwner* pOur, CInventoryOwner* pOthers)
 	m_uidata->UICharacterInfoRight.InitCharacter(m_pOthersInvOwner->object_id());
 
 	m_pInv								= &m_pInvOwner->inventory();
-	R_ASSERT2(pOur->GetTrade(), "trade for object does not init yet");
 	m_pOthersInv						= pOur->GetTrade()->GetPartnerInventory();
 		
 	m_pTrade							= pOur->GetTrade();
@@ -279,8 +278,6 @@ void CUITradeWnd::Hide()
 	m_uidata->UIOurTradeList.ClearAll	(true);
 	m_uidata->UIOthersBagList.ClearAll	(true);
 	m_uidata->UIOthersTradeList.ClearAll(true);
-	
-	(m_uidata->UIItemInfo).SetItemImageDefaultValues();
 }
 
 void CUITradeWnd::StartTrade()
@@ -536,16 +533,7 @@ bool CUITradeWnd::OnItemStartDrag(CUICellItem* itm)
 
 bool CUITradeWnd::OnItemSelected(CUICellItem* itm)
 {
-	if(m_pCurrentCellItem != itm){
-		if(m_pCurrentCellItem)
-			m_pCurrentCellItem->m_selected = false;
-	}
-	
 	SetCurrentItem		(itm);
-
-	if(m_pCurrentCellItem)
-		m_pCurrentCellItem->m_selected = true;
-	
 	return				false;
 }
 
@@ -624,11 +612,6 @@ void CUITradeWnd::SetCurrentItem(CUICellItem* itm)
 		m_uidata->UIItemInfo.UICost->SetText (str);
 	}
 }
-
-void CUITradeWnd::Draw3DStatic() {
-	m_uidata->UIItemInfo.Draw3DStatic();
-}
-
 
 void CUITradeWnd::SwitchToTalk()
 {

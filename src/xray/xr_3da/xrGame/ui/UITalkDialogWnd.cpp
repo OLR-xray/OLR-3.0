@@ -219,25 +219,9 @@ CUIQuestionItem::CUIQuestionItem			(CUIXml* xml_doc, LPCSTR path)
 
 	strconcat						(sizeof(str),str,path,":content_text");
 	xml_init.Init3tButton			(*xml_doc, str, 0, m_text);
-	//
-	u32							color;
-	CGameFont*					pFont;
-	
-	strconcat						(sizeof(str),str,path,":content_text:font_to_highlight");
-	xml_init.InitFont					(*xml_doc, str, 0, color, pFont);
-	if (pFont){
-		m_text->SetFontToHighlight(pFont);
-		m_text->SetFont	(pFont);
-	}
-	strconcat						(sizeof(str),str,path,":content_text:font_after_highlight");
-	xml_init.InitFont					(*xml_doc, str, 0, color, pFont);
-	if (pFont){
-		m_text->SetFontAfterHighlight(pFont);
-	}
-	//
+
 	Register						(m_text);
 	m_text->SetWindowName			("text_button");
-	m_text->EnableTextHighlighting(true);
 	AddCallback						("text_button",BUTTON_CLICKED,CUIWndCallback::void_function(this, &CUIQuestionItem::OnTextClicked));
 
 }

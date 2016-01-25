@@ -3,9 +3,10 @@
 #include "UIFrameWindow.h"
 #include "UIFrameLineWnd.h"
 #include "UIAnimatedStatic.h"
-//#include "UIMapWnd.h"
+#include "UIMapWnd.h"
 #include "UIScrollView.h"
 #include "UITabControl.h"
+#include "UITaskDescrWnd.h"
 #include "UI3tButton.h"
 #include "../HUDManager.h"
 #include "../level.h"
@@ -26,7 +27,7 @@ CUIEventsWnd::CUIEventsWnd			()
 
 CUIEventsWnd::~CUIEventsWnd			()
 {
-	//delete_data			(m_UIMapWnd);
+	delete_data			(m_UIMapWnd);
 	delete_data			(m_UITaskInfoWnd);
 }
 
@@ -59,8 +60,8 @@ void CUIEventsWnd::Init				()
 	AttachChild						(m_UIRightWnd);
 	xml_init.InitWindow				(uiXml, "main_wnd:right_frame", 0, m_UIRightWnd);
 
-	//m_UIMapWnd						= xr_new<CUIMapWnd>(); m_UIMapWnd->SetAutoDelete(false);
-	//m_UIMapWnd->Init				("pda_events.xml","main_wnd:right_frame:map_wnd");
+	m_UIMapWnd						= xr_new<CUIMapWnd>(); m_UIMapWnd->SetAutoDelete(false);
+	m_UIMapWnd->Init				("pda_events.xml","main_wnd:right_frame:map_wnd");
 
 	m_UITaskInfoWnd					= xr_new<CUITaskDescrWnd>(); m_UITaskInfoWnd->SetAutoDelete(false);
 	m_UITaskInfoWnd->Init			(&uiXml,"main_wnd:right_frame:task_descr_view");
@@ -86,7 +87,7 @@ void CUIEventsWnd::Init				()
     AddCallback						("btn_primary_or_all",BUTTON_CLICKED,boost::bind(&CUIEventsWnd::OnFilterChanged,this,_1,_2));
 */
    m_currFilter						= eActiveTask;
-   SetDescriptionMode				(false);
+   SetDescriptionMode				(true);
 
    m_ui_task_item_xml.Init			(CONFIG_PATH, UI_PATH, "job_item.xml");
 }
@@ -114,6 +115,8 @@ void CUIEventsWnd::OnFilterChanged			(CUIWindow* w, void*)
 {
 	m_currFilter			=(ETaskFilters)m_TaskFilter->GetActiveIndex();
 	ReloadList				(false);
+	if(!GetDescriptionMode())
+		SetDescriptionMode		(true);
 }
 
 void CUIEventsWnd::Reload					()
@@ -121,7 +124,8 @@ void CUIEventsWnd::Reload					()
 		m_flags.set(flNeedReload,TRUE );
 }
 
-void CUIEventsWnd::ReloadList(bool bClearOnly) {
+void CUIEventsWnd::ReloadList(bool bClearOnly)
+{
 	m_ListWnd->Clear			();
 	if(bClearOnly)				return;
 
@@ -130,22 +134,29 @@ void CUIEventsWnd::ReloadList(bool bClearOnly) {
 	GameTasks::iterator it		= tasks.begin();
 	CGameTask* task				= NULL;
 	
-	for(;it!=tasks.end();++it) {
+	for(;it!=tasks.end();++it)
+	{
 		task					= (*it).game_task;
 		R_ASSERT				(task);
 		R_ASSERT				(task->m_Objectives.size() > 0);
 
 		if( !Filter(task) )		continue;
 		CUITaskItem* pTaskItem	= NULL;
-
-		CUITaskRootItem* pRoot;
-		for (u16 i = 0; i < task->m_Objectives.size(); ++i) {
-			if (i==0) {
-				pRoot						= xr_new<CUITaskRootItem>(this);
-				pTaskItem					= pRoot;
-			}
-			else {
-				pTaskItem					= xr_new<CUITaskSubItem>(this, pRoot);
+/*
+		if(task->m_Objectives[0].TaskState()==eTaskUserDefined)
+		{
+			VERIFY				(task->m_Objectives.size()==1);
+			pTaskItem			= xr_new<CUIUserTaskItem>(this);
+			pTaskItem->SetGameTask			(task, 0);
+			m_ListWnd->AddWindow			(pTaskItem,true);
+		}else
+*/
+		for (u16 i = 0; i < task->m_Objectives.size(); ++i)
+		{
+			if(i==0){
+				pTaskItem					= xr_new<CUITaskRootItem>(this);
+			}else{
+				pTaskItem					= xr_new<CUITaskSubItem>(this);
 			}
 			pTaskItem->SetGameTask			(task, i);
 			m_ListWnd->AddWindow			(pTaskItem,true);
@@ -158,12 +169,11 @@ void CUIEventsWnd::ReloadList(bool bClearOnly) {
 void CUIEventsWnd::Show(bool status)
 {
 	inherited::Show			(status);
-	//m_UIMapWnd->Show		(status);
+	m_UIMapWnd->Show		(status);
 	m_UITaskInfoWnd->Show	(status);
 
 	ReloadList				(status == false);
 
-	this->ClearDescription();
 }
 
 bool CUIEventsWnd::Filter(CGameTask* t)
@@ -187,9 +197,9 @@ void CUIEventsWnd::SetDescriptionMode		(bool bMap)
 {
 	if(bMap){
 		m_UIRightWnd->DetachChild		(m_UITaskInfoWnd);
-		//m_UIRightWnd->AttachChild		(m_UIMapWnd);
+		m_UIRightWnd->AttachChild		(m_UIMapWnd);
 	}else{
-		//m_UIRightWnd->DetachChild		(m_UIMapWnd);
+		m_UIRightWnd->DetachChild		(m_UIMapWnd);
 		m_UIRightWnd->AttachChild		(m_UITaskInfoWnd);
 	}
 	m_flags.set(flMapMode, bMap);
@@ -200,77 +210,94 @@ bool CUIEventsWnd::GetDescriptionMode		()
 	return !!m_flags.test(flMapMode);
 }
 
-void CUIEventsWnd::ShowDescription(CGameTask* t, int idx) {
-	SGameTaskObjective& o		= t->Objective(0);
-	idx							= 0;
+void CUIEventsWnd::ShowDescription			(CGameTask* t, int idx)
+{
+	if(GetDescriptionMode()){//map
+		SGameTaskObjective& o		= t->Objective(idx);
+		CMapLocation* ml			= o.LinkedMapLocation();
 
-	m_UITaskInfoWnd->ClearAll	();
-	
-	if(Actor()->encyclopedia_registry->registry().objects_ptr()) {
-		string512	need_group;
-		if(0==idx){
-			strcpy(need_group,*t->m_ID);
-		}
-		else if(o.article_key.size()) {
-			sprintf_s(need_group, "%s/%s", *t->m_ID, *o.article_key);
-		}
-		else {
-			sprintf_s(need_group, "%s/%d", *t->m_ID, idx);
-		}
+		if(ml&&ml->SpotEnabled())
+			m_UIMapWnd->SetTargetMap(ml->LevelName(), ml->Position(), true);
+	}else
+	{//articles
+		SGameTaskObjective& o		= t->Objective(0);
+		idx							= 0;
 
-		ARTICLE_VECTOR::const_iterator it = Actor()->encyclopedia_registry->registry().objects_ptr()->begin();
+		m_UITaskInfoWnd->ClearAll	();
 
-		for(; it != Actor()->encyclopedia_registry->registry().objects_ptr()->end(); ++it) {
-			if (ARTICLE_DATA::eTaskArticle == it->article_type) {
-				CEncyclopediaArticle	A;
-				A.Load(it->article_id);
-				
-				const shared_str& group = A.data()->group;
+		if(Actor()->encyclopedia_registry->registry().objects_ptr())
+		{
+			string512	need_group;
+			if(0==idx){
+				strcpy(need_group,*t->m_ID);
+			}else
+			if(o.article_key.size())
+			{
+				sprintf_s(need_group, "%s/%s", *t->m_ID, *o.article_key);
+			}else
+			{
+				sprintf_s(need_group, "%s/%d", *t->m_ID, idx);
+			}
 
-				if (strstr(group.c_str(), need_group)== group.c_str() ) {
-					u32 sz = xr_strlen(need_group);
-					if ( group.size()== sz || group.c_str()[sz]=='/' ) {
-						m_UITaskInfoWnd->AddArticle(&A);
+			ARTICLE_VECTOR::const_iterator it		= Actor()->encyclopedia_registry->registry().objects_ptr()->begin();
+
+			for(; it != Actor()->encyclopedia_registry->registry().objects_ptr()->end(); ++it)
+			{
+				if (ARTICLE_DATA::eTaskArticle == it->article_type)
+				{
+					CEncyclopediaArticle	A;
+					A.Load					(it->article_id);
+
+					const shared_str& group = A.data()->group;
+
+					if( strstr(group.c_str(), need_group)== group.c_str() )
+					{
+						u32 sz			= xr_strlen(need_group);
+						if ( group.size()== sz || group.c_str()[sz]=='/' )
+							m_UITaskInfoWnd->AddArticle(&A);
+					}else
+					if(o.article_id.size() && it->article_id ==o.article_id)
+					{
+						CEncyclopediaArticle			A;
+						A.Load							(it->article_id);
+						m_UITaskInfoWnd->AddArticle		(&A);
 					}
-				}
-				else if(o.article_id.size() && it->article_id ==o.article_id) {
-					CEncyclopediaArticle A;
-					A.Load(it->article_id);
-					m_UITaskInfoWnd->AddArticle(&A);
 				}
 			}
 		}
 	}
 
-	const int sz = m_ListWnd->GetSize		();
+	int sz			= m_ListWnd->GetSize		();
 
-	for(int i=0; i<sz;++i) {
-		auto itm = (CUITaskItem*)m_ListWnd->GetItem(i);
+	for(int i=0; i<sz;++i)
+	{
+		CUITaskItem* itm			= (CUITaskItem*)m_ListWnd->GetItem(i);
 
-		if ((itm->GameTask()==t) && (itm->ObjectiveIdx()==idx) ) {
-			itm->MarkSelected(true);
-		}
-		else {
-			itm->MarkSelected(false);
-		}
+		if((itm->GameTask()==t) && (itm->ObjectiveIdx()==idx) )	
+			itm->MarkSelected		(true);
+		else
+			itm->MarkSelected		(false);
 	}
 }
 
 bool CUIEventsWnd::ItemHasDescription(CUITaskItem* itm)
 {
-	if(itm->ObjectiveIdx()==0) {
-		return itm->GameTask()->HasLinkedMapLocations();
-	}
-	else {
-		SGameTaskObjective* obj = itm->Objective();
-		CMapLocation* ml = obj->LinkedMapLocation();
-		const bool bHasLocation = (NULL != ml);
-		const bool bIsMapMode = GetDescriptionMode(); 
-		return (bIsMapMode&&bHasLocation&&ml->SpotEnabled());
+	if(itm->ObjectiveIdx()==0)// root
+	{
+		bool bHasLocation	= itm->GameTask()->HasLinkedMapLocations();
+		return bHasLocation;
+	}else
+	{
+		SGameTaskObjective	*obj				= itm->Objective();
+		CMapLocation* ml						= obj->LinkedMapLocation();
+		bool bHasLocation						= (NULL != ml);
+		bool bIsMapMode							= GetDescriptionMode(); 
+		bool b									= (bIsMapMode&&bHasLocation&&ml->SpotEnabled());
+		return b;
 	}
 }
-void CUIEventsWnd::Reset() {
+void CUIEventsWnd::Reset()
+{
 	inherited::Reset	();
 	Reload				();
 }
-

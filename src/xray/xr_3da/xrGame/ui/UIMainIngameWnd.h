@@ -28,7 +28,6 @@ class					CActor;
 class					CWeapon;
 class					CMissile;
 class					CInventoryItem;
-//class                   CUIMainIngameWnd;
 
 class CUIMainIngameWnd: public CUIWindow  
 {
@@ -41,7 +40,7 @@ public:
 	virtual void Update();
 
 	bool OnKeyboardPress(int dik);
-	//void HudAdjustMode(int);
+	void HudAdjustMode(int);
 
 protected:
 
@@ -154,7 +153,6 @@ protected:
 	// Отображение подсказок при наведении прицела на объект
 	void				RenderQuickInfos();
 
-
 public:
 	CUICarPanel&		CarPanel							(){return UICarPanel;};
 	CUIMotionIcon&		MotionIcon							(){return UIMotionIcon;}
@@ -173,11 +171,10 @@ protected:
 public:
 	void				SetPickUpItem	(CInventoryItem* PickUpItem);
 
-
 	DECLARE_SCRIPT_REGISTER_FUNCTION
-
-//	void				draw_adjust_mode					();
-
+#ifdef DEBUG
+	void				draw_adjust_mode					();
+#endif
 };
 
 add_to_type_list(CUIMainIngameWnd)

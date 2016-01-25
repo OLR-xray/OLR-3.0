@@ -3,7 +3,6 @@
 class CInventory;
 #include "UIScriptWnd.h"
 #include "UIStatic.h"
-#include "UIStatic.h"
 
 #include "UIProgressBar.h"
 
@@ -12,16 +11,12 @@ class CInventory;
 
 #include "UIOutfitInfo.h"
 #include "UIItemInfo.h"
-#include "ui3dstatic.h"
-
-//#undef INV_NEW_SLOTS_SYSTEM
 
 #if defined(INV_NEW_SLOTS_SYSTEM)
 	#include "UISleepWnd.h"
 #endif
 
 #include "../inventory_space.h"
-
 
 class CArtefact;
 class CUI3tButton;
@@ -52,19 +47,11 @@ public:
 
 	virtual void			Update						();
 	virtual void			Draw						();
-	
+
 	virtual void			Show						();
 	virtual void			Hide						();
 
 	void					AddItemToBag				(PIItem pItem);
-	
-	IRender_Visual*			OutfitStaticVisual			() {
-		return UIOutfitBackground?UIOutfitBackground->Visual():NULL;
-	}
-	void					OutfitStaticUpdate			();
-	void					OutfitStaticDestroy			() {
-		if (UIOutfitBackground) UIOutfitBackground->Destroy();
-	}
 
 	
 protected:
@@ -111,26 +98,23 @@ protected:
 	CUISleepWnd					UISleepWnd;
 	CUIDragDropListEx*			m_pUIKnifeList;
 	CUIDragDropListEx*			m_pUIBinocularList;
-	CUIDragDropListEx*			m_pUITorchList;
-	
-#	if !defined(OLR_SLOTS)
 	CUIDragDropListEx*			m_pUIDetectorList;
+	CUIDragDropListEx*			m_pUITorchList;
 	CUIDragDropListEx*			m_pUIPDAList;
 	CUIDragDropListEx*			m_pUIHelmetList;
 	CUIDragDropListEx*			m_pUISlotQuickAccessList_0;
 	CUIDragDropListEx*			m_pUISlotQuickAccessList_1;
 	CUIDragDropListEx*			m_pUISlotQuickAccessList_2;
 	CUIDragDropListEx*			m_pUISlotQuickAccessList_3;
-#	endif
-	
 	CUIProgressBar				UIProgressBarSatiety;
-	CUIProgressBar				UIProgressBarPower;
 #endif
 	CUIDragDropListEx*			m_slots_array [SLOTS_TOTAL];  // alpet: для индексированного доступа
 
+#if defined(INV_OUTFIT_FULL_ICON_HIDE)
+	CUIDragDropListEx*		m_pUIOutfitList;
+#else
 	CUIOutfitDragDropList*		m_pUIOutfitList;
-	CUI3dStatic* 				UIOutfitBackground;
-
+#endif
 	
 	void						ClearAllLists				();
 	void						BindDragDropListEnents		(CUIDragDropListEx* lst);
@@ -196,16 +180,8 @@ protected:
 	u32							m_iCurrentActiveSlot;
 public:
 	PIItem						CurrentIItem();
-	
-	void Draw3DStatic() {
-		UIItemInfo.Draw3DStatic();
-		if (this->IsShown()) {
-			if (UIOutfitBackground) UIOutfitBackground->Draw_();
-		}
-	}
-
 };
 
-#if defined(INV_NEW_SLOTS_SYSTEM) && !defined(OLR_SLOTS)
+#if defined(INV_NEW_SLOTS_SYSTEM)
 extern bool is_quick_slot(u32, CInventoryItem*, CInventory*);
 #endif

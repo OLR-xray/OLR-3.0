@@ -2,8 +2,6 @@
 
 #include "../../../build_config_defines.h"
 
-//#undef INV_NEW_SLOTS_SYSTEM
-
 //////////////////////////////////////////////////////////////////////////
 
 enum EUIMessages

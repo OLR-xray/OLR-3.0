@@ -4,7 +4,6 @@
 #include "UIBuyWndBase.h"
 #include "UIWndCallback.h"
 #include "restrictions.h"
-#include "UIItemInfo.h"
 
 
 class CUIDragDropListEx;
@@ -16,6 +15,7 @@ class CUITabControl;
 class CUICellItem;
 class CInventoryItem;
 class CItemMgr;
+class CUIItemInfo;
 
 struct SBuyItemInfo
 {
@@ -127,12 +127,6 @@ public:
 	virtual void 	Show						();
 	virtual void 	Hide						();
 	virtual bool	IsIgnoreMoneyAndRank		();
-	
-	
-	void Draw3DStatic() {
-		if (m_item_info) m_item_info->Draw3DStatic();
-	}
-
 
 
 private:

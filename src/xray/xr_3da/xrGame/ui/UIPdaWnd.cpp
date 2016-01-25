@@ -38,8 +38,8 @@ CUIPdaWnd::CUIPdaWnd()
 	UIPdaContactsWnd		= NULL;
 	UIEncyclopediaWnd		= NULL;
 	UIDiaryWnd				= NULL;
-	// UIActorInfo				= NULL;
-	// UIStalkersRanking		= NULL;
+	UIActorInfo				= NULL;
+	UIStalkersRanking		= NULL;
 	UIEventsWnd				= NULL;
 	m_updatedSectionImage	= NULL;
 	m_oldSectionImage		= NULL;
@@ -52,8 +52,8 @@ CUIPdaWnd::~CUIPdaWnd()
 	delete_data		(UIPdaContactsWnd);
 	delete_data		(UIEncyclopediaWnd);
 	delete_data		(UIDiaryWnd);
-	// delete_data		(UIActorInfo);
-	// delete_data		(UIStalkersRanking);
+	delete_data		(UIActorInfo);
+	delete_data		(UIStalkersRanking);
 	delete_data		(UIEventsWnd);
 	delete_data		(m_updatedSectionImage);
 	delete_data		(m_oldSectionImage);
@@ -111,12 +111,12 @@ void CUIPdaWnd::Init()
 		UIEncyclopediaWnd->Init	();
 
 		// Окно статистики о актере
-		// UIActorInfo				= xr_new<CUIActorInfoWnd>();
-		// UIActorInfo->Init		();
+		UIActorInfo				= xr_new<CUIActorInfoWnd>();
+		UIActorInfo->Init		();
 
 		// Окно рейтинга сталкеров
-		// UIStalkersRanking		= xr_new<CUIStalkersRankingWnd>();
-		// UIStalkersRanking->Init	();
+		UIStalkersRanking		= xr_new<CUIStalkersRankingWnd>();
+		UIStalkersRanking->Init	();
 
 		UIEventsWnd				= xr_new<CUIEventsWnd>();
 		UIEventsWnd->Init		();
@@ -192,8 +192,8 @@ void CUIPdaWnd::UpdateDateTime()
 
 #include "../../build_config_defines.h"
 #if defined(UI_LOCK_PDA_WITHOUT_PDA_IN_SLOT)
-#	include "../Actor.h"
-#	include "../Inventory.h"
+	#include "../Actor.h"
+	#include "../Inventory.h"
 #endif
 
 void CUIPdaWnd::Update()
@@ -238,16 +238,16 @@ void CUIPdaWnd::SetActiveSubdialog(EPdaTabs section)
 		InventoryUtilities::SendInfoToActor("ui_pda_encyclopedia");
 		g_pda_info_state		&= ~pda_section::encyclopedia;
 		break;
-	//case eptActorStatistic:
-		//m_pActiveDialog			= smart_cast<CUIWindow*>(UIActorInfo);
-		//InventoryUtilities::SendInfoToActor("ui_pda_actor_info");
-		//g_pda_info_state		&= ~pda_section::statistics;
-		//break;
-	//case eptRanking:
-		//m_pActiveDialog			= smart_cast<CUIWindow*>(UIStalkersRanking);
-		//g_pda_info_state		&= ~pda_section::ranking;
-		//InventoryUtilities::SendInfoToActor("ui_pda_ranking");
-		//break;
+	case eptActorStatistic:
+		m_pActiveDialog			= smart_cast<CUIWindow*>(UIActorInfo);
+		InventoryUtilities::SendInfoToActor("ui_pda_actor_info");
+		g_pda_info_state		&= ~pda_section::statistics;
+		break;
+	case eptRanking:
+		m_pActiveDialog			= smart_cast<CUIWindow*>(UIStalkersRanking);
+		g_pda_info_state		&= ~pda_section::ranking;
+		InventoryUtilities::SendInfoToActor("ui_pda_ranking");
+		break;
 	case eptQuests:
 		m_pActiveDialog			= smart_cast<CUIWindow*>(UIEventsWnd);
 		g_pda_info_state		&= ~pda_section::quests;
@@ -340,19 +340,19 @@ void CUIPdaWnd::DrawUpdatedSections				()
 	else
 		draw_sign								(m_oldSectionImage, pos);
 
-	//pos = m_sign_places_main[eptRanking];
-	//pos.add(tab_pos);
-	//if(g_pda_info_state&pda_section::ranking)
-	//	draw_sign								(m_updatedSectionImage, pos);
-	//else
-	//	draw_sign								(m_oldSectionImage, pos);
+	pos = m_sign_places_main[eptRanking];
+	pos.add(tab_pos);
+	if(g_pda_info_state&pda_section::ranking)
+		draw_sign								(m_updatedSectionImage, pos);
+	else
+		draw_sign								(m_oldSectionImage, pos);
 
-	//pos = m_sign_places_main[eptActorStatistic];
-	//pos.add(tab_pos);
-	//if(g_pda_info_state&pda_section::statistics)
-	//	draw_sign								(m_updatedSectionImage, pos);
-	//else
-	//	draw_sign								(m_oldSectionImage, pos);
+	pos = m_sign_places_main[eptActorStatistic];
+	pos.add(tab_pos);
+	if(g_pda_info_state&pda_section::statistics)
+		draw_sign								(m_updatedSectionImage, pos);
+	else
+		draw_sign								(m_oldSectionImage, pos);
 
 	pos = m_sign_places_main[eptEncyclopedia];
 	pos.add(tab_pos);
@@ -370,8 +370,8 @@ void CUIPdaWnd::Reset()
 	if (UIPdaContactsWnd)	UIPdaContactsWnd->Reset	();
 	if (UIEncyclopediaWnd)	UIEncyclopediaWnd->Reset();
 	if (UIDiaryWnd)			UIDiaryWnd->Reset		();
-	//if (UIActorInfo)		UIActorInfo->Reset		();
-	//if (UIStalkersRanking)	UIStalkersRanking->Reset();
+	if (UIActorInfo)		UIActorInfo->Reset		();
+	if (UIStalkersRanking)	UIStalkersRanking->Reset();
 	if (UIEventsWnd)		UIEventsWnd->Reset		();
 }
 
@@ -386,7 +386,7 @@ void RearrangeTabButtons(CUITabControl* pTab, xr_vector<Fvector2>& vec_sign_plac
 	Fvector2					pos;
 	pos.set						((*it)->GetWndPos());
 	Fvector2					sign_sz;
-	sign_sz.set					(29.0f+23.0f, 41.0f);
+	sign_sz.set					(9.0f+3.0f, 11.0f);
 	u32 idx						= 0;
 	float	btn_text_len		= 0.0f;
 	CUIStatic* st				= NULL;
@@ -398,7 +398,7 @@ void RearrangeTabButtons(CUITabControl* pTab, xr_vector<Fvector2>& vec_sign_plac
 			st = xr_new<CUIStatic>(); st->SetAutoDelete(true);pTab->AttachChild(st);
 			st->SetFont((*it)->GetFont());
 			st->SetTextColor	(color_rgba(90,90,90,255));
-			st->SetText("");
+			st->SetText("//");
 			st->SetWndSize		((*it)->GetWndSize());
 			st->AdjustWidthToText();
 			st->SetWndPos		(pos);

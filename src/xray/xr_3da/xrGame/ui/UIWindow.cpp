@@ -27,13 +27,7 @@ poolSS< _12b, 128>	ui_allocator;
 	void dump_list_wnd(){}
 #endif
 
-struct _rect_data {
-	Frect m_rect;
-	Frect m_bound_rect;
-	u32 m_color;
-};
-
-xr_vector<_rect_data> g_wnds_rects;
+xr_vector<Frect> g_wnds_rects;
 ref_shader  dbg_draw_sh =0;
 ref_geom	dbg_draw_gm =0;
 
@@ -46,16 +40,12 @@ void clean_wnd_rects()
 	dbg_draw_gm.destroy();
 }
 
-void add_rect_to_draw(Frect r, u32 c, Frect b)
+void add_rect_to_draw(Frect r)
 {
-	_rect_data pData;
-	pData.m_rect = r;
-	pData.m_color = c;
-	pData.m_bound_rect = b;
-	g_wnds_rects.push_back(pData);
+	g_wnds_rects.push_back(r);
 }
-
-void draw_rect(Frect& r, u32 color, Frect& bound_rect) {
+void draw_rect(Frect& r, u32 color)
+{
 
 	if(!dbg_draw_sh){
 		dbg_draw_sh.create("hud\\default","ui\\ui_pop_up_active_back");
@@ -64,26 +54,12 @@ void draw_rect(Frect& r, u32 color, Frect& bound_rect) {
 	RCache.set_Shader			(dbg_draw_sh);
 	u32							vOffset;
 	FVF::TL* pv					= (FVF::TL*)RCache.Vertex.Lock	(5,dbg_draw_gm.stride(),vOffset);
-	
-	const u8 vb_argc = 5;
-	const Fvector2 vb_args[vb_argc] = {
-		{r.lt.x, r.lt.y},
-		{r.rb.x, r.lt.y},
-		{r.rb.x, r.rb.y},
-		{r.lt.x, r.rb.y},
-		{r.lt.x, r.lt.y}
-	};
-	
-	for (u8 i=0;i<vb_argc;++i) {
-		Fvector2 this_pos = vb_args[i];
-		// Msg("x %f, y %f, top %f, bottom %f, right %f, left %f", this_pos.x, this_pos.y, bound_rect.top, bound_rect.bottom, bound_rect.right, bound_rect.left);
-		if (this_pos.y < bound_rect.top) this_pos.y = bound_rect.top;
-		if (this_pos.y > bound_rect.bottom) this_pos.y = bound_rect.bottom;
-		if (this_pos.x > bound_rect.right) this_pos.x = bound_rect.right;
-		if (this_pos.x < bound_rect.left) this_pos.x = bound_rect.left;
-		pv->set(this_pos.x, this_pos.y, color, 0,0);
-		++pv;
-	}
+
+	pv->set(r.lt.x, r.lt.y, color, 0,0); ++pv;
+	pv->set(r.rb.x, r.lt.y, color, 0,0); ++pv;
+	pv->set(r.rb.x, r.rb.y, color, 0,0); ++pv;
+	pv->set(r.lt.x, r.rb.y, color, 0,0); ++pv;
+	pv->set(r.lt.x, r.lt.y, color, 0,0); ++pv;
 
 	RCache.Vertex.Unlock		(5,dbg_draw_gm.stride());
 	RCache.set_Geometry			(dbg_draw_gm);
@@ -92,21 +68,17 @@ void draw_rect(Frect& r, u32 color, Frect& bound_rect) {
 }
 void draw_wnds_rects()
 {
-	if(g_wnds_rects.empty())	return;
+	if(0==g_wnds_rects.size())	return;
 
-	xr_vector<_rect_data>::iterator it = g_wnds_rects.begin();
-	xr_vector<_rect_data>::iterator it_e = g_wnds_rects.end();
+	xr_vector<Frect>::iterator it = g_wnds_rects.begin();
+	xr_vector<Frect>::iterator it_e = g_wnds_rects.end();
 
-	for(;it!=it_e;++it) {
-		Frect r = it->m_rect;
+	for(;it!=it_e;++it)
+	{
+		Frect& r = *it;
 		UI()->ClientToScreenScaled(r.lt, r.lt.x, r.lt.y);
 		UI()->ClientToScreenScaled(r.rb, r.rb.x, r.rb.y);
-		
-		Frect r2 = it->m_bound_rect;
-		UI()->ClientToScreenScaled(r2.lt, r2.lt.x, r2.lt.y);
-		UI()->ClientToScreenScaled(r2.rb, r2.rb.x, r2.rb.y);
-		
-		draw_rect				(r, it->m_color, r2);
+		draw_rect				(r,color_rgba(255,0,0,255));
 	};
 
 	g_wnds_rects.clear();
@@ -203,7 +175,7 @@ void CUIWindow::Draw()
 	if(g_show_wnd_rect2){
 		Frect r;
 		GetAbsoluteRect(r);
-		add_rect_to_draw(r, color_rgba(255,0,0,255), r);
+		add_rect_to_draw(r);
 	}
 #endif
 }
@@ -227,7 +199,7 @@ void CUIWindow::Update()
 		if(cursor_on_window&&g_show_wnd_rect){
 			Frect r;
 			GetAbsoluteRect(r);
-			add_rect_to_draw(r, color_rgba(255,0,0,255), r);
+			add_rect_to_draw(r);
 		}
 #endif
 		// RECEIVE and LOST focus

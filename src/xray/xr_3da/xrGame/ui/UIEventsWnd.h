@@ -2,12 +2,11 @@
 #include "UIWindow.h"
 #include "UIWndCallback.h"
 #include "UIXmlInit.h"
-#include "UITaskDescrWnd.h"
 
 class CUIFrameWindow;
 class CUIFrameLineWnd;
 class CUIAnimatedStatic;
-//class CUIMapWnd;
+class CUIMapWnd;
 class CUI3tButton;
 class CUITabControl;
 class CGameTask;
@@ -32,7 +31,7 @@ class CUIEventsWnd	:public CUIWindow, public CUIWndCallback{
 	CUIWindow*					m_UIRightWnd;
 	CUIFrameLineWnd*			m_UILeftHeader;
 	CUIAnimatedStatic*			m_UIAnimation;
-	//CUIMapWnd*					m_UIMapWnd;
+	CUIMapWnd*					m_UIMapWnd;
 	CUITaskDescrWnd*			m_UITaskInfoWnd;
 	CUIScrollView*				m_ListWnd;
 	CUITabControl*				m_TaskFilter;
@@ -45,9 +44,6 @@ public:
 	void						SetDescriptionMode		(bool bMap);
 	bool						GetDescriptionMode		();
 	void						ShowDescription			(CGameTask* t, int idx);
-	void						ClearDescription		() {
-		if (m_UITaskInfoWnd) m_UITaskInfoWnd->ClearAll	();
-	}
 	bool						ItemHasDescription		(CUITaskItem*);
 public:
 

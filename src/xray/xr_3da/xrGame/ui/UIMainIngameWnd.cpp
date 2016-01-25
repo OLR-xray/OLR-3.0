@@ -371,9 +371,9 @@ void CUIMainIngameWnd::Draw()
 
 	RenderQuickInfos			();		
 
-//#ifdef DEBUG
-//	draw_adjust_mode			();
-//#endif
+#ifdef DEBUG
+	draw_adjust_mode			();
+#endif
 }
 
 
@@ -471,7 +471,7 @@ void CUIMainIngameWnd::Update()
 		}
 		// ewiArtefact
 		if( (GameID() == GAME_ARTEFACTHUNT) && !(Device.dwFrame%30) ){
-			bool b_Artefact = (NULL != m_pActor->inventory().ItemFromSlot(NO_ACTIVE_SLOT));
+			bool b_Artefact = (NULL != m_pActor->inventory().ItemFromSlot(ARTEFACT_SLOT));
 			if(b_Artefact)
 				SetWarningIconColor	(ewiArtefact,0xffffffff);			
 			else
@@ -561,63 +561,79 @@ void CUIMainIngameWnd::Update()
 	CUIWindow::Update				();
 }
 
-bool CUIMainIngameWnd::OnKeyboardPress(int dik)
+void CUIMainIngameWnd::HudAdjustMode(int dik)
 {
-#if 0//def DEBUG
-	test_key(dik);
-#endif
 	// поддержка режима adjust hud mode
-	bool flag = false;
 	if (g_bHudAdjustMode)
 	{
 		CWeaponHUD *pWpnHud = NULL;
 		if (m_pWeapon)
 		{
 			pWpnHud = m_pWeapon->GetHUD();
-//			if (!pWpnHud) return false;
 		}
 		else
-			return false;
+			return;
 
 		Fvector tmpV;
 
-		if (1 == g_bHudAdjustMode) //hud offset and zoom offset
+		if (1 == g_bHudAdjustMode) //zoom offset
 		{
-			CActor *pActor = smart_cast<CActor*>(Level().CurrentEntity());
+			if (!pWpnHud) return;
+			tmpV = pWpnHud->ZoomOffset();
 
-			R_ASSERT(pActor);
-
-			// output coordinate info to the console
-			if (dik == DIK_P)
+			switch (dik)
 			{
-				if (!pWpnHud) return false;
-
-				Fmatrix m_offset = pWpnHud->HudOffsetMatrix();
-
-				Msg("Print coordinates:");
+				// Rotate +y
+			case DIK_K:
+				pWpnHud->SetZoomRotateX(pWpnHud->ZoomRotateX() + g_fHudAdjustValue);
+				break;
+				// Rotate -y
+			case DIK_I:
+				pWpnHud->SetZoomRotateX(pWpnHud->ZoomRotateX() - g_fHudAdjustValue);
+				break;
+				// Rotate +x
+			case DIK_L:
+				pWpnHud->SetZoomRotateY(pWpnHud->ZoomRotateY() + g_fHudAdjustValue);
+				break;
+				// Rotate -x
+			case DIK_J:
+				pWpnHud->SetZoomRotateY(pWpnHud->ZoomRotateY() - g_fHudAdjustValue);
+				break;
+				// Shift +x
+			case DIK_W:
+				tmpV.y += g_fHudAdjustValue;
+				break;
+				// Shift -y
+			case DIK_S:
+				tmpV.y -= g_fHudAdjustValue;
+				break;
+				// Shift +x
+			case DIK_D:
+				tmpV.x += g_fHudAdjustValue;
+				break;
+				// Shift -x
+			case DIK_A:
+				tmpV.x -= g_fHudAdjustValue;
+				break;
+				// Shift +z
+			case DIK_Q:
+				tmpV.z += g_fHudAdjustValue;
+				break;
+				// Shift -z
+			case DIK_E:
+				tmpV.z -= g_fHudAdjustValue;
+				break;
+				// output coordinate info to the console
+			case DIK_P:
 				string256 tmpStr;
-				sprintf_s(tmpStr, "[%s]",
-					pSettings->r_string(*m_pWeapon->cNameSect(),"hud"));
-				Log(tmpStr);
-					sprintf_s(tmpStr, "position\t\t\t= %f,%f,%f",
-						m_offset.c.x,
-						m_offset.c.y,
-						m_offset.c.z);
+				sprintf_s(tmpStr, "%s",
+					*m_pWeapon->cNameSect());
 				Log(tmpStr);
 
-				Fvector orient;
-				m_offset.getHPB (orient);
-				orient.mul (180.f/PI);
-
-				sprintf_s(tmpStr, "orientation\t\t\t= %f,%f,%f",
-						orient.x,
-						orient.y,
-						orient.z);
-				Log(tmpStr);
-						sprintf_s(tmpStr, "zoom_offset\t\t\t= %f,%f,%f",
-						pWpnHud->ZoomOffset().x,
-						pWpnHud->ZoomOffset().y,
-						pWpnHud->ZoomOffset().z);
+				sprintf_s(tmpStr, "zoom_offset\t\t\t= %f,%f,%f",
+					pWpnHud->ZoomOffset().x,
+					pWpnHud->ZoomOffset().y,
+					pWpnHud->ZoomOffset().z);
 				Log(tmpStr);
 				sprintf_s(tmpStr, "zoom_rotate_x\t\t= %f",
 					pWpnHud->ZoomRotateX());
@@ -625,179 +641,44 @@ bool CUIMainIngameWnd::OnKeyboardPress(int dik)
 				sprintf_s(tmpStr, "zoom_rotate_y\t\t= %f",
 					pWpnHud->ZoomRotateY());
 				Log(tmpStr);
-				flag = true;
-
-			} else if (pActor->IsZoomAimingMode())
-			{
-				if (!pWpnHud) return false;
-				tmpV = pWpnHud->ZoomOffset();
-
-				switch (dik)
-				{
-				// Rotate +x
-				case DIK_K:
-					pWpnHud->SetZoomRotateX(pWpnHud->ZoomRotateX() + g_fHudAdjustValue);
-					flag = true;
-					break;
-				// Rotate -x
-				case DIK_I:
-					pWpnHud->SetZoomRotateX(pWpnHud->ZoomRotateX() - g_fHudAdjustValue);
-					flag = true;
-					break;
-				// Rotate +y
-				case DIK_L:
-					pWpnHud->SetZoomRotateY(pWpnHud->ZoomRotateY() + g_fHudAdjustValue);
-					flag = true;
-					break;
-				// Rotate -y
-				case DIK_J:
-					pWpnHud->SetZoomRotateY(pWpnHud->ZoomRotateY() - g_fHudAdjustValue);
-					flag = true;
-					break;
-				// Shift +x
-				case DIK_W:
-					tmpV.y += g_fHudAdjustValue;
-					flag = true;
-					break;
-				// Shift -y
-				case DIK_S:
-					tmpV.y -= g_fHudAdjustValue;
-					flag = true;
-					break;
-				// Shift +x
-				case DIK_D:
-					tmpV.x += g_fHudAdjustValue;
-					flag = true;
-					break;
-				// Shift -x
-				case DIK_A:
-					tmpV.x -= g_fHudAdjustValue;
-					flag = true;
-					break;
-				// Shift +z
-				case DIK_Q:
-					tmpV.z += g_fHudAdjustValue;
-					flag = true;
-					break;
-				// Shift -z
-				case DIK_E:
-					tmpV.z -= g_fHudAdjustValue;
-					flag = true;
-					break;
-				}
-
-				if (tmpV.x || tmpV.y || tmpV.z)
-					pWpnHud->SetZoomOffset(tmpV);
-			} else {
-				if (!pWpnHud) return false;
-
-				Fmatrix m_offset = pWpnHud->HudOffsetMatrix();
-				tmpV = pWpnHud->ZoomOffset();
-
-				switch (dik)
-				{
-				// Rotate +x
-				case DIK_L:
-					m_offset.k.x += g_fHudAdjustValue;
-					flag = true;
-					break;
-				// Rotate -x
-				case DIK_J:
-					m_offset.k.x -= g_fHudAdjustValue;
-					flag = true;
-					break;
-				// Rotate +y
-				case DIK_I:
-					m_offset.k.y += g_fHudAdjustValue;
-					flag = true;
-					break;
-				// Rotate -y
-				case DIK_K:
-					m_offset.k.y -= g_fHudAdjustValue;
-					flag = true;
-					break;
-				// Shift +x
-				case DIK_W:
-					m_offset.c.y += g_fHudAdjustValue;
-					tmpV.y -= g_fHudAdjustValue;
-					flag = true;
-					break;
-				// Shift -y
-				case DIK_S:
-					m_offset.c.y -= g_fHudAdjustValue;
-					tmpV.y += g_fHudAdjustValue;
-					flag = true;
-					break;
-				// Shift +x
-				case DIK_D:
-					m_offset.c.x += g_fHudAdjustValue;
-					tmpV.x -= g_fHudAdjustValue;
-					flag = true;
-					break;
-				// Shift -x
-				case DIK_A:
-					m_offset.c.x -= g_fHudAdjustValue;
-					tmpV.x += g_fHudAdjustValue;
-					flag = true;
-					break;
-				// Shift +z
-				case DIK_Q:
-					m_offset.c.z += g_fHudAdjustValue;
-					tmpV.z -= g_fHudAdjustValue;
-					flag = true;
-					break;
-				// Shift -z
-				case DIK_E:
-					m_offset.c.z -= g_fHudAdjustValue;
-					tmpV.z += g_fHudAdjustValue;
-					flag = true;
-					break;
-				}
-
-				pWpnHud->SetHudOffsetMatrix(m_offset);
-				if (tmpV.x || tmpV.y || tmpV.z)
-					pWpnHud->SetZoomOffset(tmpV);
+				break;
 			}
+
+			if (tmpV.x || tmpV.y || tmpV.z)
+				pWpnHud->SetZoomOffset(tmpV);
 		}
 		else if (2 == g_bHudAdjustMode || 5 == g_bHudAdjustMode) //firePoints
 		{
-			if(TRUE==m_pWeapon->GetHUDmode())
+			if (TRUE == m_pWeapon->GetHUDmode())
 				tmpV = (2 == g_bHudAdjustMode) ? pWpnHud->FirePoint() : pWpnHud->FirePoint2();
 			else
 				tmpV = (2 == g_bHudAdjustMode) ? m_pWeapon->vLoadedFirePoint : m_pWeapon->vLoadedFirePoint2;
 
-		
 			switch (dik)
 			{
 				// Shift +x
 			case DIK_A:
 				tmpV.y += g_fHudAdjustValue;
-				flag = true;
 				break;
 				// Shift -x
 			case DIK_D:
 				tmpV.y -= g_fHudAdjustValue;
-				flag = true;
 				break;
 				// Shift +z
 			case DIK_Q:
 				tmpV.x += g_fHudAdjustValue;
-				flag = true;
 				break;
 				// Shift -z
 			case DIK_E:
 				tmpV.x -= g_fHudAdjustValue;
-				flag = true;
 				break;
 				// Shift +y
 			case DIK_S:
 				tmpV.z += g_fHudAdjustValue;
-				flag = true;
 				break;
 				// Shift -y
 			case DIK_W:
 				tmpV.z -= g_fHudAdjustValue;
-				flag = true;
 				break;
 				// output coordinate info to the console
 			case DIK_P:
@@ -809,33 +690,37 @@ bool CUIMainIngameWnd::OnKeyboardPress(int dik)
 					Log(tmpStr);
 				}
 
-			if(TRUE==m_pWeapon->GetHUDmode())
-				Msg("weapon hud section:");
-			else
-				Msg("weapon section:");
+				if (TRUE == m_pWeapon->GetHUDmode())
+					Msg("weapon hud section:");
+				else
+					Msg("weapon section:");
 
 				sprintf_s(tmpStr, "fire_point\t\t\t= %f,%f,%f",
 					tmpV.x,
 					tmpV.y,
 					tmpV.z);
 				Log(tmpStr);
-				flag = true;
 				break;
 			}
-//#ifdef	DEBUG
-			if(TRUE==m_pWeapon->GetHUDmode())
-				if (2 == g_bHudAdjustMode) pWpnHud->dbg_SetFirePoint(tmpV);
-				else pWpnHud->dbg_SetFirePoint2(tmpV);
+
+			if (TRUE == m_pWeapon->GetHUDmode())
+			{
+				if (2 == g_bHudAdjustMode)
+					pWpnHud->dbg_SetFirePoint(tmpV);
+				else
+					pWpnHud->dbg_SetFirePoint2(tmpV);
+			}
 			else
 			{
-				if (2 == g_bHudAdjustMode)  m_pWeapon->vLoadedFirePoint = tmpV;
-				else m_pWeapon->vLoadedFirePoint2 = tmpV;
+				if (2 == g_bHudAdjustMode)
+					m_pWeapon->vLoadedFirePoint = tmpV;
+				else
+					m_pWeapon->vLoadedFirePoint2 = tmpV;
 			}
-//#endif
 		}
 		else if (4 == g_bHudAdjustMode) //ShellPoint
 		{
-			if(TRUE==m_pWeapon->GetHUDmode())
+			if (TRUE == m_pWeapon->GetHUDmode())
 				tmpV = pWpnHud->ShellPoint();
 			else
 				tmpV = m_pWeapon->vLoadedShellPoint;
@@ -845,32 +730,26 @@ bool CUIMainIngameWnd::OnKeyboardPress(int dik)
 				// Shift +x
 			case DIK_A:
 				tmpV.y += g_fHudAdjustValue;
-				flag = true;
 				break;
 				// Shift -x
 			case DIK_D:
 				tmpV.y -= g_fHudAdjustValue;
-				flag = true;
 				break;
 				// Shift +z
 			case DIK_Q:
 				tmpV.x += g_fHudAdjustValue;
-				flag = true;
 				break;
 				// Shift -z
 			case DIK_E:
 				tmpV.x -= g_fHudAdjustValue;
-				flag = true;
 				break;
 				// Shift +y
 			case DIK_S:
 				tmpV.z += g_fHudAdjustValue;
-				flag = true;
 				break;
 				// Shift -y
 			case DIK_W:
 				tmpV.z -= g_fHudAdjustValue;
-				flag = true;
 				break;
 				// output coordinate info to the console
 			case DIK_P:
@@ -882,26 +761,23 @@ bool CUIMainIngameWnd::OnKeyboardPress(int dik)
 					Log(tmpStr);
 				}
 
-			if(TRUE==m_pWeapon->GetHUDmode())
-				Msg("weapon hud section:");
-			else
-				Msg("weapon section:");
+				if (TRUE == m_pWeapon->GetHUDmode())
+					Msg("weapon hud section:");
+				else
+					Msg("weapon section:");
 
 				sprintf_s(tmpStr, "shell_point\t\t\t= %f,%f,%f",
 					tmpV.x,
 					tmpV.y,
 					tmpV.z);
 				Log(tmpStr);
-				flag = true;
 				break;
 			}
-//#ifdef DEBUG
-			if(TRUE==m_pWeapon->GetHUDmode())
+
+			if (TRUE == m_pWeapon->GetHUDmode())
 				pWpnHud->dbg_SetShellPoint(tmpV);
 			else
 				m_pWeapon->vLoadedShellPoint = tmpV;
-
-//#endif
 		}
 		else if (3 == g_bHudAdjustMode) //MissileOffset
 		{
@@ -911,38 +787,31 @@ bool CUIMainIngameWnd::OnKeyboardPress(int dik)
 
 			tmpV = pActor->GetMissileOffset();
 
-			if (!pActor) return false;
 			switch (dik)
 			{
 				// Shift +x
 			case DIK_E:
 				tmpV.y += g_fHudAdjustValue;
-				flag = true;
 				break;
 				// Shift -x
 			case DIK_Q:
 				tmpV.y -= g_fHudAdjustValue;
-				flag = true;
 				break;
 				// Shift +z
 			case DIK_D:
 				tmpV.x += g_fHudAdjustValue;
-				flag = true;
 				break;
 				// Shift -z
 			case DIK_A:
 				tmpV.x -= g_fHudAdjustValue;
-				flag = true;
 				break;
 				// Shift +y
 			case DIK_W:
 				tmpV.z += g_fHudAdjustValue;
-				flag = true;
 				break;
 				// Shift -y
 			case DIK_S:
 				tmpV.z -= g_fHudAdjustValue;
-				flag = true;
 				break;
 				// output coordinate info to the console
 			case DIK_P:
@@ -960,17 +829,17 @@ bool CUIMainIngameWnd::OnKeyboardPress(int dik)
 					pActor->GetMissileOffset().z);
 
 				Log(tmpStr);
-				flag = true;
 				break;
 			}
 
 			pActor->SetMissileOffset(tmpV);
 		}
-		
-
-		if (flag) return true;
 	}
+}
 
+
+bool CUIMainIngameWnd::OnKeyboardPress(int dik)
+{
 #ifdef DEBUG
 		if(CAttachableItem::m_dbgItem){
 			static float rot_d = deg2rad(0.5f);
@@ -1054,14 +923,16 @@ bool CUIMainIngameWnd::OnKeyboardPress(int dik)
 		{
 		case DIK_NUMPADMINUS:
 			//.HideAll();
-			HUD().GetUI()->HideGameIndicators();
-			HUD().GetUI()->HideCrosshair();
+			if (!external_icon_ctrl)
+				HUD().GetUI()->HideGameIndicators();
+			else
+				HUD().GetUI()->ShowGameIndicators();
+
 			return true;
 			break;
 		case DIK_NUMPADPLUS:
 			//.ShowAll();
 			HUD().GetUI()->ShowGameIndicators();
-			HUD().GetUI()->ShowCrosshair();
 			return true;
 			break;
 		}
@@ -1069,7 +940,6 @@ bool CUIMainIngameWnd::OnKeyboardPress(int dik)
 
 	return false;
 }
-
 
 
 void CUIMainIngameWnd::RenderQuickInfos()

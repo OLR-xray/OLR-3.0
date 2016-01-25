@@ -11,8 +11,6 @@
 #include "../character_info.h"
 #include "../level.h"
 
-#include "..\ai\monsters\basemonster\base_monster.h"
-
 #include "../PhraseDialog.h"
 #include "../PhraseDialogManager.h"
 
@@ -21,12 +19,6 @@
 #include "../xr_level_controller.h"
 #include "../../cameraBase.h"
 #include "UIXmlInit.h"
-
-#include "../pch_script.h"
-#include "../game_object_space.h"
-#include "../script_callback_ex.h"
-#include "../script_game_object.h"
-
 
 CUITalkWnd::CUITalkWnd()
 {
@@ -80,32 +72,13 @@ void CUITalkWnd::InitTalkDialog()
 
 	m_pOurInvOwner = smart_cast<CInventoryOwner*>(m_pActor);
 	m_pOthersInvOwner = m_pActor->GetTalkPartner();
-	
-	auto pBaseMonster = smart_cast<CBaseMonster*>(m_pOthersInvOwner);
 
 	m_pOurDialogManager = smart_cast<CPhraseDialogManager*>(m_pOurInvOwner);
 	m_pOthersDialogManager = smart_cast<CPhraseDialogManager*>(m_pOthersInvOwner);
 
-	UITalkDialogWnd->UICharacterInfoRight.ClearInfo();
-	
 	//имена собеседников
-	UITalkDialogWnd->UICharacterInfoLeft.InitCharacter(m_pOurInvOwner->object_id());
-	if (!pBaseMonster) {
-		UITalkDialogWnd->UICharacterInfoRight.InitCharacter(m_pOthersInvOwner->object_id());
-		UITalkDialogWnd->UIToTradeButton.Enable(true);
-	}
-	else {
-		shared_str monster_tex_name = pSettings->r_string(pBaseMonster->cNameSect(),"icon");
-		shared_str monster_name = pSettings->r_string(pBaseMonster->cNameSect(),"character_name");
-		UITalkDialogWnd->UICharacterInfoRight.UIIcon().InitTexture(monster_tex_name.c_str());
-		UITalkDialogWnd->UICharacterInfoRight.UIIcon().SetStretchTexture(true);
-		UITalkDialogWnd->UICharacterInfoRight.UIName().SetText(*CStringTable().translate(monster_name));
-		UITalkDialogWnd->UICharacterInfoRight.UIRelation().Show(false);
-		UITalkDialogWnd->UICharacterInfoRight.UIRelationCaption().Show(false);
-		
-		UITalkDialogWnd->UIToTradeButton.Enable(false);
-	}
-	
+	UITalkDialogWnd->UICharacterInfoLeft.InitCharacter		(m_pOurInvOwner->object_id());
+	UITalkDialogWnd->UICharacterInfoRight.InitCharacter		(m_pOthersInvOwner->object_id());
 	UITalkDialogWnd->UIDialogFrame.UITitleText.SetText	(m_pOthersInvOwner->Name());
 	UITalkDialogWnd->UIOurPhrasesFrame.UITitleText.SetText(m_pOurInvOwner->Name());
 	
@@ -386,9 +359,6 @@ void CUITalkWnd::SwitchToTrade()
 		UITradeWnd->StartTrade		();
 		UITradeWnd->BringAllToTop	();
 		StopSnd						();
-		g_actor->callback(GameObject::eTradeBtnClick)( m_pOthersInvOwner->object_id());
-		//Actor()->callback(GameObject::eTradeBtnClick)( m_pOthersInvOwner->lua_game_object());
-		Msg("click trade btn");
 	}
 }
 

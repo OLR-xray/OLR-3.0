@@ -447,18 +447,12 @@ void CUILevelMap::Update()
 		VERIFY(m_dwFocusReceiveTime>=0);
 		if( Device.dwTimeGlobal>(m_dwFocusReceiveTime+500) ){
 
-			if(fsimilar(MapWnd()->GlobalMap()->GetCurrentZoom(), MapWnd()->GlobalMap()->GetMinZoom(),EPS_L )) {
-				MapWnd()->SetSelectedMap(this);
+			if(fsimilar(MapWnd()->GlobalMap()->GetCurrentZoom(), MapWnd()->GlobalMap()->GetMinZoom(),EPS_L ))
 				MapWnd()->ShowHint(this, *MapName());
-			}
-			else {
-				MapWnd()->ClearSelectedMap();
+			else
 				MapWnd()->HideHint(this);
-			}
+
 		}
-	}
-	else if (MapWnd()->GetSelectedMap() == this) {
-		MapWnd()->ClearSelectedMap();
 	}
 
 }
@@ -474,7 +468,19 @@ bool CUILevelMap::OnMouse	(float x, float y, EUIMessages mouse_action)
 {
 	if (inherited::OnMouse(x,y,mouse_action))	return true;
 	if (MapWnd()->GlobalMap()->Locked())		return true;
+/*
+	if (MapWnd()->m_flags.is_any(CUIMapWnd::lmZoomIn+CUIMapWnd::lmZoomOut))	return false;
 
+	if (mouse_action == WINDOW_LBUTTON_DOWN)
+	{
+		if (MapWnd()->m_flags.test(CUIMapWnd::lmUserSpotAdd) )
+			MapWnd()->AddUserSpot(this);
+		else
+		if(fsimilar(MapWnd()->GlobalMap()->GetCurrentZoom(), MapWnd()->GlobalMap()->GetMinZoom(),EPS_L) )
+			MapWnd()->SetTargetMap( this, true );
+		return true;
+	};
+*/
 	// Real Wolf: Колбек с позицией и названием карты при клике по самой карте. 03.08.2014.
 	if (mouse_action == WINDOW_LBUTTON_DOWN)
 	{

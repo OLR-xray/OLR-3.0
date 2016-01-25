@@ -14,11 +14,6 @@
 #include "../actor.h"
 #include "../gametaskmanager.h"
 
-static const u32 selected_task_color = color_rgba(0,0,0xff,0xff);
-
-static CUIStatic* g_old_caption = NULL;
-static u32 g_old_caption_color = 0;
-
 CUITaskItem::CUITaskItem			(CUIEventsWnd* w)
 :m_GameTask			(NULL),
 m_TaskObjectiveIdx(u16(-1)),
@@ -55,14 +50,6 @@ void CUITaskItem::Init				()
 
 void CUITaskItem::OnItemClicked(CUIWindow*, void*)
 {
-	if (GetCaptionStatic()) {
-		if (g_old_caption) {
-			g_old_caption->SetTextColor(g_old_caption_color);
-		}
-		g_old_caption = GetCaptionStatic();
-		g_old_caption_color = GetCaptionStatic()->GetTextColor();
-		GetCaptionStatic()->SetTextColor(selected_task_color);
-	}
 	m_EventsWnd->ShowDescription						(GameTask(), ObjectiveIdx());
 }
 
@@ -80,26 +67,16 @@ void CUITaskRootItem::Init			()
 {
 	inherited::Init					();
 
-	m_taskImage					= xr_new<CUIStatic>();
-	m_taskImage->SetAutoDelete(true);
-	AttachChild(m_taskImage);
-	
-	m_captionStatic				= xr_new<CUIStatic>();
-	m_captionStatic->SetAutoDelete(true);
-	AttachChild(m_captionStatic);
-	
-	m_remTimeStatic				= xr_new<CUIStatic>();
-	m_remTimeStatic->SetAutoDelete(true);
-	AttachChild(m_remTimeStatic);
+	m_taskImage					= xr_new<CUIStatic>();		m_taskImage->SetAutoDelete(true);			AttachChild(m_taskImage);
+	m_captionStatic				= xr_new<CUIStatic>();		m_captionStatic->SetAutoDelete(true);		AttachChild(m_captionStatic);
+	m_remTimeStatic				= xr_new<CUIStatic>();		m_remTimeStatic->SetAutoDelete(true);		AttachChild(m_remTimeStatic);
 
-	//m_switchDescriptionBtn		= xr_new<CUI3tButton>();	m_switchDescriptionBtn->SetAutoDelete(true); AttachChild(m_switchDescriptionBtn);
-	m_captionTime				= xr_new<CUI3tButton>();
-	m_captionTime->SetAutoDelete(true);
-	AttachChild(m_captionTime);
+	m_switchDescriptionBtn		= xr_new<CUI3tButton>();	m_switchDescriptionBtn->SetAutoDelete(true); AttachChild(m_switchDescriptionBtn);
+	m_captionTime				= xr_new<CUI3tButton>();	m_captionTime->SetAutoDelete(true);			AttachChild(m_captionTime);
 	
-	//m_switchDescriptionBtn->SetWindowName("m_switchDescriptionBtn");
-	//Register					(m_switchDescriptionBtn);
-	//AddCallback					("m_switchDescriptionBtn",BUTTON_CLICKED,CUIWndCallback::void_function(this, &CUITaskRootItem::OnSwitchDescriptionClicked));
+	m_switchDescriptionBtn->SetWindowName("m_switchDescriptionBtn");
+	Register					(m_switchDescriptionBtn);
+	AddCallback					("m_switchDescriptionBtn",BUTTON_CLICKED,CUIWndCallback::void_function(this, &CUITaskRootItem::OnSwitchDescriptionClicked));
 
 	CUIXmlInit xml_init;
 	CUIXml&						uiXml = m_EventsWnd->m_ui_task_item_xml;
@@ -110,7 +87,7 @@ void CUITaskRootItem::Init			()
 	xml_init.InitStatic			(uiXml,	"task_root_item:caption_time",	0,	m_captionTime);
 	xml_init.InitStatic			(uiXml,	"task_root_item:rem_time",		0,	m_remTimeStatic);
 	
-	//xml_init.Init3tButton		(uiXml,"task_root_item:switch_description_btn",0,m_switchDescriptionBtn);
+	xml_init.Init3tButton		(uiXml,"task_root_item:switch_description_btn",0,m_switchDescriptionBtn);
 }
 
 
@@ -140,19 +117,19 @@ void CUITaskRootItem::SetGameTask(CGameTask* gt, u16 obj_idx)
 	m_captionTime->SetWndPos(m_captionTime->GetWndPos().x,m_captionStatic->GetWndPos().y+m_captionStatic->GetHeight()+3.0f);
 
 	float h = _max	(m_taskImage->GetWndPos().y+m_taskImage->GetHeight(),m_captionTime->GetWndPos().y+m_captionTime->GetHeight());
-	//h	= _max(h,m_switchDescriptionBtn->GetWndPos().y+m_switchDescriptionBtn->GetHeight());
+	h	= _max(h,m_switchDescriptionBtn->GetWndPos().y+m_switchDescriptionBtn->GetHeight());
 	SetHeight						(h);
 	
 	
 	m_curr_descr_mode				= m_EventsWnd->GetDescriptionMode();
-	//if(m_curr_descr_mode)
-	//	m_switchDescriptionBtn->InitTexture	("ui_icons_newPDA_showtext");
-	//else
-	//	m_switchDescriptionBtn->InitTexture	("ui_icons_newPDA_showmap");
+	if(m_curr_descr_mode)
+		m_switchDescriptionBtn->InitTexture	("ui_icons_newPDA_showtext");
+	else
+		m_switchDescriptionBtn->InitTexture	("ui_icons_newPDA_showmap");
 
 	m_remTimeStatic->Show			(	GameTask()->Objective(0).TaskState()==eTaskStateInProgress && 
 #ifdef SHOW_LIMITED_TIME_TASKS
-#define ONE_WEEK_MS  (7 * 24 * 3600 * 1000)
+#define ONE_WEEK_MS  7 * 24 * 3600 * 1000
 										(GameTask()->m_TimeToComplete - Level().GetGameTime() < ONE_WEEK_MS)  &&
 #endif
 										(GameTask()->m_ReceiveTime!=GameTask()->m_TimeToComplete) 																	
@@ -178,13 +155,13 @@ void CUITaskRootItem::Update		()
 
 	if( m_curr_descr_mode	!= m_EventsWnd->GetDescriptionMode() ){
 		m_curr_descr_mode				= m_EventsWnd->GetDescriptionMode();
-		//if(m_curr_descr_mode)
-		//	m_switchDescriptionBtn->InitTexture	("ui_icons_newPDA_showtext");
-		//else
-		//	m_switchDescriptionBtn->InitTexture	("ui_icons_newPDA_showmap");
+		if(m_curr_descr_mode)
+			m_switchDescriptionBtn->InitTexture	("ui_icons_newPDA_showtext");
+		else
+			m_switchDescriptionBtn->InitTexture	("ui_icons_newPDA_showmap");
 	}
 
-	//m_switchDescriptionBtn->SetButtonMode(m_EventsWnd->GetDescriptionMode() ? CUIButton::BUTTON_NORMAL : CUIButton::BUTTON_PUSHED);
+	m_switchDescriptionBtn->SetButtonMode(m_EventsWnd->GetDescriptionMode() ? CUIButton::BUTTON_NORMAL : CUIButton::BUTTON_PUSHED);
 
 	if(m_remTimeStatic->IsShown())
 	{
@@ -203,9 +180,9 @@ bool CUITaskRootItem::OnDbClick	()
 
 void CUITaskRootItem::OnSwitchDescriptionClicked	(CUIWindow*, void*)
 {
-	//m_switchDescriptionBtn->SetButtonMode(m_EventsWnd->GetDescriptionMode() ? CUIButton::BUTTON_PUSHED : CUIButton::BUTTON_NORMAL);
+	m_switchDescriptionBtn->SetButtonMode(m_EventsWnd->GetDescriptionMode() ? CUIButton::BUTTON_PUSHED : CUIButton::BUTTON_NORMAL);
 
-	//m_EventsWnd->SetDescriptionMode						(!m_EventsWnd->GetDescriptionMode());
+	m_EventsWnd->SetDescriptionMode						(!m_EventsWnd->GetDescriptionMode());
 	OnItemClicked										(this, NULL);
 }
 
@@ -214,10 +191,9 @@ void CUITaskRootItem::MarkSelected (bool b)
 }
 
 
-CUITaskSubItem::CUITaskSubItem		(CUIEventsWnd* w, CUITaskRootItem* root_item)
+CUITaskSubItem::CUITaskSubItem		(CUIEventsWnd* w)
 :inherited(w)
 {
-	m_root_item = root_item;
 	Init();
 }
 
@@ -237,7 +213,7 @@ void CUITaskSubItem::Init			()
 	m_showDescriptionBtn->SetWindowName	("m_showDescriptionBtn");
 	Register						(m_showDescriptionBtn);
 
-	//AddCallback						("m_showDescriptionBtn",BUTTON_CLICKED,CUIWndCallback::void_function(this, &CUITaskSubItem::OnItemClicked));
+	AddCallback						("m_showDescriptionBtn",BUTTON_CLICKED,CUIWndCallback::void_function(this, &CUITaskSubItem::OnShowDescriptionClicked));
 
 
 	CUIXmlInit xml_init;
@@ -303,6 +279,16 @@ bool CUITaskSubItem::OnDbClick()
 	bool bIsActive								= (Actor()->GameTaskManager().ActiveObjective() == obj); 
 	Actor()->GameTaskManager().SetActiveTask((!bIsActive)?m_GameTask->m_ID:"", m_TaskObjectiveIdx);
 	return										true;
+}
+
+void CUITaskSubItem::OnActiveObjectiveClicked()
+{
+	m_EventsWnd->ShowDescription			(GameTask(), ObjectiveIdx());
+}
+
+void CUITaskSubItem::OnShowDescriptionClicked (CUIWindow*, void*)
+{
+	m_EventsWnd->ShowDescription						(GameTask(), ObjectiveIdx());
 }
 
 void CUITaskSubItem::MarkSelected (bool b)
@@ -498,7 +484,7 @@ void CUIUserTaskEditWnd::Init					()
 	m_btnOk				= xr_new<CUI3tButton>();	m_btnOk->SetAutoDelete(true);		m_background->AttachChild(m_btnOk);
 	m_btnOk->SetWindowName("m_btnOk");
 	Register			(m_btnOk);
-	AddCallbackAddCallback			(m_btnOk->WindowName(),BUTTON_CLICKED,boost::bind(&CUIUserTaskEditWnd::OnOk,this));
+	AddCallback			(m_btnOk->WindowName(),BUTTON_CLICKED,boost::bind(&CUIUserTaskEditWnd::OnOk,this));
 
 	m_btnCancel			= xr_new<CUI3tButton>();	m_btnCancel->SetAutoDelete(true);	m_background->AttachChild(m_btnCancel);
 	m_btnCancel->SetWindowName("m_btnCancel");

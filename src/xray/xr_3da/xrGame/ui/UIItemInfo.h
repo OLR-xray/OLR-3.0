@@ -1,6 +1,5 @@
 #pragma once
 #include "uiwindow.h"
-#include "UI3dStatic.h"
 
 
 class CInventoryItem;
@@ -35,26 +34,16 @@ public:
 	void				TryAddArtefactInfo	(const shared_str& af_section);
 
 	virtual void		Draw				();
-	
 	bool				m_b_force_drawing;
 	CUIStatic*			UIName;
 	CUIStatic*			UIWeight;
 	CUIStatic*			UICost;
 	CUIStatic*			UICondition;
-	CUIStatic*			UIConditionStr;
 	CUIScrollView*		UIDesc;
 	CUIProgressBar*		UICondProgresBar;
 	CUIWpnParams*		UIWpnParams;
 	CUIArtefactParams*	UIArtefactParams;
 
 	Fvector2			UIItemImageSize; 
-	CUI3dStatic*			UIItemImage;
-	
-	void				Draw3DStatic		() {
-		if (UIItemImage) UIItemImage->Draw_();
-	}
-	void				SetItemImageDefaultValues	() {
-		if (UIItemImage) UIItemImage->Destroy();
-	}
+	CUIStatic*			UIItemImage;
 };
-

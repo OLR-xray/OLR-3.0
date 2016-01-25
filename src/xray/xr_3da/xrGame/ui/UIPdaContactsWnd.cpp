@@ -11,11 +11,6 @@
 #include "../actor.h"
 #include "../string_table.h"
 
-#include "../pch_script.h"
-#include "../game_object_space.h"
-#include "../script_callback_ex.h"
-#include "../script_game_object.h"
-
 #define PDA_CONTACT_HEIGHT 70
 
 #define		PDA_CONTACTS_XML			"pda_contacts_new.xml"
@@ -174,7 +169,6 @@ bool CUIPdaContactItem::OnMouseDown(int mouse_btn)
 {
 	if(mouse_btn==MOUSE_1){
 		m_cw->UIListWnd->SetSelected(this);
-		Actor()->callback(GameObject::ePdaContactItemClick)(UIInfo->OwnerID());
 		return true;
 	}
 	return false;

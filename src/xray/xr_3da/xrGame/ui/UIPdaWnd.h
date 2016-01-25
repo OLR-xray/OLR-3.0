@@ -12,8 +12,8 @@ class CUIStatic;
 class CUIMapWnd;
 class CUIEncyclopediaWnd;
 class CUIDiaryWnd;
-//class CUIActorInfoWnd;
-//class CUIStalkersRankingWnd;
+class CUIActorInfoWnd;
+class CUIStalkersRankingWnd;
 class CUIEventsWnd;
 class CUIPdaContactsWnd;
 
@@ -51,8 +51,8 @@ public:
 	CUIPdaContactsWnd*		UIPdaContactsWnd;
 	CUIEncyclopediaWnd*		UIEncyclopediaWnd;
 	CUIDiaryWnd*			UIDiaryWnd;
-	//CUIActorInfoWnd*		UIActorInfo;
-	//CUIStalkersRankingWnd*	UIStalkersRanking;
+	CUIActorInfoWnd*		UIActorInfo;
+	CUIStalkersRankingWnd*	UIStalkersRanking;
 	CUIEventsWnd*			UIEventsWnd;
 	virtual void			Reset				();
 public:

@@ -13,15 +13,6 @@
 #include "UIDragDropListEx.h"
 #include "UI3tButton.h"
 
-
-#include "../pch_script.h"
-#include "../game_object_space.h"
-#include "../script_callback_ex.h"
-#include "../script_game_object.h"
-
-#include "../eatable_item_object.h"
-
-
 #include "../../../build_config_defines.h"
 
 CUICellItem* CUIInventoryWnd::CurrentItem()
@@ -89,69 +80,76 @@ void CUIInventoryWnd::InitInventory()
 	}
 	
 #ifdef INV_NEW_SLOTS_SYSTEM
-	if (GameID() == GAME_SINGLE) {
-			_itm = m_pInv->m_slots[KNIFE_SLOT].m_pIItem;
-			if(_itm) {
-				CUICellItem* itm = create_cell_item(_itm);
-				m_pUIKnifeList->SetItem(itm);
+	if (GameID() == GAME_SINGLE){
+			_itm								= m_pInv->m_slots[KNIFE_SLOT].m_pIItem;
+			if(_itm)
+			{
+				CUICellItem* itm				= create_cell_item(_itm);
+				m_pUIKnifeList->SetItem		(itm);
 			}
-			_itm = m_pInv->m_slots[APPARATUS_SLOT].m_pIItem;
-			if(_itm) {
-				CUICellItem* itm = create_cell_item(_itm);
-				m_pUIBinocularList->SetItem(itm);
+			_itm								= m_pInv->m_slots[APPARATUS_SLOT].m_pIItem;
+			if(_itm)
+			{
+				CUICellItem* itm				= create_cell_item(_itm);
+				m_pUIBinocularList->SetItem		(itm);
 			}
-#	if !defined(OLR_SLOTS)
-			_itm = m_pInv->m_slots[DETECTOR_SLOT].m_pIItem;
-			if(_itm) {
-				CUICellItem* itm = create_cell_item(_itm);
-				m_pUIDetectorList->SetItem(itm);
+			_itm								= m_pInv->m_slots[DETECTOR_SLOT].m_pIItem;
+			if(_itm)
+			{
+				CUICellItem* itm				= create_cell_item(_itm);
+				m_pUIDetectorList->SetItem		(itm);
 			}
-#	endif
-			_itm = m_pInv->m_slots[TORCH_SLOT].m_pIItem;
-			if(_itm) {
-				CUICellItem* itm = create_cell_item(_itm);
-				m_pUITorchList->SetItem(itm);
+			_itm								= m_pInv->m_slots[TORCH_SLOT].m_pIItem;
+			if(_itm)
+			{
+				CUICellItem* itm				= create_cell_item(_itm);
+				m_pUITorchList->SetItem		(itm);
 			}
-#	if !defined(OLR_SLOTS)
-			_itm = m_pInv->m_slots[PDA_SLOT].m_pIItem;
-			if(_itm) {
-				CUICellItem* itm = create_cell_item(_itm);
-				m_pUIPDAList->SetItem(itm);
+			_itm								= m_pInv->m_slots[PDA_SLOT].m_pIItem;
+			if(_itm)
+			{
+				CUICellItem* itm				= create_cell_item(_itm);
+				m_pUIPDAList->SetItem		(itm);
 			}
-			_itm = m_pInv->m_slots[HELMET_SLOT].m_pIItem;
-			if(_itm) {
-				CUICellItem* itm = create_cell_item(_itm);
-				m_pUIHelmetList->SetItem(itm);
+			_itm								= m_pInv->m_slots[HELMET_SLOT].m_pIItem;
+			if(_itm)
+			{
+				CUICellItem* itm				= create_cell_item(_itm);
+				m_pUIHelmetList->SetItem		(itm);
 			}
-			_itm = m_pInv->m_slots[SLOT_QUICK_ACCESS_0].m_pIItem;
-			if(_itm) {
-				CUICellItem* itm = create_cell_item(_itm);
-				m_pUISlotQuickAccessList_0->SetItem(itm);
+			_itm								= m_pInv->m_slots[SLOT_QUICK_ACCESS_0].m_pIItem;
+			if(_itm)
+			{
+				CUICellItem* itm				= create_cell_item(_itm);
+				m_pUISlotQuickAccessList_0->SetItem		(itm);
 			}
-			_itm = m_pInv->m_slots[SLOT_QUICK_ACCESS_1].m_pIItem;
-			if(_itm) {
-				CUICellItem* itm = create_cell_item(_itm);
-				m_pUISlotQuickAccessList_1->SetItem(itm);
+			_itm								= m_pInv->m_slots[SLOT_QUICK_ACCESS_1].m_pIItem;
+			if(_itm)
+			{
+				CUICellItem* itm				= create_cell_item(_itm);
+				m_pUISlotQuickAccessList_1->SetItem		(itm);
 			}
-			_itm = m_pInv->m_slots[SLOT_QUICK_ACCESS_2].m_pIItem;
-			if(_itm) {
-				CUICellItem* itm = create_cell_item(_itm);
-				m_pUISlotQuickAccessList_2->SetItem(itm);
+			_itm								= m_pInv->m_slots[SLOT_QUICK_ACCESS_2].m_pIItem;
+			if(_itm)
+			{
+				CUICellItem* itm				= create_cell_item(_itm);
+				m_pUISlotQuickAccessList_2->SetItem		(itm);
 			}
-			_itm = m_pInv->m_slots[SLOT_QUICK_ACCESS_3].m_pIItem;
-			if(_itm) {
-				CUICellItem* itm = create_cell_item(_itm);
-				m_pUISlotQuickAccessList_3->SetItem(itm);
+			_itm								= m_pInv->m_slots[SLOT_QUICK_ACCESS_3].m_pIItem;
+			if(_itm)
+			{
+				CUICellItem* itm				= create_cell_item(_itm);
+				m_pUISlotQuickAccessList_3->SetItem		(itm);
 			}
-#	endif
 	}
 #endif
 
 	PIItem _outfit						= m_pInv->m_slots[OUTFIT_SLOT].m_pIItem;
 	CUICellItem* outfit					= (_outfit)?create_cell_item(_outfit):NULL;
+#if defined(INV_OUTFIT_FULL_ICON_HIDE)
 	if (outfit)
+#endif
 		m_pUIOutfitList->SetItem			(outfit);
-		
 
 	TIItemContainer::iterator it, it_e;
 	for(it=m_pInv->m_belt.begin(),it_e=m_pInv->m_belt.end(); it!=it_e; ++it) 
@@ -190,46 +188,43 @@ void CUIInventoryWnd::InitInventory()
 
 void CUIInventoryWnd::DropCurrentItem(bool b_all)
 {
-	CActor* pActor = smart_cast<CActor*>(Level().CurrentEntity());
-	if(!pActor) return;
-	
-	CEatableItemObject* pEatable = smart_cast<CEatableItemObject*>(CurrentIItem());
-	
-	const bool is_eat = pEatable && pEatable->IsEat();
-	const bool is_drop = CurrentIItem() && !CurrentIItem()->IsQuestItem() && !is_eat;
 
-	if (!b_all && is_drop) {
-		SendEvent_Item_Drop(CurrentIItem());
-		SetCurrentItem(NULL);
-		InventoryUtilities::UpdateWeight(UIBagWnd, true);
+	CActor *pActor			= smart_cast<CActor*>(Level().CurrentEntity());
+	if(!pActor)				return;
+
+	if(!b_all && CurrentIItem() && !CurrentIItem()->IsQuestItem())
+	{
+		SendEvent_Item_Drop		(CurrentIItem());
+		SetCurrentItem			(NULL);
+		InventoryUtilities::UpdateWeight			(UIBagWnd, true);
 		return;
 	}
 
-	if (b_all && is_drop) {
+	if(b_all && CurrentIItem() && !CurrentIItem()->IsQuestItem())
+	{
 		u32 cnt = CurrentItem()->ChildsCount();
 
-		for(u32 i=0; i<cnt; ++i) {
-			CUICellItem* itm = CurrentItem()->PopChild();
-			PIItem iitm = (PIItem)itm->m_pData;
-			SendEvent_Item_Drop(iitm);
+		for(u32 i=0; i<cnt; ++i){
+			CUICellItem*	itm				= CurrentItem()->PopChild();
+			PIItem			iitm			= (PIItem)itm->m_pData;
+			SendEvent_Item_Drop				(iitm);
 		}
 
-		SendEvent_Item_Drop(CurrentIItem());
-		SetCurrentItem(NULL);
-		InventoryUtilities::UpdateWeight(UIBagWnd, true);
+		SendEvent_Item_Drop					(CurrentIItem());
+		SetCurrentItem						(NULL);
+		InventoryUtilities::UpdateWeight	(UIBagWnd, true);
 		return;
 	}
 }
 
 //------------------------------------------
 
-bool CUIInventoryWnd::ToSlot(CUICellItem* itm, bool force_place) {
-	CUIDragDropListEx* old_owner = itm->OwnerList();
-	PIItem	iitem = (PIItem)itm->m_pData;
-	u32 _slot = iitem->GetSlot();
-	auto pEatable = smart_cast<CEatableItemObject*>(iitem);
-	
-	if (pEatable && !pEatable->IsUseHud()) return false;
+bool CUIInventoryWnd::ToSlot(CUICellItem* itm, bool force_place)
+{
+	CUIDragDropListEx*	old_owner			= itm->OwnerList();
+	PIItem	iitem							= (PIItem)itm->m_pData;
+	u32 _slot								= iitem->GetSlot();
+		
 
 	if(GetInventory()->CanPutInSlot(iitem)){		
 		
@@ -245,7 +240,7 @@ bool CUIInventoryWnd::ToSlot(CUICellItem* itm, bool force_place) {
 		
 
 
-	 #if defined(INV_MOVE_ITM_INTO_QUICK_SLOTS) && defined(INV_NEW_SLOTS_SYSTEM) && !defined(OLR_SLOTS)
+	 #if defined(INV_MOVE_ITM_INTO_QUICK_SLOTS) 
 			if ((_slot == SLOT_QUICK_ACCESS_0)||(_slot == SLOT_QUICK_ACCESS_1)||(_slot == SLOT_QUICK_ACCESS_2)||(_slot == SLOT_QUICK_ACCESS_3)){
 				for(u32 i=SLOT_QUICK_ACCESS_0; i <= SLOT_QUICK_ACCESS_3; ++i ) 
 				{	
@@ -328,30 +323,28 @@ bool CUIInventoryWnd::ToSlot(CUICellItem* itm, bool force_place) {
 	}
 }
 
-bool CUIInventoryWnd::ToBag(CUICellItem* itm, bool b_use_cursor_pos) {
-	PIItem	iitem = (PIItem)itm->m_pData;
-	auto pEatable = smart_cast<CEatableItemObject*>(iitem);
-	if (pEatable && pEatable->IsEat()) return false;
+bool CUIInventoryWnd::ToBag(CUICellItem* itm, bool b_use_cursor_pos)
+{
+	PIItem	iitem						= (PIItem)itm->m_pData;
 
-	if(GetInventory()->CanPutInRuck(iitem)) {
+	if(GetInventory()->CanPutInRuck(iitem))
+	{
 #ifdef DEBUG_SLOTS
 		Msg("# inventory wnd ToBag (0x%p) ", itm);
 #endif
 
-		CUIDragDropListEx* old_owner = itm->OwnerList();
-		CUIDragDropListEx* new_owner = NULL;
-		if (b_use_cursor_pos){
-			new_owner = CUIDragDropListEx::m_drag_item->BackList();
-			VERIFY(new_owner==m_pUIBagList);
-		}
-		else {
-			new_owner = m_pUIBagList;
-		}
+		CUIDragDropListEx*	old_owner		= itm->OwnerList();
+		CUIDragDropListEx*	new_owner		= NULL;
+		if(b_use_cursor_pos){
+				new_owner					= CUIDragDropListEx::m_drag_item->BackList();
+				VERIFY						(new_owner==m_pUIBagList);
+		}else
+				new_owner					= m_pUIBagList;
 
 
-		bool result = GetInventory()->Ruck(iitem);
-		VERIFY(result);
-		CUICellItem* i = old_owner->RemoveItem(itm, (old_owner==new_owner) );
+		bool result							= GetInventory()->Ruck(iitem);
+		VERIFY								(result);
+		CUICellItem* i						= old_owner->RemoveItem(itm, (old_owner==new_owner) );
 
 		/************************************************** added by Ray Twitty (aka Shadows) START **************************************************/
 		// обновляем статик веса в инвентаре
@@ -359,21 +352,21 @@ bool CUIInventoryWnd::ToBag(CUICellItem* itm, bool b_use_cursor_pos) {
 		/*************************************************** added by Ray Twitty (aka Shadows) END ***************************************************/
 
 #ifdef INV_RUCK_UNLIMITED_FIX		
-		if (result = new_owner->CanSetItem(i) || new_owner->IsAutoGrow() ) {
+		if (result = new_owner->CanSetItem(i) || new_owner->IsAutoGrow() )
+		{
 #endif
-			if(b_use_cursor_pos) {
-				new_owner->SetItem(i,old_owner->GetDragItemPosition() );
-			}
-			else {
-				new_owner->SetItem(i);
-			}
-			SendEvent_Item2Ruck(iitem);
+			if(b_use_cursor_pos)
+				new_owner->SetItem				(i,old_owner->GetDragItemPosition() );
+			else
+				new_owner->SetItem				(i);
+			SendEvent_Item2Ruck					(iitem);
 #ifdef INV_RUCK_UNLIMITED_FIX
 		}
-		else {
-			NET_Packet P;
-			iitem->object().u_EventGen(P, GE_OWNERSHIP_REJECT, iitem->object().H_Parent()->ID());
-			P.w_u16(u16(iitem->object().ID()));
+		else
+		{
+			NET_Packet					P;
+			iitem->object().u_EventGen	(P, GE_OWNERSHIP_REJECT, iitem->object().H_Parent()->ID());
+			P.w_u16						(u16(iitem->object().ID()));
 			iitem->object().u_EventSend(P);
 		}
 
@@ -434,27 +427,8 @@ bool CUIInventoryWnd::OnItemStartDrag(CUICellItem* itm)
 
 bool CUIInventoryWnd::OnItemSelected(CUICellItem* itm)
 {
-	if(m_pCurrentCellItem != itm){
-		if(m_pCurrentCellItem)
-			m_pCurrentCellItem->m_selected = false;
-	}
-	
 	SetCurrentItem		(itm);
-
-	if(m_pCurrentCellItem)
-		m_pCurrentCellItem->m_selected = true;
-	
-	CActor *pActor = smart_cast<CActor*>(Level().CurrentEntity());
-	
-	if (!pActor) return false;
-	
-	PIItem __item = (PIItem)itm->m_pData;
-	
-	if (!__item) return false;
-
-	pActor->callback(GameObject::eOnItemSelect)((smart_cast<CGameObject*>(__item))->lua_game_object());
-	
-	return false;
+	return				false;
 }
 
 bool CUIInventoryWnd::OnItemDrop(CUICellItem* itm)
@@ -556,7 +530,7 @@ bool CUIInventoryWnd::OnItemDbClick(CUICellItem* itm)
 	PIItem	__item		= (PIItem)itm->m_pData;
 	u32		__slot		= __item->GetSlot();
 	auto	old_owner	= itm->OwnerList();
-#if defined(INV_NEW_SLOTS_SYSTEM) && !defined(OLR_SLOTS)
+#if  defined(INV_NEW_SLOTS_SYSTEM)
 	if (__slot < SLOT_QUICK_ACCESS_0 || __slot > SLOT_QUICK_ACCESS_3)
 #endif
 	if(TryUseItem(__item))
@@ -580,7 +554,7 @@ bool CUIInventoryWnd::OnItemDbClick(CUICellItem* itm)
 			#endif
 			for (u8 i = 0; i < (u8)slots.size(); ++i)
 			{
-				#if !defined(INV_MOVE_ITM_INTO_QUICK_SLOTS) && !defined(OLR_SLOTS)
+				#if !defined(INV_MOVE_ITM_INTO_QUICK_SLOTS)
 				if (!is_eat || is_quick_slot(slots[i], __item, m_pInv) )
 				{
 					__item->SetSlot(slots[i]);
@@ -638,17 +612,14 @@ void CUIInventoryWnd::ClearAllLists()
 if (IsGameTypeSingle()) {
 	m_pUIKnifeList->ClearAll				(true);
 	m_pUIBinocularList->ClearAll			(true);
-	m_pUITorchList->ClearAll				(true);
-#	if !defined(OLR_SLOTS)
 	m_pUIDetectorList->ClearAll				(true);
+	m_pUITorchList->ClearAll				(true);
 	m_pUIPDAList->ClearAll					(true);
 	m_pUIHelmetList->ClearAll				(true);
 	m_pUISlotQuickAccessList_0->ClearAll	(true);
 	m_pUISlotQuickAccessList_1->ClearAll	(true);
 	m_pUISlotQuickAccessList_2->ClearAll	(true);
 	m_pUISlotQuickAccessList_3->ClearAll	(true);
-#	endif
 }
 #endif
 }
-
