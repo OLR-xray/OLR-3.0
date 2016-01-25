@@ -433,7 +433,8 @@ public:
 protected:
 	int						iAmmoElapsed;		// ammo in magazine, currently
 	int						iMagazineSize;		// size (in bullets) of magazine	
-	int						iMinAmmoTryJammed; //Количество минимального колова потронов, при котором происходит перезарядка при заедании ствола
+	int						iMinAmmoTryJammed; // Количество минимального колова потронов, при котором происходит перезарядка при заедании ствола
+	bool					iUnJammedOnShow; // убрать ли заедание ствола при доставании пушки
 	//для подсчета в GetAmmoCurrent
 	mutable int				iAmmoCurrent;
 	mutable u32				m_dwAmmoCurrentCalcFrame;	//кадр на котором просчитали кол-во патронов

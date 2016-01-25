@@ -776,7 +776,7 @@ void CWeaponMagazined::switch2_Hidden()
 void CWeaponMagazined::switch2_Showing()
 {
 	PlaySound(sndShow, get_LastFP());
-
+	if (iUnJammedOnShow) bMisfire = false;
 	m_bPending = true;
 	PlayAnimShow();
 }

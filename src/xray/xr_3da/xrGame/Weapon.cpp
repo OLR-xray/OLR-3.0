@@ -302,11 +302,18 @@ void CWeapon::Load(LPCSTR section)
 	iAmmoElapsed = pSettings->r_s32(section, "ammo_elapsed");
 	iMagazineSize = pSettings->r_s32(section, "ammo_mag_size");
 	
-	if (pSettings->line_exist(section, "MinAmmoTryJammed"))
-		iMinAmmoTryJammed = pSettings->r_u8(section, "MinAmmoTryJammed");
+	if (pSettings->line_exist(section, "min_ammo_try_jammed"))
+		iMinAmmoTryJammed = pSettings->r_u32(section, "min_ammo_try_jammed");
 	else
 		iMinAmmoTryJammed = pSettings->r_s32(section, "ammo_mag_size");;
-	
+
+	if (pSettings->line_exist(section, "un_jammed_on_show"))
+		iUnJammedOnShow = pSettings->r_bool(section, "un_jammed_on_show");
+	else
+		iUnJammedOnShow = false;
+
+
+
 	////////////////////////////////////////////////////
 	// дисперсия стрельбы
 
