@@ -68,17 +68,6 @@ public:
 	void					ClearPool			( BOOL b_complete );
 
 	void					dump 				();
-	
-	BOOL					GetAllowChildrenDuplicate() const {
-		return bAllowChildrenDuplicate;
-	}
-	void					SetAllowChildrenDuplicate(BOOL value) {
-		bAllowChildrenDuplicate = value;
-	}
-	
-	REGISTRY&				GetRegistry() {
-		return Registry;
-	}
 #ifdef _EDITOR    
 	void					OnDeviceDestroy		();
 	void 					Render				(IRender_Visual* m_pVisual, const Fmatrix& mTransform, int priority, bool strictB2F, float m_fLOD);

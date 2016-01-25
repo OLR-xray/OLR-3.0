@@ -469,11 +469,9 @@ R_ASSERT2			(!lst.empty(),prefix);
 
 BOOL CWeapon::net_Spawn(CSE_Abstract* DC)
 {
-	R_ASSERT(DC);
 	BOOL bResult = inherited::net_Spawn(DC);
 	CSE_Abstract					*e = (CSE_Abstract*)(DC);
 	CSE_ALifeItemWeapon			    *E = smart_cast<CSE_ALifeItemWeapon*>(e);
-	R_ASSERT(E);
 
 
 	//iAmmoCurrent					= E->a_current;
@@ -974,20 +972,14 @@ int CWeapon::GetAmmoCurrent(bool use_item_to_spawn) const
 			}
 		}
 
-		auto parent			= const_cast<CObject*>(H_Parent());
-		auto entity_alive	= smart_cast<CEntityAlive*>(parent);
-
-		if (entity_alive == NULL || !entity_alive->cast_actor())
-
-			for (TIItemContainer::iterator l_it = m_pCurrentInventory->m_ruck.begin(); m_pCurrentInventory->m_ruck.end() != l_it; ++l_it)
+		for (TIItemContainer::iterator l_it = m_pCurrentInventory->m_ruck.begin(); m_pCurrentInventory->m_ruck.end() != l_it; ++l_it)
+		{
+			CWeaponAmmo *l_pAmmo = smart_cast<CWeaponAmmo*>(*l_it);
+			if (l_pAmmo && !xr_strcmp(l_pAmmo->cNameSect(), l_ammoType))
 			{
-				CWeaponAmmo *l_pAmmo = smart_cast<CWeaponAmmo*>(*l_it);
-				if (l_pAmmo && !xr_strcmp(l_pAmmo->cNameSect(), l_ammoType))
-				{
-					iAmmoCurrent = iAmmoCurrent + l_pAmmo->m_boxCurr;
-				}
+				iAmmoCurrent = iAmmoCurrent + l_pAmmo->m_boxCurr;
 			}
-		
+		}
 
 		if (!use_item_to_spawn)
 			continue;
@@ -1548,17 +1540,14 @@ void CWeapon::OnDrawUI()
 	}
 }
 
-bool CWeapon::unlimited_ammo() {
-	if (GameID() == GAME_SINGLE) {
-		if (smart_cast<CActor*>(H_Parent()) == NULL) {
-			return true;
-		}
-		return (psActorFlags.test(AF_UNLIMITEDAMMO) &&
-		m_DefaultCartridge.m_flags.test(CCartridge::cfCanBeUnlimited));
-	}
+bool CWeapon::unlimited_ammo()
+{
+	if (GameID() == GAME_SINGLE)
+		return psActorFlags.test(AF_UNLIMITEDAMMO) &&
+		m_DefaultCartridge.m_flags.test(CCartridge::cfCanBeUnlimited);
 
-	return ((GameID() != GAME_ARTEFACTHUNT) &&
-		m_DefaultCartridge.m_flags.test(CCartridge::cfCanBeUnlimited));
+	return (GameID() != GAME_ARTEFACTHUNT) &&
+		m_DefaultCartridge.m_flags.test(CCartridge::cfCanBeUnlimited);
 };
 
 LPCSTR	CWeapon::GetCurrentAmmo_ShortName()

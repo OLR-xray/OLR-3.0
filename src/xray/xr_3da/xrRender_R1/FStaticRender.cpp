@@ -78,7 +78,7 @@ void					CRender::create					()
 	Models						= xr_new<CModelPool>		();
 	L_Dynamic					= xr_new<CLightR_Manager>	();
 	PSLibrary.OnCreate			();
-//	HWOCC.occq_create			(occq_size);
+//.	HWOCC.occq_create			(occq_size);
 
 	xrRender_apply_tf			();
 	::PortalTraverser.initialize();
@@ -87,7 +87,7 @@ void					CRender::create					()
 void					CRender::destroy				()
 {
 	::PortalTraverser.destroy	();
-//	HWOCC.occq_destroy			();
+//.	HWOCC.occq_destroy			();
 	PSLibrary.OnDestroy			();
 	
 	xr_delete					(L_Dynamic);
@@ -109,13 +109,13 @@ void					CRender::reset_begin			()
 		Details->Unload				();
 		xr_delete					(Details);
 	}
-//	HWOCC.occq_destroy			();
+//.	HWOCC.occq_destroy			();
 }
 
 void					CRender::reset_end				()
 {
 	xrRender_apply_tf			();
-//	HWOCC.occq_create			(occq_size);
+//.	HWOCC.occq_create			(occq_size);
 	Target						=	xr_new<CRenderTarget>	();
 
 	// KD: let's reload details while changed details options on vid_restart
@@ -137,28 +137,6 @@ void					CRender::OnFrame				()
 IRender_ObjectSpecific*	CRender::ros_create				(IRenderable* parent)					{ return xr_new<CROS_impl>();			}
 void					CRender::ros_destroy			(IRender_ObjectSpecific* &p)			{ xr_delete(p);							}
 IRender_Visual*			CRender::model_Create			(LPCSTR name, IReader* data)			{ return Models->Create(name,data);		}
-
-IRender_Visual*			CRender::model_Instance_Load	(LPCSTR name, IReader* data) {
-	string_path low_name;	VERIFY	(xr_strlen(name)<sizeof(low_name));
-	strcpy(low_name,name);	strlwr	(low_name);
-	if (strext(low_name))	*strext	(low_name)=0;
-	
-	const bool find = (Models->Instance_Find(low_name)==NULL);
-	IRender_Visual* Base;
-	Models->SetAllowChildrenDuplicate(FALSE);
-	if (data) Base = Models->Instance_Load(low_name,data,find);
-	else Base = Models->Instance_Load(low_name,find);
-	Models->SetAllowChildrenDuplicate(TRUE);
-#ifdef _EDITOR
-	if (!Base)		return NULL;
-#endif
-	IRender_Visual*		Model	= Models->Instance_Duplicate(Base);
-	Models->GetRegistry().insert		( mk_pair(Model,low_name) );
-	Models->Delete(Base,FALSE);
-	return				Model;
-	
-}
-
 IRender_Visual*			CRender::model_CreateChild		(LPCSTR name, IReader* data)			{ return Models->CreateChild(name,data);}
 IRender_Visual*			CRender::model_Duplicate		(IRender_Visual* V)						{ return Models->Instance_Duplicate(V);	}
 void					CRender::model_Delete			(IRender_Visual* &V, BOOL bDiscard)		{ Models->Delete(V,bDiscard);			}
@@ -496,14 +474,14 @@ void CRender::Calculate				()
 	else
 	{
 		set_Object											(0);
-		
+		/*
 		g_pGameLevel->pHUD->Render_First					();	
 		g_pGameLevel->pHUD->Render_Last						();	
 
 		// Calculate miscelaneous stuff
 		L_Shadows->calculate								();
 		L_Projector->calculate								();
-		
+		*/
 	}
 
 	// End calc

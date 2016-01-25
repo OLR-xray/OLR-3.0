@@ -427,6 +427,7 @@ void CActor::g_SetAnimation( u32 mstate_rl )
 														M_torso	= TW->fire_idle;
 								break;
 
+							case CWeapon::eJammed:
 							case CWeapon::eReload:		M_torso	= TW->reload;					break;
 							case CWeapon::eShowing:		M_torso	= TW->draw;						break;
 							case CWeapon::eHiding:		M_torso	= TW->holster;					break;
@@ -439,6 +440,7 @@ void CActor::g_SetAnimation( u32 mstate_rl )
 							case CWeapon::eIdle:		M_torso	= W->IsZoomed()?TW->zoom:TW->moving[moving_idx];	break;
 							case CWeapon::eFire:		M_torso	= W->IsZoomed()?TW->attack_zoom:TW->attack;				break;
 							case CWeapon::eFire2:		M_torso	= W->IsZoomed()?TW->attack_zoom:TW->attack;				break;
+							case CWeapon::eJammed:
 							case CWeapon::eReload:	
 								if(!R3)
 									M_torso	= TW->reload;

@@ -134,8 +134,6 @@ public:
 	virtual bool			IsHidden()	const		{ return GetState() == eHidden; }						// Does weapon is in hidden state
 	virtual bool			IsHiding()	const		{ return GetState() == eHiding; }
 	virtual bool			IsShowing()	const		{ return GetState() == eShowing; }
-	
-	virtual void			SilentHide() { SwitchState(eHidden); }
 
 	IC BOOL					IsValid()	const		{ return iAmmoElapsed; }
 	// Does weapon need's update?

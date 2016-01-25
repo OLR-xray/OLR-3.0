@@ -74,10 +74,10 @@ void CLight_Compute_XFORM_and_VIS::compute_xf_spot	(light* L)
 	/************************************************** added by Ray Twitty (aka Shadows) START **************************************************/
 	// только для поинта меняем на 11.5
 	float				tan_shift;
-	if (L->flags.type == IRender_Light::SPOT)
-		tan_shift		= deg2rad(0.1f);
-	else
+	if (L->flags.type == IRender_Light::POINT)
 		tan_shift		= deg2rad(11.5f);
+	else
+		tan_shift		= deg2rad(3.5f);
 	/*************************************************** added by Ray Twitty (aka Shadows) END ***************************************************/
 	L->X.S.project.build_projection		(L->cone + tan_shift, 1.f,/*SMAP_near_plane*/L->virtual_size,L->range+EPS_S);
 	L->X.S.combine.mul					(L->X.S.project,L->X.S.view);

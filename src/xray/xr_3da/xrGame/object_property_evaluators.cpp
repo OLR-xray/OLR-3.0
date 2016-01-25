@@ -111,7 +111,7 @@ CObjectPropertyEvaluatorReady::_value_type CObjectPropertyEvaluatorReady::evalua
 {
 	if (!m_ammo_type)
 //		return		(_value_type(!m_item->IsMisfire() && m_item->GetAmmoElapsed()));
-		return		(_value_type(!m_item->IsMisfire() && (m_item->GetAmmoElapsed() && (m_item->GetState() != CWeapon::eReload))));
+		return		(_value_type(!m_item->IsMisfire() && (m_item->GetAmmoElapsed() && (m_item->GetState() != CWeapon::eReload || m_item->GetState() != CWeapon::eJammed))));
 	else
 		return		(_value_type(false));
 }

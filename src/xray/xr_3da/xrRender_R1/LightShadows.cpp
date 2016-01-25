@@ -9,23 +9,23 @@
 #include "..\fbasicvisual.h"
 #include "..\CustomHUD.h"
  
-const	float		S_distance		= 128;
+const	float		S_distance		= 48;
 const	float		S_distance2		= S_distance*S_distance;
-const	float		S_ideal_size	= 24.f;		// ideal size for the object
-const	float		S_fade			= 24.5;
+const	float		S_ideal_size	= 4.f;		// ideal size for the object
+const	float		S_fade			= 4.5;
 const	float		S_fade2			= S_fade*S_fade;
 
-const	float		S_level			= .2f;		// clip by energy level
-const	int			S_size			= 256;
-const	int			S_rt_size		= 2048;
-const	int			batch_size		= 2048;
-const	float		S_tess			= 1.5f;
-const	int 		S_ambient		= 96;
+const	float		S_level			= .05f;		// clip by energy level
+const	int			S_size			= 85;
+const	int			S_rt_size		= 512;
+const	int			batch_size		= 256;
+const	float		S_tess			= .5f;
+const	int 		S_ambient		= 32;
 const	int 		S_clip			= 256-8;
 const	D3DFORMAT	S_rtf			= D3DFMT_A8R8G8B8;
 const	float		S_blur_kernel	= 0.75f;
 
-const	u32			cache_old		= 300*1000;	// 30 secs
+const	u32			cache_old		= 30*1000;	// 30 secs
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
