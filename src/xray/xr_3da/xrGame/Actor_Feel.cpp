@@ -16,6 +16,9 @@
 #include "game_cl_base.h"
 #include "Level.h"
 
+//отображаем сталкеров
+#include "ai/stalker/ai_stalker.h"
+
 #define PICKUP_INFO_COLOR 0xFFDDDDDD
 //AAAAAA
 
@@ -220,17 +223,28 @@ void CActor::PickupInfoDraw(CObject* object)
 	LPCSTR draw_str = NULL;
 	
 	CInventoryItem* item = smart_cast<CInventoryItem*>(object);
-//.	CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(object);
-//.	VERIFY(item || inventory_owner);
-	if(!item)		return;
+	CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(object);
+
+	//CInventoryOwner* inventory_owner = smart_cast<CInventoryOwner*>(object);
+	//VERIFY(item || inventory_owner);
+	if (!item)
+		if(!stalker)
+			return;
 
 	Fmatrix			res;
 	res.mul			(Device.mFullTransform,object->XFORM());
 	Fvector4		v_res;
 	Fvector			shift;
-
-	draw_str = item->Name/*Complex*/();
-	shift.set(0,0,0);
+	
+	if (!stalker)
+		draw_str = item->Name();
+	else
+		draw_str = stalker->Name();
+	
+	if (!stalker)
+		shift.set(0, 0, 0);
+	else
+		shift.set(0, 1, 0);
 
 	res.transform(v_res,shift);
 
