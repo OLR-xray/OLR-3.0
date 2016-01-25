@@ -1,1 +1,1 @@
-binaries\XR_3DA.exe
+binaries\XR_3DA.exe -nointro
