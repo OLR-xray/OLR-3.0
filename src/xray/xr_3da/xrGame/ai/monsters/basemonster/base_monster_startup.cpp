@@ -221,20 +221,7 @@ BOOL CBaseMonster::net_Spawn (CSE_Abstract* DC)
 //		}
 //	}
 
-	if (IsGameTypeSingle()) {
-		auto dialog_manager = smart_cast<CAI_PhraseDialogManager*>(this);
-		const bool cond = (
-			HasDialogs() &&
-			(dialog_manager && !dialog_manager->GetStartDialog().size())
-		);
-		if (cond) {
-			const char* start_dialog = spawn_ini()->r_string("dialogs", "start_dialog");
-			dialog_manager->SetStartDialog(start_dialog);
-			dialog_manager->SetDefaultStartDialog(start_dialog);
-		}
-	}
-
-	return TRUE;
+	return(TRUE);
 }
 
 void CBaseMonster::net_Destroy()
