@@ -11,13 +11,8 @@ CSoundRender_CoreA::CSoundRender_CoreA() :CSoundRender_Core()
 	pDevice = 0;
 	pDeviceList = 0;
 	pContext = 0;
-#ifdef ENVIRONMENT32
 	eaxSet = 0;
 	eaxGet = 0;
-#else
-	//TODO: Add
-#endif
-
 }
 
 CSoundRender_CoreA::~CSoundRender_CoreA()
@@ -26,18 +21,13 @@ CSoundRender_CoreA::~CSoundRender_CoreA()
 
 BOOL CSoundRender_CoreA::EAXQuerySupport(BOOL bDeferred, const GUID* guid, u32 prop, void* val, u32 sz)
 {
-#ifdef ENVIRONMENT32
 	if (AL_NO_ERROR != eaxGet(guid, prop, 0, val, sz)) return FALSE;
 	if (AL_NO_ERROR != eaxSet(guid, (bDeferred ? DSPROPERTY_EAXLISTENER_DEFERRED : 0) | prop, 0, val, sz)) return FALSE;
 	return TRUE;
-#else
-	return FALSE; // TODO: FIX
-#endif
 }
 
 BOOL CSoundRender_CoreA::EAXTestSupport(BOOL bDeferred)
 {
-#ifdef ENVIRONMENT32
 	EAXLISTENERPROPERTIES 		ep;
 	if (!EAXQuerySupport(bDeferred, &DSPROPSETID_EAX_ListenerProperties, DSPROPERTY_EAXLISTENER_ROOM, &ep.lRoom, sizeof(LONG))) 	return FALSE;
 	if (!EAXQuerySupport(bDeferred, &DSPROPSETID_EAX_ListenerProperties, DSPROPERTY_EAXLISTENER_ROOMHF, &ep.lRoomHF, sizeof(LONG))) 	return FALSE;
@@ -52,9 +42,6 @@ BOOL CSoundRender_CoreA::EAXTestSupport(BOOL bDeferred)
 	if (!EAXQuerySupport(bDeferred, &DSPROPSETID_EAX_ListenerProperties, DSPROPERTY_EAXLISTENER_AIRABSORPTIONHF, &ep.flAirAbsorptionHF, sizeof(float))) return FALSE;
 	if (!EAXQuerySupport(bDeferred, &DSPROPSETID_EAX_ListenerProperties, DSPROPERTY_EAXLISTENER_FLAGS, &ep.dwFlags, sizeof(DWORD))) return FALSE;
 	return TRUE;
-#else
-	return FALSE; //TODO: Fix
-#endif
 
 }
 
@@ -114,14 +101,10 @@ void CSoundRender_CoreA::_initialize(u64 window)
 
 	// Check for EAX extension
 	bEAX = deviceDesc.eax && !deviceDesc.eax_unwanted;
-#ifdef ENVIRONMENT32
 	eaxSet = (EAXSet)alGetProcAddress((const ALchar*)"EAXSet");
 	if (eaxSet == NULL) bEAX = false;
 	eaxGet = (EAXGet)alGetProcAddress((const ALchar*)"EAXGet");
 	if (eaxGet == NULL) bEAX = false;
-#else
-	bEAX = false; //TODO: Fix
-#endif
 
 	if (bEAX){
 		bDeferredEAX = EAXTestSupport(TRUE);
@@ -196,19 +179,11 @@ void CSoundRender_CoreA::_clear()
 
 void	CSoundRender_CoreA::i_eax_set(const GUID* guid, u32 prop, void* val, u32 sz)
 {
-#ifdef ENVIRONMENT32
 	eaxSet(guid, prop, 0, val, sz);
-#else
-	//TODO: Add
-#endif
 }
 void	CSoundRender_CoreA::i_eax_get(const GUID* guid, u32 prop, void* val, u32 sz)
 {
-#ifdef ENVIRONMENT32
 	eaxGet(guid, prop, 0, val, sz);
-#else
-	//TODO: Add
-#endif
 }
 
 void CSoundRender_CoreA::update_listener(const Fvector& P, const Fvector& D, const Fvector& N, float dt)

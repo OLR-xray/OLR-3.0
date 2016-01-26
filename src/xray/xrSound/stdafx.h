@@ -6,8 +6,6 @@
 #define stdafxH
 #pragma once
 
-#include "../xrCore/xrCore.h"
-
 // mmsystem.h
 #define MMNOSOUND
 #define MMNOMIDI
@@ -27,6 +25,7 @@
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
 
+#include "../xrCore/xrCore.h"
 #include "../xrCDB/xrCDB.h"
 #include "sound.h"
 

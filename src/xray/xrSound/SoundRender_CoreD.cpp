@@ -3,11 +3,7 @@
 
 #include "soundrender_coreD.h"
 #include "soundrender_targetD.h"
-#ifdef ENVIRONMENT32
 #include <eax.h>
-#else
-//TODO: Alternative
-#endif
 
 CSoundRender_CoreD*	SoundRenderD= 0;
 
@@ -37,8 +33,6 @@ BOOL CSoundRender_CoreD::EAXQuerySupport(const GUID* guid, u32 prop)
 
 BOOL CSoundRender_CoreD::EAXTestSupport	(BOOL bDeferred)
 {
-
-#ifdef ENVIRONMENT32
 	BOOL support 	= TRUE;
     u32 ext			= bDeferred?DSPROPERTY_EAXLISTENER_DEFERRED:0;
     if (!EAXQuerySupport(&DSPROPSETID_EAX_ListenerProperties, ext | DSPROPERTY_EAXLISTENER_NONE)) 					support = FALSE;
@@ -57,11 +51,7 @@ BOOL CSoundRender_CoreD::EAXTestSupport	(BOOL bDeferred)
     if (!EAXQuerySupport(&DSPROPSETID_EAX_ListenerProperties, ext | DSPROPERTY_EAXLISTENER_ENVIRONMENTDIFFUSION)) 	support = FALSE;
     if (!EAXQuerySupport(&DSPROPSETID_EAX_ListenerProperties, ext | DSPROPERTY_EAXLISTENER_AIRABSORPTIONHF)) 		support = FALSE;
     if (!EAXQuerySupport(&DSPROPSETID_EAX_ListenerProperties, ext | DSPROPERTY_EAXLISTENER_FLAGS)) 					support = FALSE;
-    return support;
-#else
-	return FALSE; //TODO: Fix
-#endif
-
+	return support;
 }
 
 
@@ -70,9 +60,7 @@ void CSoundRender_CoreD::_initialize	(u64 window)
 	bPresent			= FALSE;
 
 	// DirectX device
-#ifdef ENVIRONMENT32
 	//if( FAILED			( EAXDirectSoundCreate8( NULL, &pDevice, NULL ) ) )
-#endif
 		if( FAILED		( DirectSoundCreate8( NULL, &pDevice, NULL ) ) )	return;
 	if( FAILED			( pDevice->SetCooperativeLevel(  (HWND)window, DSSCL_PRIORITY ) ) )	
 	{

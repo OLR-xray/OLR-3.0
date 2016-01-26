@@ -41,14 +41,7 @@ static int jit_jmp_target(jit_State *J)
 /* ------------------------------------------------------------------------ */
 
 /* Include pre-processed architecture-specific backend. */
-#if defined(__i386) || defined(__i386__) || defined(_M_IX86)
-#ifndef LUA_NUMBER_DOUBLE
-#error "No support for other number types on x86 (yet)"
-#endif
 #include "ljit_x86.h"
-#else
-#error "No support for this architecture (yet)"
-#endif
 
 /* ------------------------------------------------------------------------ */
 
