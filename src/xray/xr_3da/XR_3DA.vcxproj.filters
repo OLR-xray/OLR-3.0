@@ -471,9 +471,6 @@
     <ClInclude Include="xrXRC.h">
       <Filter>Engine\Collision Core</Filter>
     </ClInclude>
-    <ClInclude Include="xr_ioc_cmd.h">
-      <Filter>Engine\Console</Filter>
-    </ClInclude>
     <ClInclude Include="XR_IOConsole.h">
       <Filter>Engine\Console</Filter>
     </ClInclude>
@@ -505,6 +502,9 @@
       <Filter>General</Filter>
     </ClInclude>
     <ClInclude Include="..\..\build_config_defines.h" />
+    <ClInclude Include="xr_ioc_cmd.h">
+      <Filter>Engine\Console</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="defines.cpp">
@@ -849,9 +849,6 @@
     <ClCompile Include="xrXRC.cpp">
       <Filter>Engine\Collision Core</Filter>
     </ClCompile>
-    <ClCompile Include="xr_ioc_cmd.cpp">
-      <Filter>Engine\Console</Filter>
-    </ClCompile>
     <ClCompile Include="XR_IOConsole.cpp">
       <Filter>Engine\Console</Filter>
     </ClCompile>
@@ -881,6 +878,9 @@
     </ClCompile>
     <ClCompile Include="lua_tools.cpp">
       <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="xr_ioc_cmd.cpp">
+      <Filter>Engine\Console</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

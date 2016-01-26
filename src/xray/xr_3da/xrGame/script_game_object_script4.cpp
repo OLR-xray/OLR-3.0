@@ -5,7 +5,7 @@
 //	Author		: Alexander Petrov
 //	Description : Script Actor (params)
 ////////////////////////////////////////////////////////////////////////////
-
+#include "stdafx.h"
 #include "pch_script.h"
 #include "../lua_tools.h"
 

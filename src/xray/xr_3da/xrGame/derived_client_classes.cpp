@@ -5,7 +5,7 @@
 //	Author		: Alexander Petrov
 //	Description : XRay derived client classes script export
 ////////////////////////////////////////////////////////////////////////////
-
+#include "stdafx.h"
 #include "pch_script.h"
 #include "base_client_classes.h"
 #include "derived_client_classes.h"

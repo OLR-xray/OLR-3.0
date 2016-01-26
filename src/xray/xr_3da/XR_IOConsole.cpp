@@ -216,23 +216,22 @@ void CConsole::OnPressKey(int dik, BOOL bHold)
 	if (!bHold)    fAccel = 1.0f;
 
 	// ОПТИМИЗАЦИЯ КОДА
-	const int coutsymbols = 47;
-	int keyCodes[coutsymbols] = { DIK_1, DIK_2, DIK_3, DIK_4, DIK_5, DIK_6, DIK_7, DIK_8, DIK_9, DIK_0, DIK_A, DIK_B, DIK_C, DIK_D, DIK_E, DIK_F, DIK_G, DIK_H, DIK_I, DIK_J, DIK_K, DIK_L, DIK_M, DIK_N, DIK_O, DIK_P, DIK_Q, DIK_R, DIK_S, DIK_T, DIK_U, DIK_V, DIK_W, DIK_X, DIK_Y, DIK_Z, DIK_LBRACKET, DIK_RBRACKET, DIK_APOSTROPHE, DIK_COMMA, DIK_PERIOD, DIK_EQUALS, DIK_MINUS, 0x27, 0x35, DIK_SPACE, DIK_BACKSLASH };
-	const char* symbols[coutsymbols] = { "1","2","3","4","5","6","7","8","9","0","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","[","]","'",",",".","=","-",";","/"," ","\\" };
-	const char* symbolstwo[coutsymbols] = { "!","@","#","$","%","^","&","*","(",")","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","{","}","\"","<",">","+","_",":","?"," ","|" };
-	const char* symbolsrus[coutsymbols] = { "1","2","3","4","5","6","7","8","9","0","ф","и","с","в","у","а","п","р","ш","о","л","д","ь","т","щ","з","й","к","ы","е","г","м","ц","ч","н","я","х","ъ","э","б","ю","=","-","ж","."," ","\\" };
-	const char* symbolstworus[coutsymbols] = { "!","\"","№",";","%",":","?","*","(",")","Ф","И","С","В","У","А","П","Р","Ш","О","Л","Д","Ь","Т","Щ","З","Й","К","Ы","Е","Г","М","Ц","Ч","Н","Я","Х","Ъ","Э","Б","Ю","+","_","Ж",","," ","|" };
-	for (int i = 0; i < coutsymbols; ++i)
+	int keyCodes[] = { DIK_1, DIK_2, DIK_3, DIK_4, DIK_5, DIK_6, DIK_7, DIK_8, DIK_9, DIK_0, DIK_A, DIK_B, DIK_C, DIK_D, DIK_E, DIK_F, DIK_G, DIK_H, DIK_I, DIK_J, DIK_K, DIK_L, DIK_M, DIK_N, DIK_O, DIK_P, DIK_Q, DIK_R, DIK_S, DIK_T, DIK_U, DIK_V, DIK_W, DIK_X, DIK_Y, DIK_Z, DIK_LBRACKET, DIK_RBRACKET, DIK_APOSTROPHE, DIK_COMMA, DIK_PERIOD, DIK_EQUALS, DIK_MINUS, 0x27, 0x35, DIK_SPACE, DIK_BACKSLASH };
+	const char* symbols[] = { "1","2","3","4","5","6","7","8","9","0","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","[","]","'",",",".","=","-",";","/"," ","\\" };
+	const char* symbolstwo[] = { "!","@","#","$","%","^","&","*","(",")","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","{","}","\"","<",">","+","_",":","?"," ","|" };
+	const char* symbolsrus[] = { "1","2","3","4","5","6","7","8","9","0","ф","и","с","в","у","а","п","р","ш","о","л","д","ь","т","щ","з","й","к","ы","е","г","м","ц","ч","н","я","х","ъ","э","б","ю","=","-","ж","."," ","\\" };
+	const char* symbolstworus[] = { "!","\"","№",";","%",":","?","*","(",")","Ф","И","С","В","У","А","П","Р","Ш","О","Л","Д","Ь","Т","Щ","З","Й","К","Ы","Е","Г","М","Ц","Ч","Н","Я","Х","Ъ","Э","Б","Ю","+","_","Ж",","," ","|" };
+	for (int i = 0; i < sizeof(keyCodes) / sizeof(keyCodes[0]); ++i)
 	{
 		if (dik == keyCodes[i]) {
 			if (dik == keyCodes[31]) {
 				if (bLCONTROL)
 				{
 					//чтение текста из буфера обмена
-					if (OpenClipboard(NULL))//открываем буфер обмена
+					if (OpenClipboard(nullptr))//открываем буфер обмена
 					{
-						HANDLE hData = GetClipboardData(CF_TEXT);//извлекаем текст из буфера обмена
-						char* chBuffer = (char*)GlobalLock(hData);//блокируем память
+						auto hData = GetClipboardData(CF_TEXT);//извлекаем текст из буфера обмена
+						auto chBuffer = static_cast<char*>(GlobalLock(hData));//блокируем память
 						if (StrLenBuff(chBuffer) <= 100)
 						{
 							if (StrLenBuff(editor) <= 100)
@@ -253,27 +252,22 @@ void CConsole::OnPressKey(int dik, BOOL bHold)
 						CloseClipboard();//закрываем буфер обмена
 					}
 				}
-				else if (!ruslanguage)
-				{
+				else if (!ruslanguage){
 					if (bShift) strcat(editor, (symbolstwo[31]));
 					else strcat(editor, symbols[31]);
 				}
-				else
-				{
+				else{
 					if (bShift) strcat(editor, (symbolstworus[31]));
 					else strcat(editor, symbolsrus[31]);
 				}
 
 			}
-			else
-			{
-				if (!ruslanguage)
-				{
+			else{
+				if (!ruslanguage){
 					if (bShift) strcat(editor, (symbolstwo[i]));
 					else strcat(editor, symbols[i]);
 				}
-				else
-				{
+				else{
 					if (bShift) strcat(editor, (symbolstworus[i]));
 					else strcat(editor, symbolsrus[i]);
 				}

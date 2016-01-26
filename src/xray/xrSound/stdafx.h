@@ -6,6 +6,8 @@
 #define stdafxH
 #pragma once
 
+#include <windows.h>
+
 // mmsystem.h
 #define MMNOSOUND
 #define MMNOMIDI
