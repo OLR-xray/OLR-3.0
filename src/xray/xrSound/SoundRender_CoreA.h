@@ -7,7 +7,11 @@
 #include <al.h>
 #include <alc.h>
 //.#include <alut.h>
+#if ENVIRONMENT32
 #include <eax.h>
+#else
+//TODO: Alternative
+#endif
 
 #include "OpenALDeviceList.h"
 
@@ -22,8 +26,12 @@
 class CSoundRender_CoreA: public CSoundRender_Core
 {
 	typedef CSoundRender_Core inherited;
+#if ENVIRONMENT32
 	EAXSet					eaxSet;					// EAXSet function, retrieved if EAX Extension is supported
 	EAXGet					eaxGet;					// EAXGet function, retrieved if EAX Extension is supported
+#else
+	//TODO: Add
+#endif
 	ALCdevice* 				pDevice;
     ALCcontext*				pContext;
 	ALDeviceList*			pDeviceList;

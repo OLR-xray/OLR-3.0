@@ -1,4 +1,14 @@
 #pragma once
+// ==================================== Правки от nummer ======================================= 
+// дефайны x64 или x32
+#if _WIN32 || _WIN64
+#if _WIN64
+#define ENVIRONMENT64
+#else
+#define ENVIRONMENT32
+#endif
+#endif
+
 // ==================================== Правки от alpet ======================================= 
 #define HLAMP_AFFECT_IMMUNITIES					// включает обработку иммунитетов для висячих ламп (CHangingLamp)
 // #define LUAICP_COMPAT					// включает совместимость с перехватчиком Lua (luaicp.dll). Задавать надо в свойствах 

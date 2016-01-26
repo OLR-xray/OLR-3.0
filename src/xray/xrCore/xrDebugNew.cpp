@@ -213,12 +213,22 @@ XRCORE_API void LogStackTraceEx(struct _EXCEPTION_POINTERS *pExPtrs)
  		//  Msg("##DEBUG: sizeof(CONTEXT) = %d bytes ", sizeof(rec));
 		// pExPtrs->ExceptionRecord = NULL;
 		BuildStackTrace(pExPtrs); // данная функция модифицирует  ContextRecord.EIP
+
+#if ENVIRONMENT32
 		if (g_stackTraceCount > 0)
 			Msg("!Exception stack trace %d lines, EIP = 0x%08x, ESP = 0x%08x: \n* 0 %s",
 					g_stackTraceCount, rec.Eip, rec.Esp, g_stackTrace[0]);
 		else
 			Msg("!BuildStackTrace produced %d lines. Exception EIP = 0x%08x, ESP = 0x%08x:\n* %s", 
 					g_stackTraceCount, rec.Eip, rec.Esp, g_stackTrace[0]);
+#else
+		if (g_stackTraceCount > 0)
+			Msg("!Exception stack trace %d lines, EIP = 0x%08x, ESP = 0x%08x: \n* 0 %s",
+				g_stackTraceCount, rec.Rip, rec.Rsp, g_stackTrace[0]);
+		else
+			Msg("!BuildStackTrace produced %d lines. Exception EIP = 0x%08x, ESP = 0x%08x:\n* %s",
+				g_stackTraceCount, rec.Rip, rec.Rsp, g_stackTrace[0]);
+#endif
 
 		for (int line = 1; line < g_stackTraceCount; line ++)
 			 Msg("# %d %s", line, g_stackTrace[line]);

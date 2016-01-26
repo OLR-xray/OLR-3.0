@@ -6,6 +6,7 @@ with DWORD initializer using cacheable stores
 */
 void	__stdcall	xrMemFill32_MMX		(LPVOID dest,  u32 count, u32 value)
 {
+#if ENVIRONMENT32
 	__asm {
 		MOV EDI,[dest];								// pointer to dst,DWORD aligned
 		MOV ECX,[count ];							// number of DWORDs to copy
@@ -52,4 +53,9 @@ $filldword2_fc:
 $filldone2_fc:
 		EMMS;										// clear MMX state
 	}
+#else
+
+#error C++ CODE
+
+#endif
 }

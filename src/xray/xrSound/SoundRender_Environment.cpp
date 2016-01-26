@@ -5,7 +5,11 @@
 #include "soundrender_environment.h"
 #pragma warning(push)
 #pragma warning(disable:4995)
+#if ENVIRONMENT32
 #include <eax.h>
+#else
+//TODO FIX
+#endif
 #pragma warning(pop)
 
 CSoundRender_Environment::CSoundRender_Environment(void)
@@ -20,6 +24,7 @@ CSoundRender_Environment::~CSoundRender_Environment(void)
 
 void CSoundRender_Environment::set_default	()
 {
+#if ENVIRONMENT32
 	Environment				= EAX_ENVIRONMENT_GENERIC;
     Room                    = EAXLISTENER_DEFAULTROOM;
     RoomHF                  = EAXLISTENER_DEFAULTROOMHF;
@@ -33,13 +38,16 @@ void CSoundRender_Environment::set_default	()
     EnvironmentSize         = EAXLISTENER_DEFAULTENVIRONMENTSIZE;
     EnvironmentDiffusion    = EAXLISTENER_DEFAULTENVIRONMENTDIFFUSION;
     AirAbsorptionHF         = EAXLISTENER_DEFAULTAIRABSORPTIONHF;
+#endif
 }
 
 void CSoundRender_Environment::set_identity	()
 {
+#if ENVIRONMENT32
 	set_default				();
     Room                    = EAXLISTENER_MINROOM;
 	clamp				  	();
+#endif
 }
 
 void CSoundRender_Environment::lerp			(CSoundRender_Environment& A, CSoundRender_Environment& B, float f)
@@ -83,6 +91,7 @@ void CSoundRender_Environment::get			(EAXLISTENERPROPERTIES& ep)
 */
 void CSoundRender_Environment::clamp		()
 {
+#if ENVIRONMENT32
     ::clamp(Room,             		(float)EAXLISTENER_MINROOM, 	  	(float)EAXLISTENER_MAXROOM			);
     ::clamp(RoomHF,              	(float)EAXLISTENER_MINROOMHF, 	  	(float)EAXLISTENER_MAXROOMHF		);
     ::clamp(RoomRolloffFactor,   	EAXLISTENER_MINROOMROLLOFFFACTOR, 	EAXLISTENER_MAXROOMROLLOFFFACTOR	);
@@ -95,6 +104,7 @@ void CSoundRender_Environment::clamp		()
     ::clamp(EnvironmentSize,     	EAXLISTENER_MINENVIRONMENTSIZE, 	EAXLISTENER_MAXENVIRONMENTSIZE		);
     ::clamp(EnvironmentDiffusion,	EAXLISTENER_MINENVIRONMENTDIFFUSION,EAXLISTENER_MAXENVIRONMENTDIFFUSION	);
     ::clamp(AirAbsorptionHF,     	EAXLISTENER_MINAIRABSORPTIONHF, 	EAXLISTENER_MAXAIRABSORPTIONHF		);
+#endif
 }
 
 bool CSoundRender_Environment::load			(IReader* fs)

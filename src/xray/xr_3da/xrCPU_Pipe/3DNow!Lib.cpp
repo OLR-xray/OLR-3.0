@@ -110,7 +110,9 @@ static const __int64 _msgn_		=	0x8000000080000000;
 //;   © by ManOwaR™
 //;******************************************************************************
 __declspec(naked)	void alt_acos(void)
-{	__asm {
+{
+#if ENVIRONMENT32
+	__asm {
 // ------------------------------------------------------------------
 	movq		mm3,QWORD PTR [a_c7]		;	mm3 = 0.0 | c7
 	movq		mm2,QWORD PTR [a_pi_div_2]	;	mm2 = 0.0 | PI_DIV_2
@@ -127,7 +129,13 @@ __declspec(naked)	void alt_acos(void)
 	movq		mm0,mm2						;	mm0 = ?.? | PI_DIV_2 - (((c7*x2+c5)*x2+c3)*x2+c1)*x
 	ret
 // ------------------------------------------------------------------
-}}
+}
+#else
+
+#error C++ COde
+
+#endif
+}
 //;******************************************************************************
 //; SINCOSMAC - sin/cos simultaneous computation
 //; Input:    mm0 - angle in radians
@@ -140,6 +148,7 @@ __declspec(naked)	void alt_acos(void)
 //;******************************************************************************
 __declspec (naked) void SINCOSMAC ()
 {
+#if ENVIRONMENT32
     __asm {
         push        ebx
         movd        eax,mm0
@@ -219,6 +228,11 @@ ending:
         nop
         ret
     }
+#else
+
+#error C++ CODE
+
+#endif
 }
 //;******************************************************************************
 //; Routine:  a_acos
@@ -249,6 +263,7 @@ ending:
 //;******************************************************************************
 __declspec (naked) void a_acos ()
 {
+#if ENVIRONMENT32
     __asm
     {
         movd        mm6, [sgn]  //; mask for sign bit
@@ -311,6 +326,13 @@ __declspec (naked) void a_acos ()
         por         mm0, mm3    //; mux together results
         ret
     }
+
+#else
+
+#error C++ CODE
+
+#endif
+
 }
 //;******************************************************************************
 //; Routine:  a_asin
@@ -337,6 +359,7 @@ __declspec (naked) void a_acos ()
 //;******************************************************************************
 __declspec (naked) void a_asin ()
 {
+#if ENVIRONMENT32
     __asm
     {
         movd        mm6, [sgn]  //; mask for sign bit
@@ -394,6 +417,11 @@ __declspec (naked) void a_asin ()
         por         mm0, mm3    //; mux results together
         ret
     }
+#else
+
+#error C++ CODE
+
+#endif
 }
 //;******************************************************************************
 //; Routine:  a_sin
@@ -403,6 +431,7 @@ __declspec (naked) void a_asin ()
 //;******************************************************************************
 __declspec (naked) void a_sin ()
 {
+#if ENVIRONMENT32
     __asm
     {
 
@@ -410,6 +439,11 @@ __declspec (naked) void a_sin ()
         punpckhdq   mm0,mm0     //; select sin value
         ret
     }
+#else
+
+#error C++ CODE
+
+#endif
 }
 //;******************************************************************************
 #pragma warning (default:4799)

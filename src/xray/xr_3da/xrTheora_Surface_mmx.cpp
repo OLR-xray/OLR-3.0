@@ -60,7 +60,7 @@ lp_tv_uchar tv_yuv2argb(
 						)
 {
 	tv_sshort_tables ttl;
-
+#if ENVIRONMENT32
 	__asm{
 		push  ebx
 		// helper constants
@@ -272,11 +272,15 @@ _tb_loop:
 		line1 += 4 * argb_width;
 		line2 = line1 + 4 * argb_width;
 	}
-
 	__asm{
 		sfence        ;
 		emms        ;
 	}
+#else
+
+#error C++ CODE
+
+#endif
 
 	return argb_plane;
 } // tv_yuv2argb

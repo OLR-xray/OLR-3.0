@@ -5,21 +5,17 @@
 
 #undef DEMO_BUILD
 
-//#define DEMO_BUILD
 
-#ifdef DEMO_BUILD
-	#define	GAMESPY_GAMENAME				"stalkerscd"
-	#define GAMESPY_GAMEID					1576
-	#define GAMESPY_PRODUCTID				10954
-	#define GAME_VERSION					"1.0008 (OLR 3.0)"
-	#define REGISTRY_PATH					"Software\\GSC Game World\\STALKER-SoC\\"
+#define	GAMESPY_GAMENAME				"stalkersc"
+#define GAMESPY_GAMEID					1067
+#define GAMESPY_PRODUCTID				10953
+#if ENVIRONMENT32
+#define GAME_VERSION					"1.0008 (OLR 3.0) (x86)"
 #else
-	#define	GAMESPY_GAMENAME				"stalkersc"
-	#define GAMESPY_GAMEID					1067
-	#define GAMESPY_PRODUCTID				10953
-	#define GAME_VERSION					"1.0008 (OLR 3.0)"
-	#define REGISTRY_PATH					"Software\\GSC Game World\\STALKER-SHOC\\"
+#define GAME_VERSION					"1.0008 (OLR 3.0) (x64)"
 #endif
+#define REGISTRY_PATH					"Software\\GSC Game World\\STALKER-SHOC\\"
+
 
 #define	GAMESPY_QR2_BASEPORT				5447
 #define GAMESPY_BROWSER_MAX_UPDATES			20

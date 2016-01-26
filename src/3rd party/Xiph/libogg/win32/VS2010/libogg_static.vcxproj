@@ -66,15 +66,19 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">x:\intermediate\$(Configuration)\$(ProjectName)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\..\..\..\libraries</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\..\..\..\intermediate\$(Configuration)\$(ProjectName)\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">x:\libraries\x64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">x:\intermediate\$(Configuration)\$(ProjectName)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\..\..\..\..\libraries\x64</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\..\..\..\..\intermediate64\$(Configuration)\$(ProjectName)\</IntDir>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">X:\xray\xrLua\src;X:\3rd party\FreeImage\FreeImage\Source;X:\xray\xrCore;X:\3rd party\MagicSoftware\FreeMagic\Include;C:\Program Files %28x86%29\OpenAL 1.1 SDK\include;X:\3rd party\luabind_old\luabind;X:\3rd party\loki;X:\3rd party\eax\Include;X:\3rd party\Xiph\Include;X:\3rd party\boost;$(WindowsSdkDir)include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(FrameworkSDKDir)\include</IncludePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;C:\Program Files %28x86%29\OpenAL 1.1 SDK\libs\Win64;X:\3rd party\eax;X:\libraries\x64\Debug\;$(VCInstallDir)lib\amd64;$(VCInstallDir)atlmfc\lib\amd64;$(WindowsSdkDir)lib\x64</LibraryPath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\..\xray\xrLua\src;..\..\..\FreeImage\FreeImage\Source;..\..\..\..\xray\xrCore;..\..\..\MagicSoftware\FreeMagic\Include;..\..\..\OpenAL\Include;..\..\..\loki;..\..\..\eax\Include;..\..\..\Xiph\Include;..\..\..\boost;$(WindowsSdkDir)include;..\..\..\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\..\xray\xrLua\src;..\..\..\FreeImage\FreeImage\Source;..\..\..\..\xray\xrCore;..\..\..\MagicSoftware\FreeMagic\Include;..\..\..\OpenAL\Include;..\..\..\loki;..\..\..\Xiph\Include;..\..\..\boost;$(WindowsSdkDir)include;..\..\..\dxsdk\Include;$(IncludePath)</IncludePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\dxsdk\Lib\x86;..\..\..\OpenAL\libs\Win32;..\..\..\eax;..\..\..\..\..\libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>libogg_static</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>..\..\..\..\xray\xrLua\src;..\..\..\FreeImage\FreeImage\Source;..\..\..\..\xray\xrCore;..\..\..\MagicSoftware\FreeMagic\Include;..\..\..\OpenAL\Include;..\..\..\loki;..\..\..\eax\Include;..\..\..\Xiph\Include;..\..\..\boost;$(WindowsSdkDir)include;..\..\..\dxsdk\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\dxsdk\Lib\x64;..\..\..\OpenAL\libs\Win64;..\..\..\..\..\libraries64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

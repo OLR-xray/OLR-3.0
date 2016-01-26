@@ -20,6 +20,7 @@
 
 void	__stdcall	xrM44_Mul_3DNow	(_matrix<float>* D, _matrix<float>* M1, _matrix<float>* M2)
 {
+#if ENVIRONMENT32
     __asm
     {
         femms
@@ -214,4 +215,9 @@ void	__stdcall	xrM44_Mul_3DNow	(_matrix<float>* D, _matrix<float>* M1, _matrix<f
 
         femms
     }
+#else
+
+#error C++ CODE
+
+#endif
 }

@@ -7,7 +7,11 @@
 #include "soundrender_emitter.h"
 #pragma warning(push)
 #pragma warning(disable:4995)
+#if ENVIRONMENT32
 #include <eax.h>
+#else
+//TODO ADD
+#endif
 #pragma warning(pop)
 
 int		psSoundTargets			= 16;
@@ -431,6 +435,7 @@ void CSoundRender_Core::update_listener( const Fvector& P, const Fvector& D, con
 
 void	CSoundRender_Core::i_eax_listener_set	(CSound_environment* _E)
 {
+#if ENVIRONMENT32
 	VERIFY(bEAX);
     CSoundRender_Environment* E = static_cast<CSoundRender_Environment*>(_E);
     EAXLISTENERPROPERTIES 		ep;
@@ -463,10 +468,12 @@ void	CSoundRender_Core::i_eax_listener_set	(CSound_environment* _E)
     i_eax_set(&DSPROPSETID_EAX_ListenerProperties, deferred | DSPROPERTY_EAXLISTENER_ENVIRONMENTDIFFUSION,	&ep.flEnvironmentDiffusion,	sizeof(float));
     i_eax_set(&DSPROPSETID_EAX_ListenerProperties, deferred | DSPROPERTY_EAXLISTENER_AIRABSORPTIONHF, 		&ep.flAirAbsorptionHF,		sizeof(float));
     i_eax_set(&DSPROPSETID_EAX_ListenerProperties, deferred | DSPROPERTY_EAXLISTENER_FLAGS, 				&ep.dwFlags,				sizeof(DWORD));
+#endif
 }
 
 void	CSoundRender_Core::i_eax_listener_get	(CSound_environment* _E)
 {
+#if ENVIRONMENT32
 	VERIFY(bEAX);
     CSoundRender_Environment* E = static_cast<CSoundRender_Environment*>(_E);
     EAXLISTENERPROPERTIES 		ep;
@@ -483,13 +490,16 @@ void	CSoundRender_Core::i_eax_listener_get	(CSound_environment* _E)
     E->EnvironmentSize			= (float)ep.flEnvironmentSize		;
     E->EnvironmentDiffusion		= (float)ep.flEnvironmentDiffusion	;
     E->AirAbsorptionHF			= (float)ep.flAirAbsorptionHF		;
+#endif
 }
 
 void CSoundRender_Core::i_eax_commit_setting()
 {
+#if ENVIRONMENT32
 	// commit eax 
     if (bDeferredEAX)
     	i_eax_set(&DSPROPSETID_EAX_ListenerProperties, DSPROPERTY_EAXLISTENER_COMMITDEFERREDSETTINGS,NULL,0);
+#endif
 }
 
 void CSoundRender_Core::object_relcase( CObject* obj )
