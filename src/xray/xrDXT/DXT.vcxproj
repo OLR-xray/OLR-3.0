@@ -647,10 +647,6 @@
     <ProjectReference Include="..\..\3rd party\nvtt\nvtt.vcxproj">
       <Project>{0eb257dc-5cfc-44b0-82c9-ce6b158be473}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\xrCore\xrCore.vcxproj">
-      <Project>{a0f7d1fb-59a7-4717-a7e4-96f37e91998e}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

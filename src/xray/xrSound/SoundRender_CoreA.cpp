@@ -11,7 +11,7 @@ CSoundRender_CoreA::CSoundRender_CoreA() :CSoundRender_Core()
 	pDevice = 0;
 	pDeviceList = 0;
 	pContext = 0;
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 	eaxSet = 0;
 	eaxGet = 0;
 #else
@@ -26,7 +26,7 @@ CSoundRender_CoreA::~CSoundRender_CoreA()
 
 BOOL CSoundRender_CoreA::EAXQuerySupport(BOOL bDeferred, const GUID* guid, u32 prop, void* val, u32 sz)
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 	if (AL_NO_ERROR != eaxGet(guid, prop, 0, val, sz)) return FALSE;
 	if (AL_NO_ERROR != eaxSet(guid, (bDeferred ? DSPROPERTY_EAXLISTENER_DEFERRED : 0) | prop, 0, val, sz)) return FALSE;
 	return TRUE;
@@ -37,7 +37,7 @@ BOOL CSoundRender_CoreA::EAXQuerySupport(BOOL bDeferred, const GUID* guid, u32 p
 
 BOOL CSoundRender_CoreA::EAXTestSupport(BOOL bDeferred)
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 	EAXLISTENERPROPERTIES 		ep;
 	if (!EAXQuerySupport(bDeferred, &DSPROPSETID_EAX_ListenerProperties, DSPROPERTY_EAXLISTENER_ROOM, &ep.lRoom, sizeof(LONG))) 	return FALSE;
 	if (!EAXQuerySupport(bDeferred, &DSPROPSETID_EAX_ListenerProperties, DSPROPERTY_EAXLISTENER_ROOMHF, &ep.lRoomHF, sizeof(LONG))) 	return FALSE;
@@ -114,7 +114,7 @@ void CSoundRender_CoreA::_initialize(u64 window)
 
 	// Check for EAX extension
 	bEAX = deviceDesc.eax && !deviceDesc.eax_unwanted;
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 	eaxSet = (EAXSet)alGetProcAddress((const ALchar*)"EAXSet");
 	if (eaxSet == NULL) bEAX = false;
 	eaxGet = (EAXGet)alGetProcAddress((const ALchar*)"EAXGet");
@@ -196,7 +196,7 @@ void CSoundRender_CoreA::_clear()
 
 void	CSoundRender_CoreA::i_eax_set(const GUID* guid, u32 prop, void* val, u32 sz)
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 	eaxSet(guid, prop, 0, val, sz);
 #else
 	//TODO: Add
@@ -204,7 +204,7 @@ void	CSoundRender_CoreA::i_eax_set(const GUID* guid, u32 prop, void* val, u32 sz
 }
 void	CSoundRender_CoreA::i_eax_get(const GUID* guid, u32 prop, void* val, u32 sz)
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 	eaxGet(guid, prop, 0, val, sz);
 #else
 	//TODO: Add

@@ -60,7 +60,7 @@ lp_tv_uchar tv_yuv2argb(
 						)
 {
 	tv_sshort_tables ttl;
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 	__asm{
 		push  ebx
 		// helper constants

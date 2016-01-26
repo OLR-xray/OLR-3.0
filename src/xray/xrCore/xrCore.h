@@ -2,6 +2,15 @@
 #define xrCoreH
 #pragma once
 
+// дефайны x64 или x32
+#if _WIN32 || _WIN64
+#if _WIN64
+#define ENVIRONMENT64
+#else
+#define ENVIRONMENT32
+#endif
+#endif
+
 #pragma warning(disable:4996)
 
 #if (defined(_DEBUG) || defined(MIXED) || defined(DEBUG)) && !defined(FORCE_NO_EXCEPTIONS)

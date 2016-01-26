@@ -214,7 +214,7 @@ XRCORE_API void LogStackTraceEx(struct _EXCEPTION_POINTERS *pExPtrs)
 		// pExPtrs->ExceptionRecord = NULL;
 		BuildStackTrace(pExPtrs); // данная функция модифицирует  ContextRecord.EIP
 
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 		if (g_stackTraceCount > 0)
 			Msg("!Exception stack trace %d lines, EIP = 0x%08x, ESP = 0x%08x: \n* 0 %s",
 					g_stackTraceCount, rec.Eip, rec.Esp, g_stackTrace[0]);

@@ -28,7 +28,7 @@ void	__stdcall xrMemCopy_x86					(LPVOID dest, const void* src, u32 n)
 //getting maximum read bandwidth,especially in DDR memory systems.
 void __stdcall xrMemCopy_MMXSSE3DNow			(LPVOID dest, const void* src, u32 n)
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 	__asm {
 		mov ecx,[n ];							// number of bytes to copy
 		mov edi,[dest ];						// destination

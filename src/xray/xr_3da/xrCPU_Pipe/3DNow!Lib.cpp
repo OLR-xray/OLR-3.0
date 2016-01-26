@@ -53,7 +53,7 @@ static const __int32 one        =       0x3F800000;
 static const __int32 half       =       0x3F000000;
 static const __int32 two        =       0x40000000;
 static const __int32 oob        =       0x00000000;
-static const __int32 nan        =       0x7fffffff;
+//static const __int32 nan        =       0x7fffffff;
 static const __int32 pnan       =       0x7fc00000;
 static const __int32 n0         =       0x40A008EF;
 static const __int32 n1         =       0x3DAA7B3D;
@@ -111,7 +111,7 @@ static const __int64 _msgn_		=	0x8000000080000000;
 //;******************************************************************************
 __declspec(naked)	void alt_acos(void)
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 	__asm {
 // ------------------------------------------------------------------
 	movq		mm3,QWORD PTR [a_c7]		;	mm3 = 0.0 | c7
@@ -148,7 +148,7 @@ __declspec(naked)	void alt_acos(void)
 //;******************************************************************************
 __declspec (naked) void SINCOSMAC ()
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
     __asm {
         push        ebx
         movd        eax,mm0
@@ -263,7 +263,7 @@ ending:
 //;******************************************************************************
 __declspec (naked) void a_acos ()
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
     __asm
     {
         movd        mm6, [sgn]  //; mask for sign bit
@@ -359,7 +359,7 @@ __declspec (naked) void a_acos ()
 //;******************************************************************************
 __declspec (naked) void a_asin ()
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
     __asm
     {
         movd        mm6, [sgn]  //; mask for sign bit
@@ -431,7 +431,7 @@ __declspec (naked) void a_asin ()
 //;******************************************************************************
 __declspec (naked) void a_sin ()
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
     __asm
     {
 

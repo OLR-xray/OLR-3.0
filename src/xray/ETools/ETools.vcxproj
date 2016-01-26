@@ -717,14 +717,6 @@
     <ProjectReference Include="..\..\3rd party\Xiph\libvorbis\win32\VS2010\libvorbis\libvorbis_static.vcxproj">
       <Project>{3a214e06-b95e-4d61-a291-1f8df2ec10fd}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\xrCDB\xrCDB.vcxproj">
-      <Project>{a19b1df2-82ec-4364-8bdf-85d13a1c89b5}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\xrCore\xrCore.vcxproj">
-      <Project>{a0f7d1fb-59a7-4717-a7e4-96f37e91998e}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\xrQSlim\xrQSlim.vcxproj">
       <Project>{f1836ce2-59ef-4189-8b9c-d103a511cb27}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

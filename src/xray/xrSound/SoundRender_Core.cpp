@@ -7,7 +7,7 @@
 #include "soundrender_emitter.h"
 #pragma warning(push)
 #pragma warning(disable:4995)
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 #include <eax.h>
 #else
 //TODO ADD
@@ -435,7 +435,7 @@ void CSoundRender_Core::update_listener( const Fvector& P, const Fvector& D, con
 
 void	CSoundRender_Core::i_eax_listener_set	(CSound_environment* _E)
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 	VERIFY(bEAX);
     CSoundRender_Environment* E = static_cast<CSoundRender_Environment*>(_E);
     EAXLISTENERPROPERTIES 		ep;
@@ -473,7 +473,7 @@ void	CSoundRender_Core::i_eax_listener_set	(CSound_environment* _E)
 
 void	CSoundRender_Core::i_eax_listener_get	(CSound_environment* _E)
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 	VERIFY(bEAX);
     CSoundRender_Environment* E = static_cast<CSoundRender_Environment*>(_E);
     EAXLISTENERPROPERTIES 		ep;
@@ -495,7 +495,7 @@ void	CSoundRender_Core::i_eax_listener_get	(CSound_environment* _E)
 
 void CSoundRender_Core::i_eax_commit_setting()
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 	// commit eax 
     if (bDeferredEAX)
     	i_eax_set(&DSPROPSETID_EAX_ListenerProperties, DSPROPERTY_EAXLISTENER_COMMITDEFERREDSETTINGS,NULL,0);

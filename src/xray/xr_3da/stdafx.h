@@ -3,6 +3,7 @@
 
 #pragma once
 
+
 #ifdef _EDITOR
 	#include "..\editors\ECore\stdafx.h"
 #else

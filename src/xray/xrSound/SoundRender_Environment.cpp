@@ -5,7 +5,7 @@
 #include "soundrender_environment.h"
 #pragma warning(push)
 #pragma warning(disable:4995)
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 #include <eax.h>
 #else
 //TODO FIX
@@ -24,7 +24,7 @@ CSoundRender_Environment::~CSoundRender_Environment(void)
 
 void CSoundRender_Environment::set_default	()
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 	Environment				= EAX_ENVIRONMENT_GENERIC;
     Room                    = EAXLISTENER_DEFAULTROOM;
     RoomHF                  = EAXLISTENER_DEFAULTROOMHF;
@@ -43,7 +43,7 @@ void CSoundRender_Environment::set_default	()
 
 void CSoundRender_Environment::set_identity	()
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 	set_default				();
     Room                    = EAXLISTENER_MINROOM;
 	clamp				  	();
@@ -91,7 +91,7 @@ void CSoundRender_Environment::get			(EAXLISTENERPROPERTIES& ep)
 */
 void CSoundRender_Environment::clamp		()
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
     ::clamp(Room,             		(float)EAXLISTENER_MINROOM, 	  	(float)EAXLISTENER_MAXROOM			);
     ::clamp(RoomHF,              	(float)EAXLISTENER_MINROOMHF, 	  	(float)EAXLISTENER_MAXROOMHF		);
     ::clamp(RoomRolloffFactor,   	EAXLISTENER_MINROOMROLLOFFFACTOR, 	EAXLISTENER_MAXROOMROLLOFFFACTOR	);

@@ -511,7 +511,7 @@ struct damn_keys_filter {
 // Фунция для тупых требований THQ и тупых американских пользователей
 BOOL IsOutOfVirtualMemory()
 {
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 #define VIRT_ERROR_SIZE 256
 #define VIRT_MESSAGE_SIZE 512
 
@@ -648,7 +648,7 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 #endif
 
 	// Title window
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 	logoWindow					= CreateDialog(GetModuleHandle(NULL),	MAKEINTRESOURCE(IDD_STARTUP), 0, logDlgProc );
 #else
 	logoWindow = CreateDialog(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_STARTUP), 0, (DLGPROC)logDlgProc);

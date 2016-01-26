@@ -5,11 +5,19 @@
 
 #undef DEMO_BUILD
 
+// дефайны x64 или x32
+#if _WIN32 || _WIN64
+#if _WIN64
+#define ENVIRONMENT64
+#else
+#define ENVIRONMENT32
+#endif
+#endif
 
 #define	GAMESPY_GAMENAME				"stalkersc"
 #define GAMESPY_GAMEID					1067
 #define GAMESPY_PRODUCTID				10953
-#if ENVIRONMENT32
+#ifdef ENVIRONMENT32
 #define GAME_VERSION					"1.0008 (OLR 3.0) (x86)"
 #else
 #define GAME_VERSION					"1.0008 (OLR 3.0) (x64)"
