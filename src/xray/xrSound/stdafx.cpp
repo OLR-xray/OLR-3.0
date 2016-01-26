@@ -16,7 +16,7 @@
 #	pragma comment(lib,	"dsoundb.lib" 		)
 #else
 #ifdef ENVIRONMENT32
-#	pragma comment(lib,	"eax.lib"			)
+//#	pragma comment(lib,	"eax.lib"			)
 #endif
 #	pragma comment(lib,	"xrCore.lib"		)
 #	pragma comment(lib,	"xrCDB.lib"			)
