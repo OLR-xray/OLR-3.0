@@ -12,6 +12,23 @@
 
 # Build results
 intermediate/
+intermediate64/
+
+# openAL
+src/3rd party/OpenAL/OpenAL-Windows/Alc/Debug
+src/3rd party/OpenAL/OpenAL-Windows/Alc/Release
+src/3rd party/OpenAL/OpenAL-Windows/Alc/x64
+src/3rd party/OpenAL/OpenAL-Windows/Alu/Debug
+src/3rd party/OpenAL/OpenAL-Windows/Alu/Release
+src/3rd party/OpenAL/OpenAL-Windows/Alu/x64
+src/3rd party/OpenAL/OpenAL-Windows/OpenAL32/Debug
+src/3rd party/OpenAL/OpenAL-Windows/OpenAL32/Release
+src/3rd party/OpenAL/OpenAL-Windows/OpenAL32/x64
+src/3rd party/OpenAL/OpenAL-Windows/Router/Debug
+src/3rd party/OpenAL/OpenAL-Windows/Router/Release
+src/3rd party/OpenAL/OpenAL-Windows/RouterTest/Release
+src/3rd party/OpenAL/OpenAL-Windows/RouterTest/Debug
+
 
 # Visual Studio 2015 cache/options directory
 .vs/
