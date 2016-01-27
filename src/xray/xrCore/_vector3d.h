@@ -25,7 +25,7 @@ public:
 	ICF SelfRef	set(const _vector3<double> &v)			{ x = T(v.x);	y = T(v.y);	z = T(v.z);	return *this;	};
 	ICF	SelfRef	set(float* p)							{ x = p[0];	y = p[1];	z = p[2];		return *this;	};
 	ICF	SelfRef	set(double* p)							{ x = p[0];	y = p[1];	z = p[2];		return *this;	};
-
+	ICF SelfRef set(float, float, float, float) { return *this; }
 	ICF	SelfRef	add(const Self &v)						{ x+=v.x;	y+=v.y;		z+=v.z;			return *this;	};
 	ICF SelfRef	add(T s)								{ x+=s;		y+=s;		z+=s;			return *this;	};
 	ICF SelfRef	add(const Self &a, const Self &v)		{ x=a.x+v.x;y=a.y+v.y;	z=a.z+v.z;		return *this;	};
