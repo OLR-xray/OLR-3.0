@@ -17,11 +17,21 @@
 #define	GAMESPY_GAMENAME				"stalkersc"
 #define GAMESPY_GAMEID					1067
 #define GAMESPY_PRODUCTID				10953
+
 #ifdef ENVIRONMENT32
-#define GAME_VERSION					"1.0008 (OLR 3.0) (x86)"
+	#ifdef DEBUG
+		#define GAME_VERSION					"1.0008 (Debug) (x86) "
+	#else
+		#define GAME_VERSION					"1.0008 (Release) (x86)"
+	#endif
 #else
-#define GAME_VERSION					"1.0008 (OLR 3.0) (x64)"
+	#ifdef DEBUG
+		#define GAME_VERSION					"1.0008 (Debug) (x64) "
+	#else
+		#define GAME_VERSION					"1.0008 (Release) (x64)"
+	#endif
 #endif
+
 #define REGISTRY_PATH					"Software\\GSC Game World\\STALKER-SHOC\\"
 
 
