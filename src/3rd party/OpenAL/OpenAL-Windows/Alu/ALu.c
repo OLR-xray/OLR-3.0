@@ -429,6 +429,9 @@ ALUAPI ALvoid ALUAPIENTRY aluMixData(ALvoid *context,ALvoid *buffer,ALsizei size
 						DataPos64=DataPosInt;
 						DataPos64<<=FRACTIONBITS;
 						DataPos64+=DataPosFrac;
+						//FIX DEVIDE BY ZERO (NUMMER)
+						if (increment == 0)
+							increment = 1;
 						BufferSize=(ALuint)((DataSize64-DataPos64)/increment);
 						BufferListItem = ALSource->queue;
 						for (loop = 0; loop < ALSource->BuffersAddedToDSBuffer; loop++)
