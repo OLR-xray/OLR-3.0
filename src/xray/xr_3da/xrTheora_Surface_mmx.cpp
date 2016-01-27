@@ -43,6 +43,85 @@ typedef tv_sshort tv_sshort_tables[ 256 ][ 4 ];
 		}
 */
 
+static tv_sshort_tables& makeTable()
+{
+	static tv_sshort_tables ttl;
+#ifdef ENVIRONMENT32
+	__asm{
+		push  ebx
+			// helper constants
+			mov   esi, -14487936
+			mov   edi, -5822464
+			mov   ecx, -2785792
+			mov   edx, -14496256
+
+			lea   ebx, DWORD PTR[ttl + 2]
+
+			// building helper tables
+			ALIGN 4
+		_tb_loop:
+		mov   eax, esi
+			sar   eax, 16
+			mov   WORD PTR[ebx - 2], ax
+
+			mov   eax, edi
+			sar   eax, 16
+			mov   WORD PTR[ebx + 0], ax
+
+			mov   eax, ecx
+			sar   eax, 16
+			mov   WORD PTR[ebx + 2], ax
+
+			mov   eax, edx
+			sar   eax, 16
+			mov   WORD PTR[ebx + 4], ax
+
+			add   esi, 113443
+			add   edi, 45744
+			add   ecx, 22020
+			add   edx, 113508
+
+			add   ebx, 4 * (TYPE tv_sshort)
+			cmp   esi, 14553472
+
+			jl   _tb_loop
+
+			pop   ebx
+	}
+#else
+	// building short tables. Может быть тут стоит 1 раз статически сгенерировать? 
+	{
+		//what is magic?
+		register long helperTable[4] = {
+			-14487936,
+			-5822464,
+			-2785792,
+			-14496256
+		};//esi,edi,ecx,edx
+
+		//using constexpr son!
+		for (register lp_tv_sshort currentTtl = &ttl[0][0];
+			helperTable[0] != 14553472; //check overflow and check end
+			++currentTtl)
+		{
+			//sar eax,16 == eax/2^16 == eax / 65536 ; TEST ME
+			currentTtl[0] = short(helperTable[0] / 65536);
+			currentTtl[1] = short(helperTable[1] / 65536);
+			currentTtl[2] = short(helperTable[2] / 65536);
+			currentTtl[3] = short(helperTable[0] / 65536);
+
+			//restore helper tbl with magic number
+			helperTable[0] += 113443;
+			helperTable[1] += 45744;
+			helperTable[2] += 22020;
+			helperTable[3] += 113508;
+		};
+
+	}
+#endif
+	return ttl;
+}
+
 lp_tv_uchar tv_yuv2argb(
 						lp_tv_uchar			argb_plane ,
 						tv_slong			argb_width ,
@@ -59,80 +138,7 @@ lp_tv_uchar tv_yuv2argb(
 						tv_slong 			width_diff 
 						)
 {
-	tv_sshort_tables ttl;
-#ifdef ENVIRONMENT32
-	__asm{
-		push  ebx
-		// helper constants
-		mov   esi,-14487936
-		mov   edi,-5822464
-		mov   ecx,-2785792
-		mov   edx,-14496256
-
-		lea   ebx,DWORD PTR [ttl + 2]
-
-		// building helper tables
-		ALIGN 4
-_tb_loop:
-		mov   eax,esi
-		sar   eax,16
-		mov   WORD PTR [ebx-2],ax
-
-		mov   eax,edi
-		sar   eax,16
-		mov   WORD PTR [ebx+0],ax
-
-		mov   eax,ecx
-		sar   eax,16
-		mov   WORD PTR [ebx+2],ax
-
-		mov   eax,edx
-		sar   eax,16
-		mov   WORD PTR [ebx+4],ax
-
-		add   esi,113443
-		add   edi,45744
-		add   ecx,22020
-		add   edx,113508
-
-		add   ebx,4 * ( TYPE tv_sshort )
-		cmp   esi,14553472
-
-		jl   _tb_loop
-
-		pop   ebx
-	}
-#else
-        // building short tables. Может быть тут стоит 1 раз статически сгенерировать? 
-        {
-            //what is magic?
-            register long helperTable[4] = {
-                -14487936,
-                -5822464,
-                -2785792,
-                -14496256
-            };//esi,edi,ecx,edx
-            
-			//using constexpr son!
-			for (register lp_tv_sshort currentTtl = &ttl[0][0];
-				helperTable[0] != 14553472; //check overflow and check end
-				++currentTtl)
-            {
-                //sar eax,16 == eax/2^16 == eax / 65536 ; TEST ME
-                currentTtl[0] = short( helperTable[0] / 65536 );
-                currentTtl[1] = short( helperTable[1] / 65536 );
-                currentTtl[2] = short( helperTable[2] / 65536 );
-                currentTtl[3] = short( helperTable[0] / 65536 );
-                
-                //restore helper tbl with magic number
-                helperTable[0] += 113443;
-                helperTable[1] += 45744;
-                helperTable[2] += 22020;
-                helperTable[3] += 113508;                
-            };
-            
-        }
-#endif
+	static tv_sshort_tables& ttl(makeTable());
 	lp_tv_uchar line1 = argb_plane;
 	lp_tv_uchar line2 = line1 + 4 * argb_width;
 
