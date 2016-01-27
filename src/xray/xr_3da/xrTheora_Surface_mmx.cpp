@@ -43,6 +43,85 @@ typedef tv_sshort tv_sshort_tables[ 256 ][ 4 ];
 		}
 */
 
+static tv_sshort_tables& makeTable()
+{
+	static tv_sshort_tables ttl;
+#ifdef ENVIRONMENT32
+	__asm{
+		push  ebx
+			// helper constants
+			mov   esi, -14487936
+			mov   edi, -5822464
+			mov   ecx, -2785792
+			mov   edx, -14496256
+
+			lea   ebx, DWORD PTR[ttl + 2]
+
+			// building helper tables
+			ALIGN 4
+		_tb_loop:
+		mov   eax, esi
+			sar   eax, 16
+			mov   WORD PTR[ebx - 2], ax
+
+			mov   eax, edi
+			sar   eax, 16
+			mov   WORD PTR[ebx + 0], ax
+
+			mov   eax, ecx
+			sar   eax, 16
+			mov   WORD PTR[ebx + 2], ax
+
+			mov   eax, edx
+			sar   eax, 16
+			mov   WORD PTR[ebx + 4], ax
+
+			add   esi, 113443
+			add   edi, 45744
+			add   ecx, 22020
+			add   edx, 113508
+
+			add   ebx, 4 * (TYPE tv_sshort)
+			cmp   esi, 14553472
+
+			jl   _tb_loop
+
+			pop   ebx
+	}
+#else
+	// building short tables. Может быть тут стоит 1 раз статически сгенерировать? 
+	{
+		//what is magic?
+		register long helperTable[4] = {
+			-14487936,
+			-5822464,
+			-2785792,
+			-14496256
+		};//esi,edi,ecx,edx
+
+		//using constexpr son!
+		for (register lp_tv_sshort currentTtl = &ttl[0][0];
+			helperTable[0] != 14553472; //check overflow and check end
+			++currentTtl)
+		{
+			//sar eax,16 == eax/2^16 == eax / 65536 ; TEST ME
+			currentTtl[0] = short(helperTable[0] / 65536);
+			currentTtl[1] = short(helperTable[1] / 65536);
+			currentTtl[2] = short(helperTable[2] / 65536);
+			currentTtl[3] = short(helperTable[0] / 65536);
+
+			//restore helper tbl with magic number
+			helperTable[0] += 113443;
+			helperTable[1] += 45744;
+			helperTable[2] += 22020;
+			helperTable[3] += 113508;
+		};
+
+	}
+#endif
+	return ttl;
+}
+
 lp_tv_uchar tv_yuv2argb(
 						lp_tv_uchar			argb_plane ,
 						tv_slong			argb_width ,
@@ -59,50 +138,7 @@ lp_tv_uchar tv_yuv2argb(
 						tv_slong 			width_diff 
 						)
 {
-	tv_sshort_tables ttl;
-#ifdef ENVIRONMENT32
-	__asm{
-		push  ebx
-		// helper constants
-		mov   esi,-14487936
-		mov   edi,-5822464
-		mov   ecx,-2785792
-		mov   edx,-14496256
-
-		lea   ebx,DWORD PTR [ttl + 2]
-
-		// building helper tables
-		ALIGN 4
-_tb_loop:
-		mov   eax,esi
-		sar   eax,16
-		mov   WORD PTR [ebx-2],ax
-
-		mov   eax,edi
-		sar   eax,16
-		mov   WORD PTR [ebx+0],ax
-
-		mov   eax,ecx
-		sar   eax,16
-		mov   WORD PTR [ebx+2],ax
-
-		mov   eax,edx
-		sar   eax,16
-		mov   WORD PTR [ebx+4],ax
-
-		add   esi,113443
-		add   edi,45744
-		add   ecx,22020
-		add   edx,113508
-
-		add   ebx,4 * ( TYPE tv_sshort )
-		cmp   esi,14553472
-
-		jl   _tb_loop
-
-		pop   ebx
-	}
-
+	static tv_sshort_tables& ttl(makeTable());
 	lp_tv_uchar line1 = argb_plane;
 	lp_tv_uchar line2 = line1 + 4 * argb_width;
 
@@ -112,13 +148,14 @@ _tb_loop:
 	lp_tv_uchar u = u_plane;
 	lp_tv_uchar v = v_plane;
 
-	int nTempX;
-	int nTempY;
-	int nTempX_;
+	unsigned int nTempX;
+	unsigned int nTempY;
+	unsigned int nTempX_;
 
 	for( nTempY = 0 ; nTempY < argb_height ; nTempY += 2 ){
 		for( nTempX = 0 ; nTempX < argb_width ; nTempX += 4 ){
 			nTempX_ = nTempX >> 1;
+#ifdef ENVIRONMENT32
 			__asm{
 				push ebx       ;
 
@@ -133,25 +170,26 @@ _tb_loop:
 
 				add  edi,DWORD PTR nTempX_  ; edi = v + nTempX_
 				lea  esi,DWORD PTR ttl   ; esi = ttl
-
+				//взяли вектора _yuv
 				movd mm0,DWORD PTR [eax]   ; mm0 = 0 | 0 | 0 | 0 | nY4 | nY3 | nY2 | nY1
 				movd mm1,DWORD PTR [ebx]   ; mm1 = 0 | 0 | 0 | 0 | nY8 | nY7 | nY6 | nY5
-
+				//забрали адреса 2-х векторов
 				movzx edx,DWORD PTR [edi]   ; edx = V1
 				movzx ecx,DWORD PTR [edi+1]  ; ecx = V2
-
+				//расширили их
 				punpcklbw mm0,mm2     ; mm0 = nY4 | nY3 | nY2 | nY1
 				punpcklbw mm1,mm2     ; mm1 = nY8 | nY7 | nY6 | nY5
-
+				//забрали первую серию 
 				pinsrw mm4,WORD PTR [esi+edx*8+0],00000000b ; mm4 = 0 | 0 | 0 | ttl[nV1][0]
 				pinsrw mm5,WORD PTR [esi+ecx*8+0],00000000b ; mm5 = 0 | 0 | 0 | ttl[nV2][0]
-
+				//копирнули в мм3
 				movq mm3,mm0      ; mm3 = nY4 | nY3 | nY2 | nY1
+				//забрали адрес U
 				mov  edi,DWORD PTR u    ; edi = u
-
+				//shuffle
 				punpckldq mm3,mm1     ; mm3 = nY6 | nY5 | nY2 | nY1
 				punpckhdq mm0,mm1     ; mm0 = nY8 | nY7 | nY4 | nY3
-
+				//load to mm4/5 ttls(first)
 				pshufw mm4,mm4,00000000b   ; mm4 = ttl[nV1][0] | ttl[nV1][0] | ttl[nV1][0] | ttl[nV1][0]
 				pshufw mm5,mm5,00000000b   ; mm5 = ttl[nV2][0] | ttl[nV2][0] | ttl[nV2][0] | ttl[nV2][0]
 
@@ -258,7 +296,83 @@ _tb_loop:
 				// we are the champions
 				pop  ebx       ;
 			}
+#else
+//
+//#error Pls implemented me!
+			struct _argb{
+				unsigned char A;
+				unsigned char R;
+				unsigned char G;
+				unsigned char B;
+			};
+			struct _yuv{
+				unsigned char v4;
+				unsigned char v3;
+				unsigned char v2;
+				unsigned char v1;
+			};
 
+			_yuv * _y1 = (_yuv*) y1;
+			_yuv * _y2 = (_yuv*) y2;
+			unsigned char V1 = *v;
+			unsigned char V2 = *(v+1);
+			unsigned char U1 = *u;
+			unsigned char U2 = *(u + 1);
+			//set PIXEL
+			/*
+			px=pixel
+			line1
+			; px1 = 00 | P2.R | P2.G | P2.B | 00 | P1.R | P1.G | P1.B |
+			; px2 = 00 | P4.R | P4.G | P4.B | 00 | P3.R | P3.G | P3.B |
+			line2
+			; px3 = 00 | P6.R | P6.G | P6.B | 00 | P5.R | P5.G | P5.B |
+			; px4 = 00 | P8.R | P8.G | P8.B | 00 | P7.R | P7.G | P7.B |
+			*/
+			//объявляем все пиксели и размещаем их сразу на место
+			_argb *pixel1 = new ( line1 + 1 * sizeof(_argb ) ) _argb();
+			_argb *pixel2 = new ( line1 + 0 * sizeof(_argb ) ) _argb();
+			_argb *pixel3 = new ( line1 + 4 * sizeof(_argb ) ) _argb();
+			_argb *pixel4 = new ( line1 + 3 * sizeof(_argb ) ) _argb();
+
+			_argb *pixel5 = new ( line2 + 1 * sizeof(_argb ) ) _argb();
+			_argb *pixel6 = new ( line2 + 0 * sizeof(_argb ) ) _argb();
+			_argb *pixel7 = new ( line2 + 4 * sizeof(_argb ) ) _argb();
+			_argb *pixel8 = new ( line2 + 3 * sizeof(_argb ) ) _argb();
+			//calc ALL R
+			pixel6->R = _y1->v1 + ttl[V1][0];
+			pixel5->R = _y1->v2 + ttl[V1][0];
+			pixel2->R = _y1->v3 + ttl[V1][0];
+			pixel1->R = _y1->v4 + ttl[V1][0];
+
+			pixel8->R = _y2->v1 + ttl[V2][0];
+			pixel7->R = _y2->v2 + ttl[V2][0];
+			pixel4->R = _y2->v3 + ttl[V2][0];
+			pixel3->R = _y2->v4 + ttl[V2][0];
+
+			//calc ALL G
+			pixel6->G = _y1->v1 - ttl[V1][1] - ttl[U1][2];
+			pixel5->G = _y1->v2 - ttl[V1][1] - ttl[U1][2];
+			pixel2->G = _y1->v3 - ttl[V1][1] - ttl[U1][2];
+			pixel1->G = _y1->v4 - ttl[V1][1] - ttl[U1][2];
+
+			pixel8->G = _y2->v1 - ttl[V2][1] - ttl[U2][2];
+			pixel7->G = _y2->v2 - ttl[V2][1] - ttl[U2][2];
+			pixel4->G = _y2->v3 - ttl[V2][1] - ttl[U2][2];
+			pixel3->G = _y2->v4 - ttl[V2][1] - ttl[U2][2];
+
+			//calc B
+			pixel6->B = _y1->v1 + ttl[U1][3];
+			pixel5->B = _y1->v2 + ttl[U1][3];
+			pixel2->B = _y1->v3 + ttl[U1][3];
+			pixel1->B = _y1->v4 + ttl[U1][3];
+
+			pixel8->B = _y2->v1 + ttl[U2][3];
+			pixel7->B = _y2->v2 + ttl[U2][3];
+			pixel4->B = _y2->v3 + ttl[U2][3];
+			pixel3->B = _y2->v4 + ttl[U2][3];
+
+
+#endif
 			line1 += 16;
 			line2 += 16;
 		}
@@ -272,13 +386,12 @@ _tb_loop:
 		line1 += 4 * argb_width;
 		line2 = line1 + 4 * argb_width;
 	}
+#ifdef ENVIRONMENT32 
+        //clear register
 	__asm{
 		sfence        ;
 		emms        ;
 	}
-#else
-
-#error C++ CODE
 
 #endif
 
