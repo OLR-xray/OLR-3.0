@@ -13,9 +13,7 @@ class CInventory;
 #include "UIItemInfo.h"
 
 #if defined(INV_NEW_SLOTS_SYSTEM)
-#ifndef DEBUG
 #include "UISleepWnd.h"
-#endif
 #endif
 
 #include "../inventory_space.h"
@@ -97,9 +95,7 @@ protected:
 	CUIDragDropListEx*			m_pUIAutomaticList;
 
 #if defined(INV_NEW_SLOTS_SYSTEM)	
-#ifndef DEBUG
 	CUISleepWnd					UISleepWnd;
-#endif
 	CUIDragDropListEx*			m_pUIKnifeList;
 	CUIDragDropListEx*			m_pUIBinocularList;
 	CUIDragDropListEx*			m_pUIDetectorList;

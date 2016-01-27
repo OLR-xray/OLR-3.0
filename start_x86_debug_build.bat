@@ -1,1 +1,1 @@
-X:\binaries\Debug\Win32\XR_3DA.exe -nointro
+X:\binaries_Debug_Win32\XR_3DA.exe -nointro

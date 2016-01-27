@@ -70,25 +70,25 @@
     <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>X:\binaries\$(Configuration)\$(Platform)\</OutDir>
+    <OutDir>X:\binaries_$(Configuration)_$(Platform)\</OutDir>
     <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>X:\binaries\$(Configuration)\$(Platform)\</OutDir>
+    <OutDir>X:\binaries_$(Configuration)_$(Platform)\</OutDir>
     <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>X:\binaries\$(Configuration)\$(Platform)\</OutDir>
+    <OutDir>X:\binaries_$(Configuration)_$(Platform)\</OutDir>
     <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>X:\binaries\$(Configuration)\$(Platform)\</OutDir>
+    <OutDir>X:\binaries_$(Configuration)_$(Platform)\</OutDir>
     <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
@@ -124,7 +124,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>ALc.lib;ALu.lib;dxguid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>X:\binaries\$(Configuration)\$(Platform)\wrap_oal.dll</OutputFile>
+      <OutputFile>X:\binaries_$(Configuration)_$(Platform)\wrap_oal.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>.\Release/wrap_oal.pdb</ProgramDatabaseFile>
@@ -165,7 +165,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>ALc.lib;ALu.lib;dxguid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>X:\binaries\$(Configuration)\$(Platform)\wrap_oal.dll</OutputFile>
+      <OutputFile>X:\binaries_$(Configuration)_$(Platform)\wrap_oal.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>.\Release/wrap_oal.pdb</ProgramDatabaseFile>
@@ -206,7 +206,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>ALc.lib;ALu.lib;dxguid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>X:\binaries\$(Configuration)\$(Platform)\wrap_oal.dll</OutputFile>
+      <OutputFile>X:\binaries_$(Configuration)_$(Platform)\wrap_oal.dll</OutputFile>
       <Version>1.0</Version>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>LIBCD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -247,7 +247,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>ALc.lib;ALu.lib;dxguid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>X:\binaries\$(Configuration)\$(Platform)\wrap_oal.dll</OutputFile>
+      <OutputFile>X:\binaries_$(Configuration)_$(Platform)\wrap_oal.dll</OutputFile>
       <Version>1.0</Version>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>LIBCD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>

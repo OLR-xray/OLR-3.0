@@ -67,7 +67,6 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 
         }
 		GetCurrentDirectory(sizeof(WorkingPath),WorkingPath);
-
 		// User/Comp Name
 		DWORD	sz_user		= sizeof(UserName);
 		GetUserName			(UserName,&sz_user);
@@ -79,14 +78,19 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 		CPU::Detect			();
 		
 		Memory._initialize	(strstr(Params,"-mem_debug") ? TRUE : FALSE);
-
+		
 		DUMP_PHASE;
 
 		InitLog				();
 		_initialize_cpu		();
 
-//		Debug._initialize	();
-
+#ifdef DEBUG
+	#ifndef DEDICATED_SERVER
+		Debug._initialize	(FALSE);
+	#else
+		Debug._initialize	(TRUE);
+	#endif
+#endif
 		rtc_initialize		();
 
 		xr_FS				= xr_new<CLocatorAPI>	();

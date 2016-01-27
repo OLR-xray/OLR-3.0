@@ -536,7 +536,6 @@ void CLocatorAPI::_initialize	(u32 flags, LPCSTR target_folder, LPCSTR fs_name)
 	{
 		append_path		("$app_root$",Core.ApplicationPath,0,FALSE);
     }
-
 	if (m_Flags.is(flTargetFolderOnly))
 		append_path	("$fs_root$", "", 0, FALSE);
 	else

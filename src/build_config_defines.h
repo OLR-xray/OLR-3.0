@@ -17,7 +17,7 @@
 
 // ==================================== Правки от Real Wolf ======================================= 
 // #define INV_RUCK_UNLIMITED_FIX		// () Real Wolf: позволяет безболезненно использовать атрибут unlimited в теге dragdrop_bag для создания лимитного инвентаря (ГЛЮЧАТ ПАТРОНЫЙ ПРИ ЮЗЕ ОРУЖИЯ В СЛОТ!!!)
-#define INV_NEW_SLOTS_SYSTEM			// Real Wolf, Red Virus: включает слоты.
+#define INV_NEW_SLOTS_SYSTEM			// Real Wolf, Red Virus: включает слоты. //nummer: на дебаге отключил UISleepWnd
 #define SUN_DIR_NOT_DEBUG			    // Real Wolf: отключение вывода в лог информации вида CurrentEnv.sun_dir...
 // #define ARTEFACTS_FROM_RUCK				// Real Wolf: артефакты будут работать из всего инвентаря (слотов, пояса, рюкзака).
 #define KNIFE_SPRINT_FIX				// Real Wolf: остановка спринта при при ударе2.
