@@ -92,7 +92,7 @@ namespace std
 #endif
 
 #if _SECURE_SCL > 0 || _ITERATOR_DEBUG_LEVEL > 0
-#error "Это не работает в X-Ray!"
+#pragma message ("ЭТО НЕ РАБОТАЕТ В X-RAY")
 #endif
 
 

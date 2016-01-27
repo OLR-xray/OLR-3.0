@@ -845,7 +845,6 @@ bool CUIMainIngameWnd::OnKeyboardPress(int dik)
 			static float rot_d = deg2rad(0.5f);
 			static float mov_d = 0.01f;
 			bool shift = !!pInput->iGetAsyncKeyState(DIK_LSHIFT);
-			flag = true;
 			switch (dik)
 			{
 				// Shift +x
@@ -896,10 +895,8 @@ bool CUIMainIngameWnd::OnKeyboardPress(int dik)
 				Msg("attach_position_offset [%f,%f,%f]",VPUSH(CAttachableItem::get_pos_offset()));
 				break;
 			default:
-				flag = false;
 				break;
-			}		
-		if(flag)return true;;
+			}
 		}
 #endif		
 

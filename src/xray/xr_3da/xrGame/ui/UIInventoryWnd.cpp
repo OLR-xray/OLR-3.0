@@ -86,11 +86,13 @@ void CUIInventoryWnd::Init()
 	UIItemInfo.Init						(0, 0, UIDescrWnd.GetWidth(), UIDescrWnd.GetHeight(), INVENTORY_ITEM_XML);
 	
 #ifdef INV_NEW_SLOTS_SYSTEM
+#ifndef DEBUG
 	if (GameID() == GAME_SINGLE){
 		AttachChild							(&UISleepWnd);
 		UISleepWnd.Init();
 		UISleepWnd.SetWindowName("sleep_wnd");  // для лучшего нахождения через GetStatic
 	}
+#endif
 #endif
 	
 	AttachChild							(&UIPersonalWnd);

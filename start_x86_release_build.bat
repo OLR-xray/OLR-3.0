@@ -1,0 +1,1 @@
+X:\binaries\Release\Win32\XR_3DA.exe -nointro
