@@ -5,6 +5,7 @@
 #include		"skeletoncustom.h"
 #include		"skeletonmotions.h"
 
+
 // consts
 const	u32		MAX_BLENDED			=	16;
 const	u32		MAX_BLENDED_POOL	=	(MAX_BLENDED*MAX_PARTS*MAX_CHANNELS);

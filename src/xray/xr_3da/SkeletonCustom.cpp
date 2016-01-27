@@ -15,6 +15,7 @@ xrCriticalSection	UCalc_Mutex
 #endif // PROFILE_CRITICAL_SECTIONS
 ;
 
+
 //////////////////////////////////////////////////////////////////////////
 // BoneInstance methods
 void		CBoneInstance::construct	()
