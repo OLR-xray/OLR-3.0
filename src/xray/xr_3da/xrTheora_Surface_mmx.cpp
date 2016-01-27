@@ -103,7 +103,7 @@ _tb_loop:
 		pop   ebx
 	}
 #else
-        // building short tables. Может быть тут стоит 1 раз статически сгенерировать? 
+        // building short tables. РњРѕР¶РµС‚ Р±С‹С‚СЊ С‚СѓС‚ СЃС‚РѕРёС‚ 1 СЂР°Р· СЃС‚Р°С‚РёС‡РµСЃРєРё СЃРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ? 
         {
             //what is magic?
             register long helperTable[4] = {
@@ -149,81 +149,6 @@ _tb_loop:
 	for( nTempY = 0 ; nTempY < argb_height ; nTempY += 2 ){
 		for( nTempX = 0 ; nTempX < argb_width ; nTempX += 4 ){
 			nTempX_ = nTempX >> 1;
-			struct _argb{
-				unsigned char A;
-				unsigned char R;
-				unsigned char G;
-				unsigned char B;
-			};
-			struct _yuv{
-				unsigned char v4;
-				unsigned char v3;
-				unsigned char v2;
-				unsigned char v1;
-			};
-
-			_yuv * _y1 = (_yuv*) y1;
-			_yuv * _y2 = (_yuv*) y2;
-			unsigned char V1 = *v;
-			unsigned char V2 = *(v+1);
-			unsigned char U1 = *u;
-			unsigned char U2 = *(u + 1);
-			//clear registers
-			//set PIXEL
-
-			/*
-			px=pixel
-			line1
-			; px1 = 00 | P2.R | P2.G | P2.B | 00 | P1.R | P1.G | P1.B |
-			; px2 = 00 | P4.R | P4.G | P4.B | 00 | P3.R | P3.G | P3.B |
-			line2
-			; px3 = 00 | P6.R | P6.G | P6.B | 00 | P5.R | P5.G | P5.B |
-			; px4 = 00 | P8.R | P8.G | P8.B | 00 | P7.R | P7.G | P7.B |
-			*/
-			//объявляем все пиксели и размещаем их сразу на место
-			_argb *pixel1 = new ( line1 + 1 * sizeof(_argb ) ) _argb();
-			_argb *pixel2 = new ( line1 + 0 * sizeof(_argb ) ) _argb();
-			_argb *pixel3 = new ( line1 + 4 * sizeof(_argb ) ) _argb();
-			_argb *pixel4 = new ( line1 + 3 * sizeof(_argb ) ) _argb();
-
-			_argb *pixel5 = new ( line2 + 1 * sizeof(_argb ) ) _argb();
-			_argb *pixel6 = new ( line2 + 0 * sizeof(_argb ) ) _argb();
-			_argb *pixel7 = new ( line2 + 4 * sizeof(_argb ) ) _argb();
-			_argb *pixel8 = new ( line2 + 3 * sizeof(_argb ) ) _argb();
-			//calc ALL R
-			pixel6->R = _y1->v1 + ttl[V1][0];
-			pixel5->R = _y1->v2 + ttl[V1][0];
-			pixel2->R = _y1->v3 + ttl[V1][0];
-			pixel1->R = _y1->v4 + ttl[V1][0];
-
-			pixel8->R = _y2->v1 + ttl[V2][0];
-			pixel7->R = _y2->v2 + ttl[V2][0];
-			pixel4->R = _y2->v3 + ttl[V2][0];
-			pixel3->R = _y2->v4 + ttl[V2][0];
-
-			//calc ALL G
-			pixel6->G = _y1->v1 - ttl[V1][1] - ttl[U1][2];
-			pixel5->G = _y1->v2 - ttl[V1][1] - ttl[U1][2];
-			pixel2->G = _y1->v3 - ttl[V1][1] - ttl[U1][2];
-			pixel1->G = _y1->v4 - ttl[V1][1] - ttl[U1][2];
-
-			pixel8->G = _y2->v1 - ttl[V2][1] - ttl[U2][2];
-			pixel7->G = _y2->v2 - ttl[V2][1] - ttl[U2][2];
-			pixel4->G = _y2->v3 - ttl[V2][1] - ttl[U2][2];
-			pixel3->G = _y2->v4 - ttl[V2][1] - ttl[U2][2];
-
-			//calc B
-			pixel6->B = _y1->v1 + ttl[U1][3];
-			pixel5->B = _y1->v2 + ttl[U1][3];
-			pixel2->B = _y1->v3 + ttl[U1][3];
-			pixel1->B = _y1->v4 + ttl[U1][3];
-
-			pixel8->B = _y2->v1 + ttl[U2][3];
-			pixel7->B = _y2->v2 + ttl[U2][3];
-			pixel4->B = _y2->v3 + ttl[U2][3];
-			pixel3->B = _y2->v4 + ttl[U2][3];
-
-
 #ifdef ENVIRONMENT32
 			__asm{
 				push ebx       ;
@@ -239,21 +164,21 @@ _tb_loop:
 
 				add  edi,DWORD PTR nTempX_  ; edi = v + nTempX_
 				lea  esi,DWORD PTR ttl   ; esi = ttl
-				//взяли вектора _yuv
+				//РІР·СЏР»Рё РІРµРєС‚РѕСЂР° _yuv
 				movd mm0,DWORD PTR [eax]   ; mm0 = 0 | 0 | 0 | 0 | nY4 | nY3 | nY2 | nY1
 				movd mm1,DWORD PTR [ebx]   ; mm1 = 0 | 0 | 0 | 0 | nY8 | nY7 | nY6 | nY5
-				//забрали адреса 2-х векторов
+				//Р·Р°Р±СЂР°Р»Рё Р°РґСЂРµСЃР° 2-С… РІРµРєС‚РѕСЂРѕРІ
 				movzx edx,DWORD PTR [edi]   ; edx = V1
 				movzx ecx,DWORD PTR [edi+1]  ; ecx = V2
-				//расширили их
+				//СЂР°СЃС€РёСЂРёР»Рё РёС…
 				punpcklbw mm0,mm2     ; mm0 = nY4 | nY3 | nY2 | nY1
 				punpcklbw mm1,mm2     ; mm1 = nY8 | nY7 | nY6 | nY5
-				//забрали первую серию 
+				//Р·Р°Р±СЂР°Р»Рё РїРµСЂРІСѓСЋ СЃРµСЂРёСЋ 
 				pinsrw mm4,WORD PTR [esi+edx*8+0],00000000b ; mm4 = 0 | 0 | 0 | ttl[nV1][0]
 				pinsrw mm5,WORD PTR [esi+ecx*8+0],00000000b ; mm5 = 0 | 0 | 0 | ttl[nV2][0]
-				//копирнули в мм3
+				//РєРѕРїРёСЂРЅСѓР»Рё РІ РјРј3
 				movq mm3,mm0      ; mm3 = nY4 | nY3 | nY2 | nY1
-				//забрали адрес U
+				//Р·Р°Р±СЂР°Р»Рё Р°РґСЂРµСЃ U
 				mov  edi,DWORD PTR u    ; edi = u
 				//shuffle
 				punpckldq mm3,mm1     ; mm3 = nY6 | nY5 | nY2 | nY1
@@ -366,9 +291,81 @@ _tb_loop:
 				pop  ebx       ;
 			}
 #else
+//
+//#error Pls implemented me!
+			struct _argb{
+				unsigned char A;
+				unsigned char R;
+				unsigned char G;
+				unsigned char B;
+			};
+			struct _yuv{
+				unsigned char v4;
+				unsigned char v3;
+				unsigned char v2;
+				unsigned char v1;
+			};
 
-#error Pls implemented me!
-                    
+			_yuv * _y1 = (_yuv*) y1;
+			_yuv * _y2 = (_yuv*) y2;
+			unsigned char V1 = *v;
+			unsigned char V2 = *(v+1);
+			unsigned char U1 = *u;
+			unsigned char U2 = *(u + 1);
+			//set PIXEL
+			/*
+			px=pixel
+			line1
+			; px1 = 00 | P2.R | P2.G | P2.B | 00 | P1.R | P1.G | P1.B |
+			; px2 = 00 | P4.R | P4.G | P4.B | 00 | P3.R | P3.G | P3.B |
+			line2
+			; px3 = 00 | P6.R | P6.G | P6.B | 00 | P5.R | P5.G | P5.B |
+			; px4 = 00 | P8.R | P8.G | P8.B | 00 | P7.R | P7.G | P7.B |
+			*/
+			//РѕР±СЉСЏРІР»СЏРµРј РІСЃРµ РїРёРєСЃРµР»Рё Рё СЂР°Р·РјРµС‰Р°РµРј РёС… СЃСЂР°Р·Сѓ РЅР° РјРµСЃС‚Рѕ
+			_argb *pixel1 = new ( line1 + 1 * sizeof(_argb ) ) _argb();
+			_argb *pixel2 = new ( line1 + 0 * sizeof(_argb ) ) _argb();
+			_argb *pixel3 = new ( line1 + 4 * sizeof(_argb ) ) _argb();
+			_argb *pixel4 = new ( line1 + 3 * sizeof(_argb ) ) _argb();
+
+			_argb *pixel5 = new ( line2 + 1 * sizeof(_argb ) ) _argb();
+			_argb *pixel6 = new ( line2 + 0 * sizeof(_argb ) ) _argb();
+			_argb *pixel7 = new ( line2 + 4 * sizeof(_argb ) ) _argb();
+			_argb *pixel8 = new ( line2 + 3 * sizeof(_argb ) ) _argb();
+			//calc ALL R
+			pixel6->R = _y1->v1 + ttl[V1][0];
+			pixel5->R = _y1->v2 + ttl[V1][0];
+			pixel2->R = _y1->v3 + ttl[V1][0];
+			pixel1->R = _y1->v4 + ttl[V1][0];
+
+			pixel8->R = _y2->v1 + ttl[V2][0];
+			pixel7->R = _y2->v2 + ttl[V2][0];
+			pixel4->R = _y2->v3 + ttl[V2][0];
+			pixel3->R = _y2->v4 + ttl[V2][0];
+
+			//calc ALL G
+			pixel6->G = _y1->v1 - ttl[V1][1] - ttl[U1][2];
+			pixel5->G = _y1->v2 - ttl[V1][1] - ttl[U1][2];
+			pixel2->G = _y1->v3 - ttl[V1][1] - ttl[U1][2];
+			pixel1->G = _y1->v4 - ttl[V1][1] - ttl[U1][2];
+
+			pixel8->G = _y2->v1 - ttl[V2][1] - ttl[U2][2];
+			pixel7->G = _y2->v2 - ttl[V2][1] - ttl[U2][2];
+			pixel4->G = _y2->v3 - ttl[V2][1] - ttl[U2][2];
+			pixel3->G = _y2->v4 - ttl[V2][1] - ttl[U2][2];
+
+			//calc B
+			pixel6->B = _y1->v1 + ttl[U1][3];
+			pixel5->B = _y1->v2 + ttl[U1][3];
+			pixel2->B = _y1->v3 + ttl[U1][3];
+			pixel1->B = _y1->v4 + ttl[U1][3];
+
+			pixel8->B = _y2->v1 + ttl[U2][3];
+			pixel7->B = _y2->v2 + ttl[U2][3];
+			pixel4->B = _y2->v3 + ttl[U2][3];
+			pixel3->B = _y2->v4 + ttl[U2][3];
+
+
 #endif
 			line1 += 16;
 			line2 += 16;
