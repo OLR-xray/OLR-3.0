@@ -294,63 +294,63 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_Priquel|x64'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_Priquel|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_Priquel|x64'">false</LinkIncremental>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">X:\src\xray\LuaJIT\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">X:\src\xray\LuaJIT\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">X:\src\xray\LuaJIT\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">X:\src\xray\LuaJIT\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">X:\src\xray\Lua\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">X:\src\xray\Lua\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">X:\src\xray\Lua\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">X:\src\xray\Lua\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">X:\src\xray\LuaJIT\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">X:\src\xray\Lua\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">X:\src\xray\LuaJIT\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">X:\src\xray\Lua\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
     <OutDir>X:\binaries\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <TargetExt>.dll</TargetExt>
-    <IncludePath>X:\src\xray\LuaJIT\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath>X:\src\xray\Lua\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
     <LibraryPath>X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'">
     <OutDir>X:\binaries\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <TargetExt>.dll</TargetExt>
-    <IncludePath>X:\src\xray\LuaJIT\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath>X:\src\xray\Lua\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
     <LibraryPath>X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Priquel|Win32'">
-    <IncludePath>X:\src\xray\LuaJIT\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath>X:\src\xray\Lua\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
     <LibraryPath>X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Priquel|Win32'">
-    <IncludePath>X:\src\xray\LuaJIT\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath>X:\src\xray\Lua\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
     <LibraryPath>X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">
-    <IncludePath>X:\src\xray\LuaJIT\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath>X:\src\xray\Lua\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
     <LibraryPath>X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mixed_Priquel|Win32'">
-    <IncludePath>X:\src\xray\LuaJIT\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath>X:\src\xray\Lua\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
     <LibraryPath>X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Priquel|x64'">
-    <IncludePath>X:\src\xray\LuaJIT\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath>X:\src\xray\Lua\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
     <LibraryPath>X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Priquel|x64'">
-    <IncludePath>X:\src\xray\LuaJIT\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath>X:\src\xray\Lua\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
     <LibraryPath>X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">
-    <IncludePath>X:\src\xray\LuaJIT\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath>X:\src\xray\Lua\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
     <LibraryPath>X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mixed_Priquel|x64'">
-    <IncludePath>X:\src\xray\LuaJIT\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath>X:\src\xray\Lua\src;X:\src\xray\Luabind;X:\src\3rd party\loki;X:\src\3rd party\boost;X:\src\xray\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
     <LibraryPath>X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

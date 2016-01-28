@@ -71,7 +71,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Router", "..\3rd party\Open
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenAL", "OpenAL", "{E9EDAF7D-3677-43E4-B77F-7165E93937CA}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LuaJIT", "LuaJIT\LuaJIT.vcxproj", "{94BE3D19-23D3-4D15-8B5C-41193885648C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lua", "Lua\Lua.vcxproj", "{94BE3D19-23D3-4D15-8B5C-41193885648C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

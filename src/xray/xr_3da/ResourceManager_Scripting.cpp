@@ -229,7 +229,6 @@ void	CResourceManager::LS_Load			()
 	}
 	FS.file_list_close			(folder);
 
-	luaJIT_setmode			(LSVM,LUAJIT_MODE_ENGINE,LUAJIT_MODE_ON);
 }
 
 void	CResourceManager::LS_Unload			()
