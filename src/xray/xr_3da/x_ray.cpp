@@ -648,7 +648,8 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 #endif
 
 	// Title window
-	logoWindow					= CreateDialog(GetModuleHandle(NULL),	MAKEINTRESOURCE(IDD_STARTUP), 0, static_cast<DLGPROC>(logDlgProc));
+	
+	logoWindow					= CreateDialog(GetModuleHandle(NULL),	MAKEINTRESOURCE(IDD_STARTUP), 0, (DLGPROC)logDlgProc);
 	SetWindowPos				(
 		logoWindow,
 #ifdef  TRUE_RELEASE

@@ -189,8 +189,8 @@
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform);X:\src\3rd party\dxsdk\Lib\$(Platform);X:\libraries\$(Configuration)\$(Platform)\</LibraryPath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(WindowsSDK_IncludePath);$(VC_IncludePath);..\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;..\..\3rd party\boost</IncludePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(WindowsSDK_LibraryPath_x86);$(VC_LibraryPath_x86);X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform);X:\src\3rd party\dxsdk\Lib\$(Platform);X:\libraries\$(Configuration)\$(Platform)\</LibraryPath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(WindowsSDK_IncludePath);$(VC_IncludePath);..\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;..\..\3rd party\boost</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform);X:\src\3rd party\dxsdk\Lib\$(Platform);X:\libraries\$(Configuration)\$(Platform)\</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(WindowsSDK_IncludePath);$(VC_IncludePath);..\xrCore;X:\src\3rd party\dxsdk\Include;..\..\3rd party\boost</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">X:\src\3rd party\dxsdk\Lib\$(Platform);$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);X:\libraries\$(Configuration)\$(Platform)\</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">
     <LibraryPath>$(WindowsSDK_LibraryPath_x86);$(VC_LibraryPath_x86);X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform);X:\src\3rd party\dxsdk\Lib\$(Platform);X:\libraries\$(Configuration)\$(Platform)\</LibraryPath>
@@ -721,9 +721,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Luabind\Luabind.vcxproj">
-      <Project>{6fdbcdb3-d190-486d-bdac-3c4ac527da3b}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\xrCore\xrCore.vcxproj">
       <Project>{a0f7d1fb-59a7-4717-a7e4-96f37e91998e}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

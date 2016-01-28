@@ -23,7 +23,7 @@
 
 /* per-machine configuration */
 
-
+#define WIN32
 
 #ifndef _ODE_CONFIG_H_
 
