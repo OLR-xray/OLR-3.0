@@ -721,9 +721,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Luabind\Luabind.vcxproj">
-      <Project>{6fdbcdb3-d190-486d-bdac-3c4ac527da3b}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\xrCore\xrCore.vcxproj">
       <Project>{a0f7d1fb-59a7-4717-a7e4-96f37e91998e}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
