@@ -60,7 +60,8 @@ void CInfoPortion::load_shared	(LPCSTR)
 	//список названий диалогов
 	int dialogs_num			= pXML->GetNodesNum(pNode, "dialog");
 	info_data()->m_DialogNames.clear();
-	for(int i=0; i<dialogs_num; ++i)
+	int i = 0;
+	for(; i<dialogs_num; ++i)
 	{
 		shared_str dialog_name = pXML->Read(pNode, "dialog", i,"");
 		info_data()->m_DialogNames.push_back(dialog_name);

@@ -48,8 +48,8 @@ void  CPhraseScript::LoadSequence (CUIXml* uiXml, XML_NODE* phrase_node,
 bool  CPhraseScript::CheckInfo		(const CInventoryOwner* pOwner) const
 {
 	THROW(pOwner);
-
-	for(u32 i=0; i<m_HasInfo.size(); i++) {
+	u32 i = 0;
+	for(; i<m_HasInfo.size(); i++) {
 #pragma todo("Andy->Andy how to check infoportion existence in XML ?")
 /*		INFO_INDEX	result = CInfoPortion::IdToIndex(m_HasInfo[i],NO_INFO_INDEX,true);
 		if (result == NO_INFO_INDEX) {
@@ -95,7 +95,7 @@ void  CPhraseScript::TransferInfo	(const CInventoryOwner* pOwner) const
 //.		pOwner->TransferInfo(m_GiveInfo[i], true);
 		Actor()->TransferInfo(m_GiveInfo[i], true);
 
-	for(i=0; i<m_DisableInfo.size(); i++)
+	for(u32 i=0; i<m_DisableInfo.size(); i++)
 //.		pOwner->TransferInfo(m_DisableInfo[i],false);
 		Actor()->TransferInfo(m_DisableInfo[i], false);
 }

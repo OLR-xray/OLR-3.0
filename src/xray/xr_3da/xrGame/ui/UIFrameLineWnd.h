@@ -27,4 +27,5 @@ protected:
 	bool			bHorizontal;
 	bool			m_bTextureAvailable;
 	CUIFrameLine	UIFrameLine;	
+	u32					m_texture_color;
 };
