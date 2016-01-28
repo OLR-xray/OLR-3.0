@@ -13,7 +13,7 @@
 
 
 #include "llimits.h"
-#include "lua.h"
+#include <lua/lua.h>
 
 
 /* tags for values visible from Lua */
@@ -60,6 +60,7 @@ typedef union {
   GCObject *gc;
   void *p;
   lua_Number n;
+  ptrdiff_t na[sizeof(lua_Number)/sizeof(ptrdiff_t)];  /* LuaJIT kludge */
   int b;
 } Value;
 
@@ -72,7 +73,7 @@ typedef union {
 
 typedef struct lua_TValue {
   TValuefields;
-} TValue;
+} LUA_TVALUE_ALIGN TValue;
 
 
 /* Macros to test type */

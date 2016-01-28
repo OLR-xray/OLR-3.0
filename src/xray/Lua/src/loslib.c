@@ -14,10 +14,10 @@
 #define loslib_c
 #define LUA_LIB
 
-#include "lua.h"
+#include <lua/lua.h>
 
-#include "lauxlib.h"
-#include "lualib.h"
+#include <lua/lauxlib.h>
+#include <lua/lualib.h>
 
 
 static int os_pushresult (lua_State *L, int i, const char *filename) {
@@ -215,6 +215,7 @@ static int os_setlocale (lua_State *L) {
 
 static int os_exit (lua_State *L) {
   exit(luaL_optint(L, 1, EXIT_SUCCESS));
+  return 0;  /* to avoid warnings */
 }
 
 static const luaL_Reg syslib[] = {

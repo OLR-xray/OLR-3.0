@@ -13,7 +13,7 @@
 #define lobject_c
 #define LUA_CORE
 
-#include "lua.h"
+#include <lua/lua.h>
 
 #include "ldo.h"
 #include "lmem.h"

@@ -31,7 +31,7 @@
 /* results from luaD_precall */
 #define PCRLUA		0	/* initiated a call to a Lua function */
 #define PCRC		1	/* did a call to a C function */
-#define PCRYIELD	2	/* C funtion yielded */
+#define PCRYIELD	2	/* C function yielded */
 
 
 /* type of protected functions, to be ran by `runprotected' */
@@ -39,12 +39,14 @@ typedef void (*Pfunc) (lua_State *L, void *ud);
 
 LUAI_FUNC int luaD_protectedparser (lua_State *L, ZIO *z, const char *name);
 LUAI_FUNC void luaD_callhook (lua_State *L, int event, int line);
+LUAI_FUNC StkId luaD_tryfuncTM (lua_State *L, StkId func);
 LUAI_FUNC int luaD_precall (lua_State *L, StkId func, int nresults);
 LUAI_FUNC void luaD_call (lua_State *L, StkId func, int nResults);
 LUAI_FUNC int luaD_pcall (lua_State *L, Pfunc func, void *u,
                                         ptrdiff_t oldtop, ptrdiff_t ef);
 LUAI_FUNC int luaD_poscall (lua_State *L, StkId firstResult);
 LUAI_FUNC void luaD_reallocCI (lua_State *L, int newsize);
+LUAI_FUNC CallInfo *luaD_growCI (lua_State *L);
 LUAI_FUNC void luaD_reallocstack (lua_State *L, int newsize);
 LUAI_FUNC void luaD_growstack (lua_State *L, int n);
 

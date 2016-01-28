@@ -14,10 +14,10 @@
 #define lbaselib_c
 #define LUA_LIB
 
-#include "lua.h"
+#include <lua/lua.h>
 
-#include "lauxlib.h"
-#include "lualib.h"
+#include <lua/lauxlib.h>
+#include <lua/lualib.h>
 
 
 
@@ -524,7 +524,6 @@ static int auxresume (lua_State *L, lua_State *co, int narg) {
     return -1;  /* error flag */
   }
   lua_xmove(L, co, narg);
-  lua_setlevel(L, co);
   status = lua_resume(co, narg);
   if (status == 0 || status == LUA_YIELD) {
     int nres = lua_gettop(co);

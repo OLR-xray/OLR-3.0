@@ -36,7 +36,7 @@
 #if defined(LUA_USE_LINUX)
 #define LUA_USE_POSIX
 #define LUA_USE_DLOPEN		/* needs an extra library: -ldl */
-#define LUA_USE_READLINE	/* needs some extra libraries */
+/* #define LUA_USE_READLINE */	/* needs some extra libraries */
 #endif
 
 #if defined(LUA_USE_MACOSX)
@@ -95,8 +95,8 @@
 
 #else
 #define LUA_ROOT	"/usr/local/"
-#define LUA_LDIR	LUA_ROOT "share/lua/5.1/"
-#define LUA_CDIR	LUA_ROOT "lib/lua/5.1/"
+#define LUA_LDIR	LUA_ROOT "share/5.1/"
+#define LUA_CDIR	LUA_ROOT "lib/5.1/"
 #define LUA_PATH_DEFAULT  \
 		"./?.lua;"  LUA_LDIR"?.lua;"  LUA_LDIR"?/init.lua;" \
 		            LUA_CDIR"?.lua;"  LUA_CDIR"?/init.lua"
@@ -151,7 +151,21 @@
 ** the libraries, you may want to use the following definition (define
 ** LUA_BUILD_AS_DLL to get it).
 */
+#define LUA_BUILD_AS_DLL
+
+#if defined(LUA_BUILD_AS_DLL)
+
+#if defined(LUA_CORE) || defined(LUA_LIB) || defined(XRCORE_EXPORTS)
 #define LUA_API __declspec(dllexport)
+#else
+#define LUA_API __declspec(dllimport)
+#endif
+
+#else
+
+#define LUA_API		extern
+
+#endif
 
 /* more often than not the libs go together with the core */
 #define LUALIB_API	LUA_API
@@ -320,8 +334,12 @@
 @@ LUA_COMPAT_VARARG controls compatibility with old vararg feature.
 ** CHANGE it to undefined as soon as your programs use only '...' to
 ** access vararg parameters (instead of the old 'arg' table).
+**
+** Note: this has a slightly negative performance impact with LuaJIT
+** for all vararg functions. Leave it off if possible and upgrade your
+** code (replace unpack(arg) with ... and/or add local arg = {...}).
 */
-#define LUA_COMPAT_VARARG
+#undef LUA_COMPAT_VARARG
 
 /*
 @@ LUA_COMPAT_MOD controls compatibility with old math.mod function.
@@ -428,11 +446,14 @@
 @* can use.
 ** CHANGE it if you need lots of (Lua) stack space for your C
 ** functions. This limit is arbitrary; its only purpose is to stop C
-** functions to consume unlimited stack space. (must be smaller than
-** -LUA_REGISTRYINDEX)
+** functions to consume unlimited stack space.
 */
+#if 1
+#define LUAI_MCS_AUX   ((int)(INT_MAX / (4*sizeof(LUA_NUMBER))))
+#define LUAI_MAXCSTACK (LUAI_MCS_AUX > SHRT_MAX ? SHRT_MAX : LUAI_MCS_AUX)
+#else
 #define LUAI_MAXCSTACK	8000
-
+#endif
 
 
 /*
@@ -570,6 +591,24 @@ union luai_Cast { double l_d; long l_l; };
 
 #endif
 
+
+/*
+@@ LUA_TVALUE_ALIGN specifies extra alignment constraints for the
+@@ tagged value structure to get better lua_Number alignment.
+** CHANGE it to an empty define if you want to save some space
+** at the cost of execution time. Note that this is only needed
+** for the x86 ABI on most POSIX systems, but not on Windows and
+** not for most other CPUs. If you change it then you need to follow
+** the instructions in ljit_x86.dash, too (look for TVALUE_SIZE).
+*/
+
+#if defined(LUA_NUMBER_DOUBLE) && defined(__GNUC__) && \
+    (defined(__i386) || defined(__i386__)) && !defined(_WIN32)
+#define LUA_TVALUE_ALIGN	__attribute__ ((aligned(8)))
+#else
+#define LUA_TVALUE_ALIGN
+#endif
+
 /* }================================================================== */
 
 
@@ -595,7 +634,7 @@ union luai_Cast { double l_d; long l_l; };
 /* C++ exceptions */
 #define LUAI_THROW(L,c)	throw(c)
 #define LUAI_TRY(L,c,a)	try { a } catch(...) \
-	{ if ((c)->status == 0) (c)->status = -1; }
+				{ if ((c)->status == 0) (c)->status = -1; }
 #define luai_jmpbuf	int  /* dummy variable */
 
 #elif defined(LUA_USE_ULONGJMP)

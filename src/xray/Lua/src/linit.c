@@ -8,10 +8,10 @@
 #define linit_c
 #define LUA_LIB
 
-#include "lua.h"
+#include <lua/lua.h>
 
-#include "lualib.h"
-#include "lauxlib.h"
+#include <lua/lualib.h>
+#include <lua/lauxlib.h>
 
 
 static const luaL_Reg lualibs[] = {

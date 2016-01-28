@@ -13,7 +13,7 @@
 #include <stddef.h>
 
 
-#include "luaconf.h"
+#include <luaconf.h>
 
 
 #define LUA_VERSION	"Lua 5.1"
@@ -293,9 +293,6 @@ LUA_API void lua_setallocf (lua_State *L, lua_Alloc f, void *ud);
 #define lua_Chunkreader		lua_Reader
 #define lua_Chunkwriter		lua_Writer
 
-
-/* hack */
-LUA_API void lua_setlevel	(lua_State *from, lua_State *to);
 
 
 /*

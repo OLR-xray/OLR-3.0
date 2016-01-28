@@ -10,10 +10,10 @@
 #define ltablib_c
 #define LUA_LIB
 
-#include "lua.h"
+#include <lua/lua.h>
 
-#include "lauxlib.h"
-#include "lualib.h"
+#include <lua/lauxlib.h>
+#include <lua/lualib.h>
 
 
 #define aux_getn(L,n)	(luaL_checktype(L, n, LUA_TTABLE), luaL_getn(L, n))

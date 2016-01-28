@@ -12,7 +12,7 @@
 #define ldo_c
 #define LUA_CORE
 
-#include "lua.h"
+#include <lua/lua.h>
 
 #include "ldebug.h"
 #include "ldo.h"
@@ -83,7 +83,7 @@ static void resetstack (lua_State *L, int status) {
   L->base = L->ci->base;
   luaF_close(L, L->base);  /* close eventual pending closures */
   luaD_seterrorobj(L, status, L->base);
-  L->nCcalls = L->baseCcalls;
+  L->nCcalls = 0;
   L->allowhook = 1;
   restore_stack_limit(L);
   L->errfunc = 0;
@@ -166,7 +166,7 @@ void luaD_growstack (lua_State *L, int n) {
 }
 
 
-static CallInfo *growCI (lua_State *L) {
+CallInfo *luaD_growCI (lua_State *L) {
   if (L->size_ci > LUAI_MAXCALLS)  /* overflow while handling overflow? */
     luaD_throw(L, LUA_ERRERR);
   else {
@@ -241,7 +241,7 @@ static StkId adjust_varargs (lua_State *L, Proto *p, int actual) {
 }
 
 
-static StkId tryfuncTM (lua_State *L, StkId func) {
+StkId luaD_tryfuncTM (lua_State *L, StkId func) {
   const TValue *tm = luaT_gettmbyobj(L, func, TM_CALL);
   StkId p;
   ptrdiff_t funcr = savestack(L, func);
@@ -258,7 +258,7 @@ static StkId tryfuncTM (lua_State *L, StkId func) {
 
 
 #define inc_ci(L) \
-  ((L->ci == L->end_ci) ? growCI(L) : \
+  ((L->ci == L->end_ci) ? luaD_growCI(L) : \
    (condhardstacktests(luaD_reallocCI(L, L->size_ci)), ++L->ci))
 
 
@@ -266,7 +266,7 @@ int luaD_precall (lua_State *L, StkId func, int nresults) {
   LClosure *cl;
   ptrdiff_t funcr;
   if (!ttisfunction(func)) /* `func' is not a function? */
-    func = tryfuncTM(L, func);  /* check the `function' tag method */
+    func = luaD_tryfuncTM(L, func);  /* check the `function' tag method */
   funcr = savestack(L, func);
   cl = &clvalue(func)->l;
   L->ci->savedpc = L->savedpc;
@@ -420,22 +420,16 @@ LUA_API int lua_resume (lua_State *L, int nargs) {
   lua_lock(L);
   if (L->status != LUA_YIELD && (L->status != 0 || L->ci != L->base_ci))
       return resume_error(L, "cannot resume non-suspended coroutine");
-  if (L->nCcalls >= LUAI_MAXCCALLS)
-    return resume_error(L, "C stack overflow");
   luai_userstateresume(L, nargs);
-  lua_assert(L->errfunc == 0);
-  L->baseCcalls = ++L->nCcalls;
+  lua_assert(L->errfunc == 0 && L->nCcalls == 0);
   status = luaD_rawrunprotected(L, resume, L->top - nargs);
   if (status != 0) {  /* error? */
     L->status = cast_byte(status);  /* mark thread as `dead' */
     luaD_seterrorobj(L, status, L->top);
     L->ci->top = L->top;
   }
-  else {
-    lua_assert(L->nCcalls == L->baseCcalls);
+  else
     status = L->status;
-  }
-  --L->nCcalls;
   lua_unlock(L);
   return status;
 }
@@ -444,7 +438,7 @@ LUA_API int lua_resume (lua_State *L, int nargs) {
 LUA_API int lua_yield (lua_State *L, int nresults) {
   luai_userstateyield(L, nresults);
   lua_lock(L);
-  if (L->nCcalls > L->baseCcalls)
+  if (L->nCcalls > 0)
     luaG_runerror(L, "attempt to yield across metamethod/C-call boundary");
   L->base = L->top - nresults;  /* protect stack slots below */
   L->status = LUA_YIELD;

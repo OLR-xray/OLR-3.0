@@ -7,7 +7,7 @@
 #ifndef lstate_h
 #define lstate_h
 
-#include "lua.h"
+#include <lua/lua.h>
 
 #include "lobject.h"
 #include "ltm.h"
@@ -26,7 +26,8 @@ struct lua_longjmp;  /* defined in ldo.c */
 
 
 /* extra stack space to handle TM calls and some other extras */
-#define EXTRA_STACK   5
+/* LuaJIT uses more than the default (5) to speed up calls (setnil loop) */
+#define EXTRA_STACK   8
 
 
 #define BASIC_CI_SIZE           8
@@ -112,7 +113,6 @@ struct lua_State {
   int stacksize;
   int size_ci;  /* size of array `base_ci' */
   unsigned short nCcalls;  /* number of nested C calls */
-  unsigned short baseCcalls;  /* nested C calls when resuming coroutine */
   lu_byte hookmask;
   lu_byte allowhook;
   int basehookcount;

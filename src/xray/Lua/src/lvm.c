@@ -12,7 +12,7 @@
 #define lvm_c
 #define LUA_CORE
 
-#include "lua.h"
+#include <lua/lua.h>
 
 #include "ldebug.h"
 #include "ldo.h"
@@ -236,7 +236,7 @@ int luaV_lessthan (lua_State *L, const TValue *l, const TValue *r) {
 }
 
 
-static int lessequal (lua_State *L, const TValue *l, const TValue *r) {
+int luaV_lessequal (lua_State *L, const TValue *l, const TValue *r) {
   int res;
   if (ttype(l) != ttype(r))
     return luaG_ordererror(L, l, r);
@@ -314,7 +314,7 @@ void luaV_concat (lua_State *L, int total, int last) {
 }
 
 
-static void Arith (lua_State *L, StkId ra, const TValue *rb,
+void luaV_arith (lua_State *L, StkId ra, const TValue *rb,
                    const TValue *rc, TMS op) {
   TValue tempb, tempc;
   const TValue *b, *c;
@@ -369,7 +369,7 @@ static void Arith (lua_State *L, StkId ra, const TValue *rb,
           setnvalue(ra, op(nb, nc)); \
         } \
         else \
-          Protect(Arith(L, ra, rb, rc, tm)); \
+          Protect(luaV_arith(L, ra, rb, rc, tm)); \
       }
 
 
@@ -502,7 +502,7 @@ void luaV_execute (lua_State *L, int nexeccalls) {
           setnvalue(ra, luai_numunm(nb));
         }
         else {
-          Protect(Arith(L, ra, rb, rb, TM_UNM));
+          Protect(luaV_arith(L, ra, rb, rb, TM_UNM));
         }
         continue;
       }
@@ -562,7 +562,7 @@ void luaV_execute (lua_State *L, int nexeccalls) {
       }
       case OP_LE: {
         Protect(
-          if (lessequal(L, RKB(i), RKC(i)) == GETARG_A(i))
+          if (luaV_lessequal(L, RKB(i), RKC(i)) == GETARG_A(i))
             dojump(L, pc, GETARG_sBx(*pc));
         )
         pc++;

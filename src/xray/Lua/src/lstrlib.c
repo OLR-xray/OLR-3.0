@@ -14,10 +14,10 @@
 #define lstrlib_c
 #define LUA_LIB
 
-#include "lua.h"
+#include <lua/lua.h>
 
-#include "lauxlib.h"
-#include "lualib.h"
+#include <lua/lauxlib.h>
+#include <lua/lualib.h>
 
 
 /* macro to `unsign' a character */

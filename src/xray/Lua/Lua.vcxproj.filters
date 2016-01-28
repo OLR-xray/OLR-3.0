@@ -15,7 +15,31 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\print.c">
+    <ClCompile Include="src\lstate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lstring.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lstrlib.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ltable.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ltablib.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ltm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lundump.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lvm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lzio.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\lapi.c">
@@ -78,39 +102,12 @@
     <ClCompile Include="src\lparser.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\lstate.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lstring.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lstrlib.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ltable.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ltablib.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ltm.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lua.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lundump.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lvm.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lzio.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\lualib.h">
+    <ClInclude Include="src\ltable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ltm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\lundump.h">
@@ -123,9 +120,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\lapi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\lauxlib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\lcode.h">
@@ -165,18 +159,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\lstring.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ltable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ltm.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\lua.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\luaconf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

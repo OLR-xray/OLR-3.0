@@ -9,7 +9,7 @@
 #define ldump_c
 #define LUA_CORE
 
-#include "lua.h"
+#include <lua/lua.h>
 
 #include "lobject.h"
 #include "lstate.h"

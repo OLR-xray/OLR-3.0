@@ -53,15 +53,12 @@
     <ClCompile Include="src\ltable.c" />
     <ClCompile Include="src\ltablib.c" />
     <ClCompile Include="src\ltm.c" />
-    <ClCompile Include="src\lua.c" />
     <ClCompile Include="src\lundump.c" />
     <ClCompile Include="src\lvm.c" />
     <ClCompile Include="src\lzio.c" />
-    <ClCompile Include="src\print.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\lapi.h" />
-    <ClInclude Include="src\lauxlib.h" />
     <ClInclude Include="src\lcode.h" />
     <ClInclude Include="src\ldebug.h" />
     <ClInclude Include="src\ldo.h" />
@@ -77,9 +74,6 @@
     <ClInclude Include="src\lstring.h" />
     <ClInclude Include="src\ltable.h" />
     <ClInclude Include="src\ltm.h" />
-    <ClInclude Include="src\lua.h" />
-    <ClInclude Include="src\luaconf.h" />
-    <ClInclude Include="src\lualib.h" />
     <ClInclude Include="src\lundump.h" />
     <ClInclude Include="src\lvm.h" />
     <ClInclude Include="src\lzio.h" />
@@ -143,22 +137,32 @@
     <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <TargetName>lua5.1</TargetName>
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>X:\src\xray\Lua;X:\src\xray\Lua\lua;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>lua5.1</TargetName>
     <LinkIncremental>false</LinkIncremental>
     <OutDir>X:\binaries_$(Configuration)_$(Platform)\</OutDir>
     <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <IncludePath>X:\src\xray\Lua;X:\src\xray\Lua\lua;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>X:\binaries_$(Configuration)_$(Platform)\</OutDir>
     <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <TargetName>lua5.1</TargetName>
+    <IncludePath>X:\src\xray\Lua;X:\src\xray\Lua\lua;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>lua5.1</TargetName>
     <OutDir>X:\binaries_$(Configuration)_$(Platform)\</OutDir>
     <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <IncludePath>X:\src\xray\Lua;X:\src\xray\Lua\lua;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test_Clang|x64'">
+    <IncludePath>X:\src\xray\Lua;X:\src\xray\Lua\lua;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test_Clang|Win32'">
+    <IncludePath>X:\src\xray\Lua;X:\src\xray\Lua\lua;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

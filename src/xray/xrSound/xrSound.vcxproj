@@ -237,6 +237,7 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\3rd party\Xiph\libogg\include;..\..\3rd party\Xiph\libvorbis\include;</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalOptions>/NODEFAULTLIB:LIBCMTD %(AdditionalOptions)</AdditionalOptions>
@@ -280,6 +281,7 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\3rd party\Xiph\libogg\include;..\..\3rd party\Xiph\libvorbis\include;</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalOptions>/NODEFAULTLIB:LIBCMTD %(AdditionalOptions)</AdditionalOptions>
@@ -328,6 +330,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include;..\..\3rd party\OpenAL\include\AL;..\..\3rd party\Xiph\libogg\include;..\..\3rd party\Xiph\libvorbis\include;$(FrameworkSdkDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions> /MP</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libogg_static.lib;libvorbis_static.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -378,6 +381,7 @@
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Microsoft SDKs\Windows\v7.0A\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>vorbisfile_static.lib;ogg_static.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -427,6 +431,7 @@
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include;..\..\3rd party\OpenAL\include\AL;..\..\3rd party\Xiph\libogg\include;..\..\3rd party\Xiph\libvorbis\include;$(FrameworkSdkDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libvorbisfile_static.lib;libogg_static.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -475,6 +480,7 @@
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Microsoft SDKs\Windows\v7.0A\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>vorbisfile_static.lib;ogg_static.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -577,6 +583,16 @@
     <Link>
       <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
     </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test_Clang|x64'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test_Clang|Win32'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="cl_intersect.h" />
