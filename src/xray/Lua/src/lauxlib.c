@@ -560,8 +560,9 @@ static int errfile (lua_State *L, const char *what, int fnameindex) {
 
 LUALIB_API int luaL_loadfile(lua_State *L, const char *filename)
 {
-	const char*script = ScriptLoadFileFromVFS(filename);
-	return luaL_loadstring(L, script);
+	/*const char*script = ScriptLoadFileFromVFS(filename);
+	return luaL_loadstring(L, script);*/
+	return 0;
 }
 
 

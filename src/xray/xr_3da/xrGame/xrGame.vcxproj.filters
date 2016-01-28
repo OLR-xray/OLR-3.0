@@ -6561,9 +6561,6 @@
     <ClInclude Include="ui\UIGameTutorial.h">
       <Filter>AI\AScript\ScriptClasses\UI\Tutorial</Filter>
     </ClInclude>
-    <ClInclude Include="script_additional_libs.h">
-      <Filter>AI\AScript\ScriptEngine</Filter>
-    </ClInclude>
     <ClInclude Include="raypick.h" />
     <ClInclude Include="script_actor.h">
       <Filter>AI\AScript\ScriptClasses\ScriptActor</Filter>
@@ -9720,9 +9717,6 @@
     </ClCompile>
     <ClCompile Include="ui\UIGameTutorialVideoItem.cpp">
       <Filter>AI\AScript\ScriptClasses\UI\Tutorial</Filter>
-    </ClCompile>
-    <ClCompile Include="script_additional_libs.cpp">
-      <Filter>AI\AScript\ScriptEngine</Filter>
     </ClCompile>
     <ClCompile Include="raypick.cpp" />
     <ClCompile Include="script_actor.cpp">
