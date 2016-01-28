@@ -2,6 +2,7 @@
 #define SoundH
 #pragma once
 
+
 #ifdef XRSOUND_EXPORTS
 	#define XRSOUND_API __declspec(dllexport)
 #else
