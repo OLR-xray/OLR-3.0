@@ -312,8 +312,9 @@ bool CInventory::DropItem(CGameObject *pObj)
 bool CInventory::Slot(PIItem pIItem, bool bNotActivate) 
 {
 	VERIFY(pIItem);
-//	Msg("To Slot %s[%d]", *pIItem->object().cName(), pIItem->object().ID());
-	
+#ifdef DEBUG
+	Msg("To Slot %s[%d]", *pIItem->object().cName(), pIItem->object().ID());
+#endif
 	if(!CanPutInSlot(pIItem)) 
 	{
 #ifdef DEBUG
