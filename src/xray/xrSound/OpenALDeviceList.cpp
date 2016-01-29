@@ -238,7 +238,8 @@ void ALDeviceList::ResetFilters()
  */
 int ALDeviceList::GetFirstFilteredDevice()
 {
-	for (int i = 0; i < GetNumDevices(); i++) {
+	int i = 0;
+	for (; i < GetNumDevices(); i++) {
 		if (m_devices[i].selected == true)
 			break;
 	}
@@ -251,7 +252,8 @@ int ALDeviceList::GetFirstFilteredDevice()
  */
 int ALDeviceList::GetNextFilteredDevice()
 {
-	for (int i = m_filterIndex; i < GetNumDevices(); i++) {
+	int i = m_filterIndex;
+	for (; i < GetNumDevices(); i++) {
 		if (m_devices[i].selected == true)
 			break;
 	}

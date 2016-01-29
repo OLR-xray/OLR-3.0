@@ -862,7 +862,7 @@ static char *value_for_key(const char *s, const char *key)
 	strcpy(keyspec, slash_t);
 	strcat(keyspec,key);
 	strcat(keyspec,slash_t);
-	pos = strstr(s,keyspec);
+	pos = (char*)strstr(s,keyspec);
 	if (!pos)
 		return "";
 	pos += strlen(keyspec);

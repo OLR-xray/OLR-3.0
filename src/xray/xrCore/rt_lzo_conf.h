@@ -176,7 +176,7 @@
 ************************************************************************/
 
 #if 1
-#  define LZO_BYTE(x)       ((unsigned char) (x))
+#  define LZO_BYTE(x)       (static_cast<unsigned char>(x))
 #else
 #  define LZO_BYTE(x)       ((unsigned char) ((x) & 0xff))
 #endif

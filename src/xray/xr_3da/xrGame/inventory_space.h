@@ -4,7 +4,7 @@
 #define CMD_START	(1<<0)
 #define CMD_STOP	(1<<1)
 
-#define NO_ACTIVE_SLOT		0xffffffff
+#define NO_ACTIVE_SLOT		17
 #define KNIFE_SLOT			0
 #define PISTOL_SLOT			1
 #define RIFLE_SLOT			2

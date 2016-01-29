@@ -979,7 +979,7 @@ static gsi_bool qr_build_split_query_reply(qr2_t qrec, qr2_buffer_t buf, struct 
 			buf->buffer[buf->len++] = '\0';
 
 		// Move onto next key type
-		progress->mCurKeyType++;
+		progress->mCurKeyType = (qr2_key_type)((int)progress->mCurKeyType + 1);
 		progress->mCurKeyIndex = 0;
 		progress->mCurSubCount = 0;
 		progress->mCurSubIndex = 0;
