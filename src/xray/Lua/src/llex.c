@@ -409,6 +409,31 @@ static int llex (LexState *ls, SemInfo *seminfo) {
       case EOZ: {
         return TK_EOS;
       }
+		//+RvP, дополнительно используютс€ C-style комментарии
+	  case '/':
+		  next(ls);
+		  if (ls->current == '/') {
+			  while (ls->current != '\n' && ls->current != EOZ)
+				  next(ls);
+			  continue;
+		  }
+		  else if (ls->current == '*') {
+			  next(ls);
+			  while (ls->current != EOZ) {
+				  if (ls->current == '*') {
+					  next(ls);
+					  if (ls->current == '/') {
+						  next(ls);
+						  break;
+					  }
+				  }
+				  next(ls);
+			  }
+			  continue;
+		  }
+		  else
+			  return '/';
+		  //-RvP
       default: {
         if (isspace(ls->current)) {
           lua_assert(!currIsNewline(ls));
