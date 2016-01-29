@@ -197,13 +197,13 @@ namespace CDB
 		u32				VPack				( const Fvector& V, float eps);
 	public:
 		void			add_face			( const Fvector& v0, const Fvector& v1, const Fvector& v2, u16 material, u16 sector	);
-#ifdef _WIN64
+/*#ifndef _WIN64
 		void			add_face_D			( const Fvector& v0, const Fvector& v1, const Fvector& v2, u64 dummy );
 		void			add_face_packed_D	( const Fvector& v0, const Fvector& v1, const Fvector& v2, u64 dummy, float eps = EPS );
-#else
+#else*/
 		void			add_face_D			( const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy );
 		void			add_face_packed_D	( const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy, float eps = EPS );
-#endif
+//#endif
 		void			add_face_packed		( const Fvector& v0, const Fvector& v1, const Fvector& v2, u16 material, u16 sector, float eps = EPS );
         void			remove_duplicate_T	( );
 		void			calc_adjacency		( xr_vector<u32>& dest		);

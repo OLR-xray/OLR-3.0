@@ -284,7 +284,7 @@ void			ISpatial_DB::_remove	(ISpatial_NODE* N, ISpatial_NODE* N_sub)
 	if (0==N)							return;
 
 	//*** we are assured that node contains N_sub and this subnode is empty
-	u32 octant	= u32(-1);
+	u32 octant	= 0;
 	if (N_sub==N->children[0])			octant = 0;
 	else if (N_sub==N->children[1])		octant = 1;
 	else if (N_sub==N->children[2])		octant = 2;

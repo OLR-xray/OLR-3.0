@@ -16,17 +16,10 @@
 #define fdRLE10	0x03ede5bdb     // 1/ln10
 
 // integer math on floats
-#ifdef	_M_AMD64
 	IC bool negative(const float f)		{ return f<0;	}
 	IC bool positive(const float f)		{ return f>=0;	}
 	IC void set_negative(float &f)		{ f = -fabsf(f); }
 	IC void set_positive(float &f)		{ f = fabsf(f);	}
-#else
-	IC BOOL negative(const float &f)	{ return (*((unsigned*)(&f))&fdSGN);	}
-	IC BOOL positive(const float &f)	{ return (*((unsigned*)(&f))&fdSGN)==0;	}
-	IC void set_negative(float &f)		{ (*(unsigned*)(&f)) |= fdSGN;			}
-	IC void set_positive(float &f)		{ (*(unsigned*)(&f)) &= ~fdSGN;			}
-#endif
 
 /*
  * Here are a few nice tricks for 2's complement based machines
@@ -80,20 +73,7 @@ IC	u64	btwCount1(u64 v)
 
 ICF int iFloor (float x)
 {
-    int a			= *(const int*)(&x);
-    int exponent	= (127 + 31) - ((a >> 23) & 0xFF);
-    int r			= (((u32)(a) << 8) | (1U << 31)) >> exponent;
-    exponent		+= 31-127;
-    {
-        int imask	=	(!(((( (1<<(exponent)))-1)>>8)&a));
-        exponent	-=	(31-127)+32;
-        exponent	>>=	31;
-        a			>>=	31;
-        r			-=	(imask&a);
-        r			&=	exponent;
-        r			^=	a;
-    }
-    return r;
+	return floor(x);
 }
 
 /* intCeil() is a non-interesting variant, since effectively
@@ -101,21 +81,7 @@ ICF int iFloor (float x)
 */
 ICF int iCeil (float x)
 {
-    int a			= (*(const int*)(&x));
-    int exponent	= (127 + 31) - ((a >> 23) & 0xFF);
-    int r			= (((u32)(a) << 8) | (1U << 31)) >> exponent;
-    exponent		+= 31-127;
-    {
-        int imask	=	(!(((( (1<<(exponent)))-1)>>8)&a));
-        exponent	-=	(31-127)+32;
-        exponent	>>=	31;
-        a			=	~((a-1)>>31);		/* change sign */
-        r			-=	(imask&a);
-        r			&=	exponent;
-        r			^=	a;
-        r			=	-r;                 /* change sign */
-    }
-    return r;								/* r = (int)(ceil(f)) */
+	return ceil(x);
 }
 
 // Validity checks
@@ -132,27 +98,17 @@ IC bool fis_denormal	( const float &f )
 // Approximated calculations
 IC float apx_InvSqrt( const float& n )
 {
-    long tmp	= (long(0xBE800000) - *(long*)&n) >> 1;
-    float y		= *(float*)&tmp;
-    return y * (1.47f - 0.47f * n * y * y);
+	return 1 / sqrt(n);
 }
 // Only for [0..1] (positive) range 
 IC float apx_asin	(const float x)
 {
-	const float c1 = 0.892399f;
-	const float c3 = 1.693204f;
-	const float c5 =-3.853735f;
-	const float c7 = 2.838933f;
-	
-	const float x2 = x * x;
-	const float d = x * (c1 + x2 * (c3 + x2 * (c5 + x2 * c7)));
-	
-	return d;
+	return asin(x);
 }
 // Only for [0..1] (positive) range 
 IC float apx_acos	(const float x)
 {
-	return PI_DIV_2 - apx_asin(x);
+	return acos(x);
 }
 
 #endif

@@ -42,15 +42,17 @@ public:
 	virtual void	w		(const void* ptr, u32 count)	= 0;
 
 	// generalized writing functions
-	IC void			w_u64	(u64 d)					{	w(&d,sizeof(u64));	}
-	IC void			w_u32	(u32 d)					{	w(&d,sizeof(u32));	}
-	IC void			w_u16	(u16 d)					{	w(&d,sizeof(u16));	}
-	IC void			w_u8	(u8 d)					{	w(&d,sizeof(u8));	}
-	IC void			w_s64	(s64 d)					{	w(&d,sizeof(s64));	}
-	IC void			w_s32	(s32 d)					{	w(&d,sizeof(s32));	}
-	IC void			w_s16	(s16 d)					{	w(&d,sizeof(s16));	}
-	IC void			w_s8	(s8 d)					{	w(&d,sizeof(s8));	}
-	IC void			w_float	(float d)				{	w(&d,sizeof(float));}
+	IC void			w_u64	(u64 d)					{	w(&d,sizeof(u64));		}
+	IC void			w_u32	(u32 d)					{	w(&d,sizeof(u32));		}
+	IC void			w_u16	(u16 d)					{	w(&d,sizeof(u16));		}
+	IC void			w_u8	(u8 d)					{	w(&d,sizeof(u8));		}
+	IC void			w_s64	(s64 d)					{	w(&d,sizeof(s64));		}
+	IC void			w_s32	(s32 d)					{	w(&d,sizeof(s32));		}
+	IC void			w_s16	(s16 d)					{	w(&d,sizeof(s16));		}
+	IC void			w_s8	(s8 d)					{	w(&d,sizeof(s8));		}
+	IC void			w_float	(float d)				{	w(&d,sizeof(float));	}
+	IC void			w_bool(bool b)					{	w(&b, sizeof(bool));	}
+	IC void			w_double(double d)				{	w(&d, sizeof(double));	}
 	IC void			w_string(const char *p)			{	w(p,(u32)xr_strlen(p));w_u8(13);w_u8(10);	}
 	IC void			w_stringZ(const char *p)		{	w(p,(u32)xr_strlen(p)+1);					}
 	IC void			w_stringZ(const shared_str& p) 	{	w(*p?*p:"",p.size());w_u8(0);		}
@@ -152,6 +154,8 @@ public:
 	IC s16			r_s16		()			{	s16 tmp;	r(&tmp,sizeof(tmp)); return tmp;	};
 	IC s8			r_s8		()			{	s8 tmp;		r(&tmp,sizeof(tmp)); return tmp;	};
 	IC float		r_float		()			{	float tmp;	r(&tmp,sizeof(tmp)); return tmp;	};
+	IC bool			r_bool		()			{	bool tmp;	r(&tmp, sizeof(tmp)); return tmp;	};
+	IC double		r_double	()			{	double tmp;	r(&tmp, sizeof(tmp)); return tmp;	};
 	IC void			r_fvector4	(Fvector4 &v){	r(&v,sizeof(Fvector4));	}
 	IC void			r_fvector3	(Fvector3 &v){	r(&v,sizeof(Fvector3));	}
 	IC void			r_fvector2	(Fvector2 &v){	r(&v,sizeof(Fvector2));	}
@@ -260,10 +264,10 @@ protected:
 public:
 	IC int			elapsed		()	const		{	return Size-Pos;		};
 	IC int			tell		()	const		{	return Pos;				};
-	IC void			seek		(int ptr)		{	Pos=ptr; VERIFY((Pos<=Size) && (Pos>=0));};
+	IC void			seek(int ptr) { Pos = ptr; VERIFY2((Pos <= Size) && (Pos >= 0), make_string("Pos=[%d], Size=[%d]", Pos, Size)); };
 	IC int			length		()	const		{	return Size;			};
 	IC void*		pointer		()	const		{	return &(data[Pos]);	};
-	IC void			advance		(int cnt)		{	Pos+=cnt;VERIFY((Pos<=Size) && (Pos>=0));};
+	IC void			advance(int cnt) { Pos += cnt;VERIFY2((Pos <= Size) && (Pos >= 0), make_string("Pos=[%d], Size=[%d]", Pos, Size)); };
 
 public:
 	void			r			(void *p,int cnt);
