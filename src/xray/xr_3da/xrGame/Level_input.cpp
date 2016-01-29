@@ -122,25 +122,28 @@ public:
 // Обработка нажатия клавиш
 extern bool g_block_pause;
 
+#if 0
 #include "ui/UIMainIngameWnd.h"
+#endif
 void CLevel::IR_OnKeyboardPress	(int key)
 {
 	bool b_ui_exist = (pHUD && pHUD->GetUI());
 
 	if (!g_bDisableAllInput)
 	{
+#if 0
 		HUD().GetUI()->UIMainIngameWnd->HudAdjustMode(key); // Real Wolf. 07.09.2014.
-
+#endif
 		/************************************************** added by Ray Twitty (aka Shadows) START **************************************************/
 		// Колбек на нажатие клавиши
 		if (g_actor) Actor()->callback(GameObject::eOnKeyPress)(key);
 		/*************************************************** added by Ray Twitty (aka Shadows) END ***************************************************/
 	}
+#ifdef DEBUG
+	if (DIK_F10 == key)		vtune.enable();
+	if (DIK_F11 == key)		vtune.disable();
+#endif
 
-
-//.	if (DIK_F10 == key)		vtune.enable();
-//.	if (DIK_F11 == key)		vtune.disable();
-	
 	EGameActions _curr = get_binded_action(key);
 	switch ( _curr ) 
 	{
