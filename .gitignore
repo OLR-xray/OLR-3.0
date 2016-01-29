@@ -36,6 +36,10 @@ binaries_Debug_Win32/*.exe
 binaries_Debug_x64/*.exe
 binaries_Release_Win32/*.exe
 binaries_Release_x64/*.exe
+binaries_Debug_Win32/*.dll
+binaries_Debug_x64/*.dll
+binaries_Release_Win32/*.dll
+binaries_Release_x64/*.dll
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -252,18 +256,5 @@ _Pvt_Extensions
 .fake/
 
 #stalker
-*.db0
-*.db1
-*.db2
-*.db3
-*.db4
-*.db5
-*.db6
-*.db7
-*.db8
-*.db9
-*.dba
-*.dbb
-*.dbc
-*.dbd
+*.db*
 _appdata_/
