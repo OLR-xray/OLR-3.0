@@ -30,6 +30,13 @@ src/3rd party/OpenAL/OpenAL-Windows/RouterTest/Release
 src/3rd party/OpenAL/OpenAL-Windows/RouterTest/Debug
 
 
+#binandlib
+libraries/
+binaries_Debug_Win32/
+binaries_Debug_x64/
+binaries_Release_Win32/
+binaries_Release_x64/
+
 # Visual Studio 2015 cache/options directory
 .vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot
