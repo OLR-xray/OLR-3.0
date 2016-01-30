@@ -34,7 +34,7 @@ ICF	size_t		get_pool			(size_t size)
 bool	g_use_pure_alloc		= false;
 #endif // PURE_ALLOC
 
-void*	xrMemory::mem_alloc		(size_t size
+void*	xrMemory::mem_alloc		(u32 size
 #	ifdef DEBUG_MEMORY_NAME
 								 , const char* _name
 #	endif // DEBUG_MEMORY_NAME
@@ -167,7 +167,7 @@ void	xrMemory::mem_free		(void* P)
 
 extern BOOL	g_bDbgFillMemory	;
 
-void*	xrMemory::mem_realloc	(void* P, size_t size
+void*	xrMemory::mem_realloc	(void* P, u32 size
 #ifdef DEBUG_MEMORY_NAME
 								 , const char* _name
 #endif // DEBUG_MEMORY_NAME

@@ -11,7 +11,7 @@
  
 #pragma comment(lib,"winmm.lib")
 
-template struct _quaternion<float>;
+template class _quaternion<float>;
 
 #ifdef DEBUG
 #	include	<malloc.h>
