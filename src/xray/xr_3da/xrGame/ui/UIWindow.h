@@ -2,7 +2,7 @@
 #include "../xr_level_controller.h"
 class CUIWindow;
 
-struct _12b	{ DWORD _[3]; };
+struct _12b	{ void* _[3]; };
 extern poolSS< _12b, 128>	ui_allocator;
 
 

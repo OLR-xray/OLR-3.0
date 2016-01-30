@@ -34,7 +34,7 @@ namespace CDB
 	{
 	public:
 		u32				verts	[3];		// 3*4 = 12b
-#ifdef _WIN64
+/*
 		union	{
 			u64			dummy;				// 8b
 			struct {
@@ -49,7 +49,7 @@ namespace CDB
 				u32 dummy_high;
 			};
 		};
-#else
+*/
 		union	{
 			u32			dummy;				// 4b
 			struct {
@@ -59,7 +59,7 @@ namespace CDB
 				u32		sector:16;			// 
 			};
 		};
-#endif
+
 	public:
 		IC u32			IDvert	(u32 ID)		{ return verts[ID];	}
 	};

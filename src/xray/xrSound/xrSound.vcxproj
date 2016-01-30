@@ -70,7 +70,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -150,64 +150,64 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">X:\binaries_$(Configuration)_$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">X:\binaries_$(Configuration)_$(Platform)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)..\..\binaries_$(Configuration)_$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)..\..\binaries_$(Configuration)_$(Platform)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</IgnoreImportLibrary>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">X:\binaries_$(Configuration)_$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">X:\binaries_$(Configuration)_$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">X:\binaries_$(Configuration)_$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">X:\binaries_$(Configuration)_$(Platform)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)..\..\binaries_$(Configuration)_$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">$(SolutionDir)..\..\binaries_$(Configuration)_$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)..\..\binaries_$(Configuration)_$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">$(SolutionDir)..\..\binaries_$(Configuration)_$(Platform)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">X:\binaries\$(Configuration)\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">X:\binaries\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">$(SolutionDir)..\..\binaries\$(Configuration)\$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">$(SolutionDir)..\..\binaries\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">true</LinkIncremental>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(WindowsSDK_IncludePath);$(VC_IncludePath);X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;X:\src\xray\xrCore;X:\src\3rd party\OpenAL\Include\AL;X:\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">$(WindowsSDK_IncludePath);$(VC_IncludePath);X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;X:\src\xray\xrCore;X:\src\3rd party\OpenAL\Include\AL;X:\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(WindowsSDK_IncludePath);$(VC_IncludePath);X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;X:\src\xray\xrCore;X:\src\3rd party\OpenAL\Include\AL;X:\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">$(WindowsSDK_IncludePath);$(VC_IncludePath);X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;X:\src\xray\xrCore;X:\src\3rd party\OpenAL\Include\AL;X:\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(WindowsSDK_LibraryPath_x86);$(VC_LibraryPath_x86);X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform);X:\src\3rd party\dxsdk\Lib\$(Platform);X:\libraries\$(Configuration)\$(Platform)\</LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">$(WindowsSDK_LibraryPath_x86);$(VC_LibraryPath_x86);X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform);X:\src\3rd party\dxsdk\Lib\$(Platform);X:\libraries\$(Configuration)\$(Platform)\</LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform);X:\src\3rd party\dxsdk\Lib\$(Platform);X:\libraries\$(Configuration)\$(Platform)\</LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform);X:\src\3rd party\dxsdk\Lib\$(Platform);X:\libraries\$(Configuration)\$(Platform)\</LibraryPath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(WindowsSDK_IncludePath);$(VC_IncludePath);X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;X:\src\xray\xrCore;X:\src\3rd party\OpenAL\Include\AL;X:\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(WindowsSDK_LibraryPath_x86);$(VC_LibraryPath_x86);X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform);X:\src\3rd party\dxsdk\Lib\$(Platform);X:\libraries\$(Configuration)\$(Platform)\</LibraryPath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(WindowsSDK_IncludePath);$(VC_IncludePath);X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;X:\src\xray\xrCore;X:\src\3rd party\OpenAL\Include\AL;X:\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform);X:\src\3rd party\dxsdk\Lib\$(Platform);X:\libraries\$(Configuration)\$(Platform)\</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(WindowsSDK_IncludePath);$(VC_IncludePath);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(SolutionDir)..\..\src\xray\xrCore;$(SolutionDir)..\..\src\3rd party\OpenAL\Include\AL;$(SolutionDir)..\..\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">$(WindowsSDK_IncludePath);$(VC_IncludePath);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(SolutionDir)..\..\src\xray\xrCore;$(SolutionDir)..\..\src\3rd party\OpenAL\Include\AL;$(SolutionDir)..\..\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(WindowsSDK_IncludePath);$(VC_IncludePath);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(SolutionDir)..\..\src\xray\xrCore;$(SolutionDir)..\..\src\3rd party\OpenAL\Include\AL;$(SolutionDir)..\..\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">$(WindowsSDK_IncludePath);$(VC_IncludePath);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(SolutionDir)..\..\src\xray\xrCore;$(SolutionDir)..\..\src\3rd party\OpenAL\Include\AL;$(SolutionDir)..\..\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(WindowsSDK_LibraryPath_x86);$(VC_LibraryPath_x86);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform);$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform);$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">$(WindowsSDK_LibraryPath_x86);$(VC_LibraryPath_x86);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform);$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform);$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform);$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform);$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform);$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform);$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(WindowsSDK_IncludePath);$(VC_IncludePath);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(SolutionDir)..\..\src\xray\xrCore;$(SolutionDir)..\..\src\3rd party\OpenAL\Include\AL;$(SolutionDir)..\..\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(WindowsSDK_LibraryPath_x86);$(VC_LibraryPath_x86);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform);$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform);$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(WindowsSDK_IncludePath);$(VC_IncludePath);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(SolutionDir)..\..\src\xray\xrCore;$(SolutionDir)..\..\src\3rd party\OpenAL\Include\AL;$(SolutionDir)..\..\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform);$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform);$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
-    <OutDir>X:\binaries\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IncludePath>$(WindowsSDK_IncludePath);$(VC_IncludePath);X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;X:\src\xray\xrCore;X:\src\3rd party\OpenAL\Include\AL;X:\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
-    <LibraryPath>$(WindowsSDK_LibraryPath_x86);$(VC_LibraryPath_x86);X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform);X:\src\3rd party\dxsdk\Lib\$(Platform);X:\libraries\$(Configuration)\$(Platform)\</LibraryPath>
+    <OutDir>$(SolutionDir)..\..\binaries\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <IncludePath>$(WindowsSDK_IncludePath);$(VC_IncludePath);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(SolutionDir)..\..\src\xray\xrCore;$(SolutionDir)..\..\src\3rd party\OpenAL\Include\AL;$(SolutionDir)..\..\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
+    <LibraryPath>$(WindowsSDK_LibraryPath_x86);$(VC_LibraryPath_x86);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform);$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform);$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'">
-    <OutDir>X:\binaries\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IncludePath>$(WindowsSDK_IncludePath);$(VC_IncludePath);X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;X:\src\xray\xrCore;X:\src\3rd party\OpenAL\Include\AL;X:\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
-    <LibraryPath>$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform);X:\src\3rd party\dxsdk\Lib\$(Platform);X:\libraries\$(Configuration)\$(Platform)\</LibraryPath>
+    <OutDir>$(SolutionDir)..\..\binaries\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <IncludePath>$(WindowsSDK_IncludePath);$(VC_IncludePath);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(SolutionDir)..\..\src\xray\xrCore;$(SolutionDir)..\..\src\3rd party\OpenAL\Include\AL;$(SolutionDir)..\..\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
+    <LibraryPath>$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform);$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform);$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">
-    <IncludePath>$(WindowsSDK_IncludePath);$(VC_IncludePath);X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;X:\src\xray\xrCore;X:\src\3rd party\OpenAL\Include\AL;X:\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
-    <LibraryPath>$(WindowsSDK_LibraryPath_x86);$(VC_LibraryPath_x86);X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform);X:\src\3rd party\dxsdk\Lib\$(Platform);X:\libraries\$(Configuration)\$(Platform)\</LibraryPath>
+    <IncludePath>$(WindowsSDK_IncludePath);$(VC_IncludePath);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(SolutionDir)..\..\src\xray\xrCore;$(SolutionDir)..\..\src\3rd party\OpenAL\Include\AL;$(SolutionDir)..\..\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
+    <LibraryPath>$(WindowsSDK_LibraryPath_x86);$(VC_LibraryPath_x86);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform);$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform);$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">
-    <IncludePath>$(WindowsSDK_IncludePath);$(VC_IncludePath);X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;X:\src\xray\xrCore;X:\src\3rd party\OpenAL\Include\AL;X:\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
-    <LibraryPath>$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform);X:\src\3rd party\dxsdk\Lib\$(Platform);X:\libraries\$(Configuration)\$(Platform)\</LibraryPath>
+    <IncludePath>$(WindowsSDK_IncludePath);$(VC_IncludePath);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(SolutionDir)..\..\src\xray\xrCore;$(SolutionDir)..\..\src\3rd party\OpenAL\Include\AL;$(SolutionDir)..\..\src\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include</IncludePath>
+    <LibraryPath>$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform);$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform);$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -219,12 +219,13 @@
       <StringPooling>false</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <SmallerTypeCheck>true</SmallerTypeCheck>
+      <BasicRuntimeChecks>
+      </BasicRuntimeChecks>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <FloatingPointModel>Fast</FloatingPointModel>
-      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <FloatingPointModel>Strict</FloatingPointModel>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
@@ -237,6 +238,8 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\3rd party\Xiph\libogg\include;..\..\3rd party\Xiph\libvorbis\include;</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <AdditionalOptions>/NODEFAULTLIB:LIBCMTD %(AdditionalOptions)</AdditionalOptions>
@@ -249,7 +252,7 @@
       <MapExports>false</MapExports>
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -262,12 +265,12 @@
       <PreprocessorDefinitions>_AMD64_;_WIN64;DEBUG;_WINDOWS;_USRDLL;XRSOUND_EXPORTS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>false</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <SmallerTypeCheck>true</SmallerTypeCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <FloatingPointModel>Fast</FloatingPointModel>
-      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <FloatingPointModel>Strict</FloatingPointModel>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
@@ -280,6 +283,11 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\3rd party\Xiph\libogg\include;..\..\3rd party\Xiph\libvorbis\include;</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <AdditionalOptions>/NODEFAULTLIB:LIBCMTD %(AdditionalOptions)</AdditionalOptions>
@@ -292,7 +300,7 @@
       <MapExports>false</MapExports>
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -328,6 +336,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include;..\..\3rd party\OpenAL\include\AL;..\..\3rd party\Xiph\libogg\include;..\..\3rd party\Xiph\libvorbis\include;$(FrameworkSdkDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions> /MP</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libogg_static.lib;libvorbis_static.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -341,7 +350,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalOptions> /MP</AdditionalOptions>
     </Link>
@@ -378,6 +387,7 @@
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Microsoft SDKs\Windows\v7.0A\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>vorbisfile_static.lib;ogg_static.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -391,15 +401,15 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
@@ -427,6 +437,7 @@
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\3rd party\OpenAL\OpenAL-Windows\OpenAL32\Include;..\..\3rd party\OpenAL\include\AL;..\..\3rd party\Xiph\libogg\include;..\..\3rd party\Xiph\libvorbis\include;$(FrameworkSdkDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libvorbisfile_static.lib;libogg_static.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -440,7 +451,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">
@@ -475,6 +486,7 @@
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Microsoft SDKs\Windows\v7.0A\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>vorbisfile_static.lib;ogg_static.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -488,7 +500,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">
@@ -526,7 +538,7 @@
       <MapFileName>$(OutDir)$(ProjectName).map</MapFileName>
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
       <TargetMachine>NotSet</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -565,18 +577,28 @@
       <MapFileName>$(OutDir)$(ProjectName).map</MapFileName>
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
     <Link>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'">
     <Link>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
     </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test_Clang|x64'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test_Clang|Win32'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="cl_intersect.h" />

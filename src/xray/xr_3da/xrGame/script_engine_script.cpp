@@ -11,7 +11,7 @@
 #include "ai_space.h"
 #include "script_debugger.h"
 //#include <ostream>
-#include "script_additional_libs.h"
+//#include "script_additional_libs.h"
 #include "xr_level_controller.h"
 #include "../x_ray.h"
 
@@ -188,9 +188,9 @@ CApplication *get_application() { return pApp; }
 #pragma optimize("s",on)
 void CScriptEngine::script_register(lua_State *L)
 {
-	open_additional_libs(L); //RvP
+//	open_additional_libs(L); //RvP
 	module(L)[
-		def("log1",	(void(*)(LPCSTR)) &Log),	//RvP		
+//		def("log1",	(void(*)(LPCSTR)) &Log),	//RvP		
 
 		class_<profile_timer_script>("profile_timer")
 			.def(constructor<>())

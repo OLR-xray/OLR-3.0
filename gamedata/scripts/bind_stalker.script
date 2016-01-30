@@ -428,7 +428,7 @@ function restore_weapon()
 	weapon_hide = false
 end
 
---[[// this is test for section iteration
+--[[-- this is test for section iteration
 /**
 local function test_section_iteration(file_name, section_name)
 	printf			("file    : %s",file_name)

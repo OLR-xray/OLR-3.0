@@ -68,8 +68,8 @@ public:
 	void*				mem_alloc		(size_t	size				, const char* _name);
 	void*				mem_realloc		(void*	p, size_t size		, const char* _name);
 #else // DEBUG_MEMORY_NAME
-	void*				mem_alloc		(size_t	size				);
-	void*				mem_realloc		(void*	p, size_t size		);
+	void*				mem_alloc(size_t	size);
+	void*				mem_realloc(void*	p, size_t size);
 #endif // DEBUG_MEMORY_NAME
 	void				mem_free		(void*	p					);
 

@@ -175,11 +175,8 @@
 //
 ************************************************************************/
 
-#if 1
-#  define LZO_BYTE(x)       ((unsigned char) (x))
-#else
+
 #  define LZO_BYTE(x)       ((unsigned char) ((x) & 0xff))
-#endif
 
 #define LZO_MAX(a,b)        ((a) >= (b) ? (a) : (b))
 #define LZO_MIN(a,b)        ((a) <= (b) ? (a) : (b))

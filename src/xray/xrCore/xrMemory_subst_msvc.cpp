@@ -22,8 +22,8 @@ MEMPOOL		mem_pools			[mem_pools_count];
 
 // MSVC
 ICF	u8*		acc_header			(void* P)	{	u8*		_P		= (u8*)P;	return	_P-1;	}
-ICF	u32		get_header			(void* P)	{	return	(u32)*acc_header(P);				}
-ICF	u32		get_pool			(size_t size)
+ICF	size_t		get_header			(void* P)	{	return	(size_t)*acc_header(P);				}
+ICF	size_t		get_pool			(size_t size)
 {
 	u32		pid					= u32(size/mem_pools_ebase);
 	if (pid>=mem_pools_count)	return mem_generic;
@@ -41,8 +41,9 @@ void*	xrMemory::mem_alloc		(size_t size
 								 )
 {
 	stat_calls++;
+	//check maximum and minimum
 	_ASSERT (size > 0);
-	R_ASSERT (size < 0x7fffFFFF);
+	R_ASSERT (size < 0x7fffFFFF); //maximim 2GB static data!!! 
 
 #ifdef PURE_ALLOC
 	static bool g_use_pure_alloc_initialized = false;
@@ -88,7 +89,7 @@ void*	xrMemory::mem_alloc		(size_t size
 #endif // DEBUG
 		//	accelerated
 		//	Igor: Reserve 1 byte for xrMemory header
-		u32	pool				=	get_pool	(1+size+_footer);
+		size_t	pool				=	get_pool	(1+size+_footer);
 		//u32	pool				=	get_pool	(size+_footer);
 		if (mem_generic==pool)	
 		{
@@ -148,7 +149,7 @@ void	xrMemory::mem_free		(void* P)
 	if (mem_initialized)		debug_cs.Enter		();
 #endif // DEBUG_MEMORY_MANAGER
 	if		(debug_mode)		dbg_unregister	(P);
-	u32	pool					= get_header	(P);
+	size_t	pool					= get_header	(P);
 	void* _real					= (void*)(((u8*)P)-1);
 	if (mem_generic==pool)		
 	{
@@ -199,11 +200,11 @@ void*	xrMemory::mem_realloc	(void* P, size_t size
 #ifdef DEBUG_MEMORY_MANAGER
 	if (mem_initialized)		debug_cs.Enter		();
 #endif // DEBUG_MEMORY_MANAGER
-	u32		p_current			= get_header(P);
+	size_t		p_current			= get_header(P);
 	//	Igor: Reserve 1 byte for xrMemory header
-	u32		p_new				= get_pool	(1+size+(debug_mode?4:0));
+	size_t		p_new				= get_pool	(1+size+(debug_mode?4:0));
 	//u32		p_new				= get_pool	(size+(debug_mode?4:0));
-	u32		p_mode				;
+	size_t		p_mode				;
 
 	if (mem_generic==p_current)	{
 		if (p_new<p_current)		p_mode	= 2	;
@@ -237,8 +238,8 @@ void*	xrMemory::mem_realloc	(void* P, size_t size
 	} else if (1==p_mode)		{
 		// pooled realloc
 		R_ASSERT2				(p_current<mem_pools_count,"Memory corruption");
-		u32		s_current		= mem_pools[p_current].get_element();
-		u32		s_dest			= (u32)size;
+		size_t		s_current		= mem_pools[p_current].get_element();
+		size_t		s_dest			= (size_t)size;
 		void*	p_old			= P;
 
 		void*	p_new			= mem_alloc(size
@@ -260,7 +261,7 @@ void*	xrMemory::mem_realloc	(void* P, size_t size
 			,_name
 #	endif // DEBUG_MEMORY_NAME
 		);
-		mem_copy				(p_new,p_old,(u32)size);
+		mem_copy				(p_new,p_old,(size_t)size);
 		mem_free				(p_old);
 		_ptr					= p_new;
 	}

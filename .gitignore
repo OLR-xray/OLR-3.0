@@ -30,6 +30,10 @@ src/3rd party/OpenAL/OpenAL-Windows/RouterTest/Release
 src/3rd party/OpenAL/OpenAL-Windows/RouterTest/Debug
 
 
+#binandlib
+libraries
+binaries_*_*
+
 # Visual Studio 2015 cache/options directory
 .vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot
@@ -245,18 +249,5 @@ _Pvt_Extensions
 .fake/
 
 #stalker
-*.db0
-*.db1
-*.db2
-*.db3
-*.db4
-*.db5
-*.db6
-*.db7
-*.db8
-*.db9
-*.dba
-*.dbb
-*.dbc
-*.dbd
+*.db*
 _appdata_/

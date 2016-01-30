@@ -72,8 +72,8 @@ rtc9_uninitialize()
 
 //------------------------------------------------------------------------------
 
-u32		
-rtc9_csize( u32 in )
+size_t
+rtc9_csize(size_t in )
 {
     VERIFY(in);
     return in + in/64 + 16 + 3;
@@ -82,10 +82,10 @@ rtc9_csize( u32 in )
 
 //------------------------------------------------------------------------------
 
-u32		
-rtc9_compress( void* dst, u32 dst_len, const void* src, u32 src_len )
+size_t
+rtc9_compress( void* dst, size_t dst_len, const void* src, size_t src_len )
 {
-    u32 out_size = dst_len;    
+	size_t out_size = dst_len;
 	int r        = LZO_E_ERROR;
 
     rtc9_initialize();
@@ -113,10 +113,10 @@ rtc9_compress( void* dst, u32 dst_len, const void* src, u32 src_len )
 
 //------------------------------------------------------------------------------
 
-u32		
-rtc9_decompress( void* dst, u32 dst_len, const void* src, u32 src_len )
+size_t
+rtc9_decompress( void* dst, size_t dst_len, const void* src, size_t src_len )
 {
-	u32	    out_size = dst_len;
+	size_t	    out_size = dst_len;
 	int     r        = LZO_E_ERROR;
     
     rtc9_initialize();

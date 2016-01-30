@@ -6,7 +6,7 @@ BOOL ValidateIndices		(u32 vCount, u32 iCount, u16* pIndices);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 // MESH as it is represented in file
-enum MT {
+enum MESH_TRANSFORM {
 	MT_NORMAL				=0,
 	MT_HIERRARHY			=1,
 	MT_PROGRESSIVE			=2,

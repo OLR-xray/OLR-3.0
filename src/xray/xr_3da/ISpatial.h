@@ -101,7 +101,7 @@ public:
 class ENGINE_API				ISpatial_NODE
 {
 public:
-	typedef	_W64 unsigned		ptrt;
+	typedef	size_t ptrt;
 public:
 	ISpatial_NODE*				parent;					// parent node for "empty-members" optimization
 	ISpatial_NODE*				children		[8];	// children nodes

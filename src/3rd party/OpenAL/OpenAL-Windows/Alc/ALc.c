@@ -51,7 +51,7 @@
 #define	TIMERINTERVAL	50
 
 #ifndef DWORD_PTR_DEFINED
-#define DWORD_PTR DWORD
+#define DWORD_PTR void*
 #endif
 
 #define sqr(a) ((a) * (a))
@@ -1892,7 +1892,7 @@ static void CALLBACK DirectSoundProc(UINT uID,UINT uReserved,DWORD_PTR dwUser,DW
 	static DWORD OldWriteCursor=0;
 	DWORD PlayCursor,WriteCursor;
 	BYTE *WritePtr1,*WritePtr2;
-	DWORD WriteCnt1,WriteCnt2;
+	void* WriteCnt1,*WriteCnt2;
 	WAVEFORMATEX OutputType;
 	ALCcontext *pContext;
 	ALCdevice *pDevice;

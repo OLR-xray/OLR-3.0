@@ -9,8 +9,8 @@
 #include "stdafx.h"
 extern "C" {
 #include <lua.h>
-#include <luajit.h>
-#include <lcoco.h>
+#include <lualib.h>
+#include <lauxlib.h>
 };
 
 

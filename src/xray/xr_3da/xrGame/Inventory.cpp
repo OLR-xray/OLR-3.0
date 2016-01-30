@@ -312,11 +312,12 @@ bool CInventory::DropItem(CGameObject *pObj)
 bool CInventory::Slot(PIItem pIItem, bool bNotActivate) 
 {
 	VERIFY(pIItem);
-//	Msg("To Slot %s[%d]", *pIItem->object().cName(), pIItem->object().ID());
-	
+#ifdef DEBUG
+	Msg("To Slot %s[%d]", *pIItem->object().cName(), pIItem->object().ID());
+#endif
 	if(!CanPutInSlot(pIItem)) 
 	{
-#if 0//def _DEBUG
+#ifdef DEBUG
 		Msg("there is item %s[%d,%x] in slot %d[%d,%x]", 
 				*m_slots[pIItem->GetSlot()].m_pIItem->object().cName(), 
 				m_slots[pIItem->GetSlot()].m_pIItem->object().ID(), 
@@ -777,7 +778,7 @@ void CInventory::UpdateDropTasks()
 			UpdateDropItem		(m_slots[i].m_pIItem);
 	}
 
-	for(i = 0; i < 2; ++i)	
+	for(u32 i = 0; i < 2; ++i)	
 	{
 		TIItemContainer &list			= i?m_ruck:m_belt;
 		TIItemContainer::iterator it	= list.begin();
