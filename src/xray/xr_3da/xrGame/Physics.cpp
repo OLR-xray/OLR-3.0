@@ -149,7 +149,6 @@ IC static int CollideIntoGroup(dGeomID o1, dGeomID o2,dJointGroupID jointGroup,C
 		bool is_tri_1=dTriListClass == dGeomGetClass(g1);
 		bool is_tri_2=dTriListClass == dGeomGetClass(g2);
 		if((!is_tri_2&&!is_tri_1)) surface.mode=0;
-		if (surface.mode > GMLib.CountMaterial()) surface.mode = 0;
 		if(is_tri_1) material_idx_1= (u16)surface.mode;
 		if (is_tri_2) material_idx_2 = (u16)surface.mode;
 		SGameMtl* material_1=GMLib.GetMaterialByIdx(material_idx_1);
