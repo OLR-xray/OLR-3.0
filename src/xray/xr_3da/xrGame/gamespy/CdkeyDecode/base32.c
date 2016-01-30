@@ -4,9 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-extern "C" {
-	#include "base32.h"
-}
+#include "base32.h"
 
 ////////////////////////////////////////////////////////////////////////
 // Globals

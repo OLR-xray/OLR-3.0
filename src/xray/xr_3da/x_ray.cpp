@@ -612,8 +612,8 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 
 	// Check for virtual memory
 
-	if ( ( strstr( lpCmdLine , "--skipmemcheck" ) == NULL ) && IsOutOfVirtualMemory() )
-		return 0;
+	/*if ( ( strstr( lpCmdLine , "--skipmemcheck" ) == NULL ) && IsOutOfVirtualMemory() )
+		return 0;*/
 
 	// Check for another instance
 #ifdef NO_MULTI_INSTANCES
