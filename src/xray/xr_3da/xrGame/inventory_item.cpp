@@ -126,7 +126,8 @@ CInventoryItem::~CInventoryItem()
 				object().ID(),
 				p ? p->Name_script() : "none",
 				p ? p->ID() : -1,
-				Device.dwFrame);
+				Device.dwFrame
+				);
 	}
 }
 
@@ -163,6 +164,8 @@ void CInventoryItem::Load(LPCSTR section)
 			if (slot < SLOTS_TOTAL && !IsPlaceable(slot, slot))
 				m_slots.push_back(slot);			
 		}
+		//init selected slots первым же слотом
+		selected_slot = 0;
 	}	
 	
 	// alpet: разрешение некоторым объектам попадать в слоты быстрого доступа независимо от настроек
