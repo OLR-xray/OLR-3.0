@@ -34,15 +34,16 @@ ICF	size_t		get_pool			(size_t size)
 bool	g_use_pure_alloc		= false;
 #endif // PURE_ALLOC
 
-void*	xrMemory::mem_alloc		(unsigned int size
+void*	xrMemory::mem_alloc		(size_t size
 #	ifdef DEBUG_MEMORY_NAME
 								 , const char* _name
 #	endif // DEBUG_MEMORY_NAME
 								 )
 {
 	stat_calls++;
+	//check maximum and minimum
 	_ASSERT (size > 0);
-	R_ASSERT (size < 0x7fffFFFF);
+	R_ASSERT (size < 0x7fffFFFF); //maximim 2GB static data!!! 
 
 #ifdef PURE_ALLOC
 	static bool g_use_pure_alloc_initialized = false;
@@ -166,7 +167,7 @@ void	xrMemory::mem_free		(void* P)
 
 extern BOOL	g_bDbgFillMemory	;
 
-void*	xrMemory::mem_realloc	(void* P, unsigned int size
+void*	xrMemory::mem_realloc	(void* P, size_t size
 #ifdef DEBUG_MEMORY_NAME
 								 , const char* _name
 #endif // DEBUG_MEMORY_NAME
