@@ -133,36 +133,36 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>X:\binaries_$(Configuration)_$(Platform)\</OutDir>
-    <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)..\..\binaries_$(Configuration)_$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <TargetName>lua5.1</TargetName>
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>X:\src\xray\Lua;X:\src\xray\Lua\lua;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\src\xray\Lua;$(SolutionDir)..\..\src\xray\Lua\lua;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>lua5.1</TargetName>
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>X:\binaries_$(Configuration)_$(Platform)\</OutDir>
-    <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IncludePath>X:\src\xray\Lua;X:\src\xray\Lua\lua;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)..\..\binaries_$(Configuration)_$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <IncludePath>$(SolutionDir)..\..\src\xray\Lua;$(SolutionDir)..\..\src\xray\Lua\lua;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>X:\binaries_$(Configuration)_$(Platform)\</OutDir>
-    <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)..\..\binaries_$(Configuration)_$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <TargetName>lua5.1</TargetName>
-    <IncludePath>X:\src\xray\Lua;X:\src\xray\Lua\lua;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\src\xray\Lua;$(SolutionDir)..\..\src\xray\Lua\lua;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>lua5.1</TargetName>
-    <OutDir>X:\binaries_$(Configuration)_$(Platform)\</OutDir>
-    <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IncludePath>X:\src\xray\Lua;X:\src\xray\Lua\lua;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)..\..\binaries_$(Configuration)_$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <IncludePath>$(SolutionDir)..\..\src\xray\Lua;$(SolutionDir)..\..\src\xray\Lua\lua;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test_Clang|x64'">
-    <IncludePath>X:\src\xray\Lua;X:\src\xray\Lua\lua;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\src\xray\Lua;$(SolutionDir)..\..\src\xray\Lua\lua;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test_Clang|Win32'">
-    <IncludePath>X:\src\xray\Lua;X:\src\xray\Lua\lua;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\src\xray\Lua;$(SolutionDir)..\..\src\xray\Lua\lua;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -172,7 +172,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\lua5.1.lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\lua5.1.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -188,7 +188,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\lua5.1.lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\lua5.1.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -215,7 +215,7 @@
       <ProgramDatabaseFile>$(OutDir)lua5.1.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\lua5.1.lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\lua5.1.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -242,7 +242,7 @@
       <ProgramDatabaseFile>$(OutDir)lua5.1.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\lua5.1.lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\lua5.1.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test_Clang|x64'">

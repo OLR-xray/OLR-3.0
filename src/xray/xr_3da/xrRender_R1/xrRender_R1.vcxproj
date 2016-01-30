@@ -150,66 +150,66 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">X:\binaries_$(Configuration)_$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">X:\binaries_$(Configuration)_$(Platform)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)..\..\binaries_$(Configuration)_$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)..\..\binaries_$(Configuration)_$(Platform)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</IgnoreImportLibrary>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">X:\binaries_$(Configuration)_$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">X:\binaries_$(Configuration)_$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">X:\binaries_$(Configuration)_$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">X:\binaries_$(Configuration)_$(Platform)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)..\..\binaries_$(Configuration)_$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">$(SolutionDir)..\..\binaries_$(Configuration)_$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)..\..\binaries_$(Configuration)_$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">$(SolutionDir)..\..\binaries_$(Configuration)_$(Platform)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">X:\binaries\$(Configuration)\$(Platform)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">X:\binaries\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">$(SolutionDir)..\..\binaries\$(Configuration)\$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">$(SolutionDir)..\..\binaries\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">true</LinkIncremental>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">..\..\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">..\..\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\xrCore;$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">..\..\xrCore;$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\xrCore;$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">..\..\xrCore;$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform)\;$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|Win32'">$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform)\;$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform)\;$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform)\;$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\xrCore;$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform)\;$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\xrCore;$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform)\;$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
-    <OutDir>X:\binaries\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)..\..\binaries\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <TargetExt>.dll</TargetExt>
-    <LibraryPath>X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
-    <IncludePath>..\..\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform)\;$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\xrCore;$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'">
-    <OutDir>X:\binaries\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>X:\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)..\..\binaries\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)..\..\intermediate\$(Configuration)\$(ProjectName)\$(Platform)\</IntDir>
     <TargetExt>.dll</TargetExt>
-    <LibraryPath>X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
-    <IncludePath>..\..\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform)\;$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\xrCore;$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">
-    <LibraryPath>X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
-    <IncludePath>..\..\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform)\;$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\xrCore;$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">
-    <LibraryPath>X:\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;X:\src\3rd party\dxsdk\Lib\$(Platform)\;X:\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
-    <IncludePath>..\..\xrCore;X:\src\3rd party\dxsdk_jun2010\Include;X:\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Lib\$(Platform)\;$(SolutionDir)..\..\src\3rd party\dxsdk\Lib\$(Platform)\;$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\xrCore;$(SolutionDir)..\..\src\3rd party\dxsdk_jun2010\Include;$(SolutionDir)..\..\src\3rd party\dxsdk\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -244,7 +244,7 @@
       </MapFileName>
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -282,7 +282,7 @@
       </MapFileName>
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -329,7 +329,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalDependencies>lua5.1.lib;luabind.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions> /MP</AdditionalOptions>
@@ -376,7 +376,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -421,7 +421,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_w_STLPORT|x64'">
@@ -465,7 +465,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <ImportLibrary>X:\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(Configuration)\$(Platform)\$(ProjectName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">
@@ -500,7 +500,7 @@
       <MapFileName>$(OutDir)$(ProjectName).map</MapFileName>
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
-      <ImportLibrary>x:\libraries\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(ProjectName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -536,7 +536,7 @@
       <MapFileName>$(OutDir)$(ProjectName).map</MapFileName>
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
-      <ImportLibrary>x:\libraries\$(ProjectName).lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)..\..\libraries\$(ProjectName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test_Clang|x64'">
