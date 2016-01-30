@@ -16,11 +16,11 @@ namespace CDB
 
 	void	Collector::add_face_D	(
 		const Fvector& v0, const Fvector& v1, const Fvector& v2,	// vertices
-/*#ifndef _WIN64
+#ifdef _WIN64
 		u64 dummy								// misc
-#else*/
+#else
 		u32 dummy								// misc
-//#endif
+#endif
 		)
 	{
 		TRI T;
@@ -67,11 +67,11 @@ namespace CDB
 
 	void	Collector::add_face_packed_D	(
 		const Fvector& v0, const Fvector& v1, const Fvector& v2,	// vertices
-/*#ifndef _WIN64
+#ifdef _WIN64
 		u64		dummy,	float eps
-#else*/
+#else
 		u32		dummy,	float eps
-//#endif
+#endif
 		)
 	{
 		TRI T;
