@@ -45,9 +45,9 @@ typedef void	__stdcall	xrTransfer		(LPVOID vDest, LPVOID vSrc, u32 vCount, u32 v
 											 MATRIX* xform);
 
 // Memory routines
-typedef void	__stdcall	xrMemFill_32b	(LPVOID ptr,  u32 count, u32 value);
-typedef void	__stdcall	xrMemFill_8b	(LPVOID ptr,  u32 count, u32 value);
-typedef void	__stdcall	xrMemCopy_8b	(LPVOID dest, const void* src, u32 count);
+typedef void	__stdcall	xrMemFill_32b	(LPVOID ptr,  u32 count, size_t value);
+typedef void	__stdcall	xrMemFill_8b	(LPVOID ptr,  u32 count, size_t value);
+typedef void	__stdcall	xrMemCopy_8b	(LPVOID dest, const void* src, size_t count);
 
 #pragma pack(push,8)
 struct xrDispatchTable
